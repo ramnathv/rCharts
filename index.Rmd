@@ -59,7 +59,7 @@ p2$printChart('chart2')  # use p2$show() from your R console
 
 rCharts is compatible with Shiny. Here is a link to the [rCharts Shiny App](http://glimmer.rstudio.com/ramnathv/rChartApp/).
 
-```
+```r
 ## server.r
 require(rCharts)
 shinyServer(function(input, output) {

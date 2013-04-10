@@ -39,7 +39,7 @@ names(iris) = gsub("\\.", "", names(iris))
 p1 <- rPlot(SepalLength ~ SepalWidth | Species, data = iris, color = "Species", 
     type = "point")
 p1$addParams(width = 550)
-p1$printChart("chart1")
+p1$printChart("chart1")  # use p1$show() from your R console
 ```
 
 <script type='text/javascript'>
@@ -59,7 +59,7 @@ hair_eye = subset(as.data.frame(HairEyeColor), Sex == "Female")
 p2 <- rPlot(Freq ~ Hair, color = 'Eye', data = hair_eye, type = 'bar', 
  position = 'dodge')
 p2$addParams(width = 550)
-p2$printChart('chart2')
+p2$printChart('chart2')  # use p2$show() from your R console
 ```
 
 <script type='text/javascript'>
@@ -75,7 +75,7 @@ p2$printChart('chart2')
 
 rCharts is compatible with Shiny. Here is a link to the [rCharts Shiny App](http://glimmer.rstudio.com/ramnathv/rChartApp/).
 
-```
+```r
 ## server.r
 require(rCharts)
 shinyServer(function(input, output) {
