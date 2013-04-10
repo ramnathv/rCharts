@@ -1,0 +1,3 @@
+*.RData
+.DS_Store
+.Rhistory

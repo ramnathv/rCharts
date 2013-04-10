@@ -1,0 +1,57 @@
+---
+title: rCharts
+subtitle: Interactive Charts from R using Polycharts
+author: Ramnath Vaidyanathan
+github:
+  user: ramnathv
+  repo: rCharts
+framework: minimal
+mode: selfcontained
+widgets: polycharts
+hitheme: solarized_light
+---
+
+## Interactive Charts from R using [PolyCharts](https://github.com/Polychart/polychart2)
+
+This R package helps users create interactive visualizations using [polychart.js](https://github.com/Polychart/polychart2), using a plotting interface similar to the [lattice](http://cran.r-project.org/web/packages/lattice/index.html) package.
+
+### Installation
+
+You can install `rCharts` from `github` using the `devtools` package
+
+```
+require(devtools)
+install_github('rCharts', 'ramnathv')
+```
+
+### Usage
+
+`rCharts` uses a plotting interface similar to that of the `lattice` package. Here are a few examples you can try out in your R console.
+
+### Example 1: Faceted Scatterplot
+
+<div id='chart1' class='rChart'></div>
+
+```{r results = 'asis', comment = NA, message = F}
+require(rCharts)
+names(iris) = gsub("\\.", "", names(iris))
+p1 <- rPlot(SepalLength ~ SepalWidth | Species, data = iris, color = 'Species', 
+  type = 'point')
+p1$addParams(width = 550)
+p1$printChart('chart1')
+```
+
+### Example 2: Faceted Barplot
+
+<div id='chart2' class='rChart'></div>
+
+```{r results = 'asis', comment = NA, message = F, tidy = F}
+hair_eye = subset(as.data.frame(HairEyeColor), Sex == "Female")
+p2 <- rPlot(Freq ~ Hair, color = 'Eye', data = hair_eye, type = 'bar', 
+ position = 'dodge')
+p2$addParams(width = 550)
+p2$printChart('chart2')
+```
+
+
+
