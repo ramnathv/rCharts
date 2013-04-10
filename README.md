@@ -31,6 +31,8 @@ More documentation is underway.
 
 ### Using with Shiny
 
+rCharts is compatible with Shiny. You can see the [rCharts Shiny App](http://glimmer.rstudio.com/ramnathv/rChartApp/).
+
 ```
 ## server.r
 require(rCharts)
