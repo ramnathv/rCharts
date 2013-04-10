@@ -1,0 +1,10 @@
+Package: rCharts
+Type: Package
+Title: Interactive Charts using Polycharts.js
+Version: 0.0.1
+Date: 2013-04-09
+Author: Ramnath Vaidyanathan
+Maintainer: Ramnath Vaidyanathan <ramnath.vaidya@gmail.com>
+Description: Create interactive visualizations with a plotting interface familiar to R users
+  using the Polycharts javascript library
+License: MIT
