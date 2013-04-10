@@ -38,7 +38,7 @@ names(iris) = gsub("\\.", "", names(iris))
 p1 <- rPlot(SepalLength ~ SepalWidth | Species, data = iris, color = 'Species', 
   type = 'point')
 p1$addParams(width = 550)
-p1$printChart('chart1')
+p1$printChart('chart1') # use p1$show() from your R console 
 ```
 
 ### Example 2: Faceted Barplot
@@ -50,7 +50,7 @@ hair_eye = subset(as.data.frame(HairEyeColor), Sex == "Female")
 p2 <- rPlot(Freq ~ Hair, color = 'Eye', data = hair_eye, type = 'bar', 
  position = 'dodge')
 p2$addParams(width = 550)
-p2$printChart('chart2')
+p2$printChart('chart2')  # use p2$show() from your R console
 ```
 
 `rCharts` is merely a wrapper around Polycharts.js. More documentation and examples are underway.
