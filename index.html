@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>rCharts</title>
     <link rel="stylesheet" href="libraries/frameworks/minimal/stylesheets/styles.css">
-    <link rel="stylesheet" href="libraries/frameworks/minimal/stylesheets/pygment_trac.css">
     <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/solarized_light.css"
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
@@ -25,13 +24,13 @@
     </a>
   </p>
   <ul>
-    <li><a href="https://github.com/{user}}/rCharts/zipball/master">
+    <li><a href="https://github.com/ramnathv/rCharts/zipball/master">
       Download <strong>ZIP File</strong>
     </a></li>
-    <li><a href="https://github.com/{user}}/rCharts/tarball/master">
+    <li><a href="https://github.com/ramnathv/rCharts/tarball/master">
       Download <strong>TAR Ball</strong>
     </a></li>
-    <li><a href="http://github.com/{user}}/rCharts">
+    <li><a href="http://github.com/ramnathv/rCharts">
       Fork On <strong>GitHub</strong></a>
     </li>
   </ul>
@@ -85,6 +84,53 @@ p2$printChart(&#39;chart2&#39;)
     _.each(chartParams.layers, function(el){el.data = polyjs.data(el.data)})
     polyjs.chart(chartParams);
 </script>
+
+<p><code>rCharts</code> is merely a wrapper around Polycharts.js. More documentation and examples are underway.</p>
+
+<h3>Using with Shiny</h3>
+
+<p>rCharts is compatible with Shiny. Here is a link to the <a href="http://glimmer.rstudio.com/ramnathv/rChartApp/">rCharts Shiny App</a>.</p>
+
+<pre><code>## server.r
+require(rCharts)
+shinyServer(function(input, output) {
+  output$myChart &lt;- renderChart({
+    names(iris) = gsub(&quot;\\.&quot;, &quot;&quot;, names(iris))
+    p1 &lt;- rPlot(input$x, input$y, data = iris, color = &quot;Species&quot;, 
+      facet = &quot;Species&quot;, type = &#39;point&#39;)
+    p1$addParams(dom = &#39;myChart&#39;)
+    return(p1)
+  })
+})
+
+## ui.R
+require(rCharts)
+shinyUI(pageWithSidebar(
+  headerPanel(&quot;rCharts: Interactive Charts from R using polychart.js&quot;),
+
+  sidebarPanel(
+    selectInput(inputId = &quot;x&quot;,
+     label = &quot;Choose X&quot;,
+     choices = c(&#39;SepalLength&#39;, &#39;SepalWidth&#39;, &#39;PetalLength&#39;, &#39;PetalWidth&#39;),
+     selected = &quot;SepalLength&quot;),
+    selectInput(inputId = &quot;y&quot;,
+      label = &quot;Choose Y&quot;,
+      choices = c(&#39;SepalLength&#39;, &#39;SepalWidth&#39;, &#39;PetalLength&#39;, &#39;PetalWidth&#39;),
+      selected = &quot;SepalWidth&quot;)
+  ),
+  mainPanel(
+    showOutput(&quot;myChart&quot;)
+  )
+))
+</code></pre>
+
+<h3>Credits</h3>
+
+<p>Most of the implementation in <code>rCharts</code> is inspired by <a href="https://github.com/metagraf/rHighcharts">rHighcharts</a> and <a href="https://github.com/metagraf/rVega">rVega</a>. I have reused some code from these packages verbatim, and would like to acknowledge the efforts of its author <a href="https://github.com/reinholdsson">Thomas Reinholdsson</a>.</p>
+
+<h3>License</h3>
+
+<p><code>rCharts</code> is licensed under the MIT License. However, the Polycharts JavaScript library that is included in this package is not free for commercial use, and is licensed under Creative Commons 3.0 Attribution &amp; Non-commercial. Read more about its license at <a href="http://polychart.com/js/license">http://polychart.com/js/license</a>.</p>
 
       </section>
       <footer>
