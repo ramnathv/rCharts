@@ -14,7 +14,13 @@ PolyChart = setRefClass('PolyChart', list(params = 'list'), methods = list(
     params$layers[[len + 1]] <<- list(x = fml$right.name, y = fml$left.name, 
       data = data, ...)
     if (!is.null(fml$condition)){
-      params$facet <<- c(params$facet, type = 'wrap', var = names(fml$condition))
+      facet = names(fml$condition)
+      if (length(facet) == 1){
+        params$facet <<- list(type = 'wrap', var = facet)
+      } else {
+        params$facet <<- list(type = 'grid', x = facet[1], y = facet[2])
+      }
+      # params$facet <<- c(params$facet, type = 'wrap', var = names(fml$condition))
       # len = length(params$facet)
       # params$facet[[len + 1]] <<- list(type = 'type', var = facet)
     }
@@ -23,14 +29,11 @@ PolyChart = setRefClass('PolyChart', list(params = 'list'), methods = list(
     len = length(params$layers)
     params$layers[[len + 1]] <<- list(x = x, y = y, data = data, ...)
     if (!is.null(facet)){
-      params$facet <<- c(params$facet, type = 'wrap', var = facet)
-      # len = length(params$facet)
-      # params$facet[[len + 1]] <<- list(type = 'type', var = facet)
+      params$facet <<- modifyList(params$facet, facet)
     }
   },
   facet = function(...){
-    len = length(params$facets)
-    params$facet[[len + 1]] <<- list(...)
+    params$facet <<- modifyList(params$facet, list(...))
   },
   guides = function(...){
     params$guides <<- modifyList(params$guides, addGuide(...))
