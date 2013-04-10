@@ -4,6 +4,7 @@ PolyChart = setRefClass('PolyChart', list(params = 'list'), methods = list(
     params$layers <<- list()
     params$facet <<- list()
     params$guides <<- list()
+    params$coord <<- list()
   },
   addParams = function(...){
     params <<- modifyList(params, list(...))
@@ -36,7 +37,10 @@ PolyChart = setRefClass('PolyChart', list(params = 'list'), methods = list(
     params$facet <<- modifyList(params$facet, list(...))
   },
   guides = function(...){
-    params$guides <<- modifyList(params$guides, addGuide(...))
+    params$guides <<- modifyList(params$guides, addSpec(...))
+  },
+  coord = function(...){
+    params$coord <<- modifyList(params$coord, list(...))
   },
   html = function(chartId = NULL){
     template_file = system.file('polycharts', 'layouts', 'polychart1.html', 

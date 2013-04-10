@@ -1,12 +1,12 @@
-addGuide <- function(...){
-  UseMethod('addGuides')
+addSpec <- function(...){
+  UseMethod('addSpec')
 }
 
-addGuides.default <- function(...){
+addSpec.default <- function(...){
   list(...)
 }
 
-addGuides.character <- function(...){
+addSpec.character <- function(...){
   yaml::yaml.load(...)
 }
 
