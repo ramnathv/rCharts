@@ -9,7 +9,15 @@ PolyChart = setRefClass('PolyChart', list(params = 'list'), methods = list(
   addParams = function(...){
     params <<- modifyList(params, list(...))
   },
-  layer = function(x, data, ...){
+  layer = function(...){
+    tmp <- list(...)[[1]]
+    if (is.character(tmp) || is.list(tmp)){
+      .self$layer2(...)
+    } else {
+      .self$layer1(...)
+    }
+  },
+  layer1 = function(x, data, ...){
     len = length(params$layers)
     fml = lattice::latticeParseFormula(x, data = data)
     params$layers[[len + 1]] <<- list(x = fml$right.name, y = fml$left.name, 

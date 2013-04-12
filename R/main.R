@@ -13,7 +13,7 @@ rPlot <- function(x, ...){
 rPlot.default <- function(x, y, data, facet = NULL, ..., width = 800, height = 400){
   myChart <- PolyChart$new()
   myChart$addParams(width = width, height = height)
-  myChart$layer2(x = x, y = y, data = data, facet = facet, ...)
+  myChart$layer(x = x, y = y, data = data, facet = facet, ...)
   return(myChart$copy())
 }
 
