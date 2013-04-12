@@ -74,3 +74,13 @@ Most of the implementation in `rCharts` is inspired by [rHighcharts](https://git
 ### License
 
 `rCharts` is licensed under the MIT License. However, the Polycharts JavaScript library that is included in this package is not free for commercial use, and is licensed under Creative Commons 3.0 Attribution & Non-commercial. Read more about its license at http://polychart.com/js/license.
+
+### See Also
+
+There has been a lot of interest recently in creating packages that allow R users to make use of Javascript charting libraries. 
+
+- [gg2v](https://github.com/hadley/gg2v) by [Hadley Wickham](https://github.com/hadley)
+- [clickme](https://github.com/nachocab/clickme) by [Nacho Caballero](https://github.com/nachocab)
+- [rHighcharts](https://github.com/metagraf/rHighcharts) by [Thomas Reinholdsson](https://github.com/reinholdsson)
+- [rHighcharts](https://github.com/metagraf/rVega) by [Thomas Reinholdsson](https://github.com/reinholdsson)
+- [rCharts](https://github.com/ramnathv/rCharts) by [Ramnath Vaidyanathan](https://github.com/ramnathv)
