@@ -5,3 +5,4 @@
 *.Rproj
 inst/docs
 inst/oecd
+inst/forcedirected
