@@ -14,7 +14,8 @@ rPlot(x = 'day', y = 'box(tip)', data = tips, type = 'box')
 ## Example 4 
 
 dat = count(mtcars, .(gear, am))
-rPlot(x = 'bin(gear, 1)', y = 'freq', data = dat, type = 'bar', facet = 'am')
+rPlot(x = 'bin(gear, 1)', y = 'freq', data = dat, type = 'bar', 
+  list(var = 'am', type = 'wrap'))
 
 ## Example 5 (Heat Map)
 
@@ -24,6 +25,7 @@ rPlot(x = 'bin(x, 1)', y = 'bin(y, 1)', color = 'value', data = dat, type = 'til
 
 
 # Example 6 (NBA Heat Map)
+require(reshape2); require(scales)
 nba <- read.csv('http://datasets.flowingdata.com/ppg2008.csv')
 nba.m <- ddply(melt(nba), .(variable), transform, rescale = rescale(value))
 p1 <- rPlot(Name ~ variable, color = 'rescale', data = nba.m, type = 'tile', height = 600)
