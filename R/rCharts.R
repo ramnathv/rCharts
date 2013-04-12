@@ -1,10 +1,7 @@
 PolyChart = setRefClass('PolyChart', list(params = 'list'), methods = list(
   initialize = function(){
-    params <<- list(dom = basename(tempfile('chart')), width = 700, height = 300)
-    params$layers <<- list()
-    params$facet <<- list()
-    params$guides <<- list()
-    params$coord <<- list()
+    params <<- list(dom = basename(tempfile('chart')), width = 700, height = 300,
+      layers = list(), facet = list(), guides = list(), coord = list())
   },
   addParams = function(...){
     params <<- modifyList(params, list(...))
