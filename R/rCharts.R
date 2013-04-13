@@ -9,12 +9,12 @@ PolyChart = setRefClass('PolyChart', list(params = 'list'), methods = list(
   layer = function(...){
     tmp <- list(...)[[1]]
     if (is.character(tmp) || is.list(tmp)){
-      .self$layer2(...)
+     .self$layerDefault(...)
     } else {
-      .self$layer1(...)
+     .self$layerFormula(...)
     }
   },
-  layer1 = function(x, data, ...){
+  layerFormula = function(x, data, ...){
     len = length(params$layers)
     fml = lattice::latticeParseFormula(x, data = data)
     params$layers[[len + 1]] <<- list(x = fml$right.name, y = fml$left.name, 
@@ -26,12 +26,9 @@ PolyChart = setRefClass('PolyChart', list(params = 'list'), methods = list(
       } else {
         params$facet <<- list(type = 'grid', x = facet[1], y = facet[2])
       }
-      # params$facet <<- c(params$facet, type = 'wrap', var = names(fml$condition))
-      # len = length(params$facet)
-      # params$facet[[len + 1]] <<- list(type = 'type', var = facet)
     }
   },
-  layer2 = function(x, y, data, facet = NULL, ...){
+  layerDefault = function(x, y, data, facet = NULL, ...){
     len = length(params$layers)
     params$layers[[len + 1]] <<- list(x = x, y = y, data = data, ...)
     if (!is.null(facet)){
@@ -47,33 +44,20 @@ PolyChart = setRefClass('PolyChart', list(params = 'list'), methods = list(
   coord = function(...){
     params$coord <<- modifyList(params$coord, list(...))
   },
+  
   html = function(chartId = NULL){
-    template_file = system.file('polycharts', 'layouts', 'polychart1.html', 
-      package = 'rCharts')
-    template = paste(readLines(template_file, warn = F), collapse = '\n')
-    if (is.null(chartId)){
-      chartId <- params$dom
-    } else {
-      params$dom <<- chartId
-    }
-    chartParams = toJSON(params)
-    html = paste(capture.output(cat(whisker.render(template))), collapse = '\n')
+    if (!is.null(chartId)) params$dom <<- chartId
+    template = read_template('polycharts', 'layouts', 'chart.html')
+    html = render_template(template, list(chartParams = toJSON(params)))
     return(html)
   },
   printChart = function(chartId = NULL){
     writeLines(.self$html(chartId))
   },
   render = function(chartId = NULL){
-    if (is.null(chartId)){
-      chartId <- params$dom
-    } else {
-      params$dom <<- chartId
-    }
-    template_file = system.file('polycharts', 'layouts', 'polychart2.html', 
-      package = 'rCharts')
-    template = paste(readLines(template_file, warn = F), collapse = '\n')
-    partials = list(polychart1 = .self$html(chartId))
-    html = capture.output(cat(whisker.render(template, partials = partials)))
+    if (!is.null(chartId)) params$dom <<- chartId
+    template = read_template('polycharts', 'layouts', 'script.html')
+    html = render_template(template, list(params = params, script = .self$html(chartId)))
   },
   save = function(destfile = 'index.html'){
     writeLines(.self$render(), destfile)
