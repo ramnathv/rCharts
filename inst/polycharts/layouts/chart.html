@@ -1,5 +1,7 @@
 <script type='text/javascript'>
     var chartParams = {{{ chartParams }}}
-    _.each(chartParams.layers, function(el){el.data = polyjs.data(el.data)})
+    _.each(chartParams.layers, function(el){
+        el.data = polyjs.data(el.data)
+    })
     polyjs.chart(chartParams);
 </script>
