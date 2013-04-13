@@ -12,13 +12,12 @@ data(tips, package = 'reshape2')
 rPlot(x = 'day', y = 'box(tip)', data = tips, type = 'box')
 
 ## Example 4 
-
+require(plyr)
 dat = count(mtcars, .(gear, am))
 rPlot(x = 'bin(gear, 1)', y = 'freq', data = dat, type = 'bar', 
   list(var = 'am', type = 'wrap'))
 
 ## Example 5 (Heat Map)
-
 dat = expand.grid(x = 1:5, y = 1:5)
 dat = transform(dat, value = sample(1:5, 25, replace = T))
 rPlot(x = 'bin(x, 1)', y = 'bin(y, 1)', color = 'value', data = dat, type = 'tile')
