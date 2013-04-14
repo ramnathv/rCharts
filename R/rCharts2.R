@@ -2,10 +2,13 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character'), metho
   addParams = function(...){
     params <<- modifyList(params, list(...))
   },
+  getPayload = function(chartId){
+    list(chartParams = toJSON(params))
+  },
   html = function(chartId = NULL){
-    if (!is.null(chartId)) params$dom <<- chartId
+    if (!is.null(chartId)) params$dom <<- chartId else chartId <- params$dom
     template = read_template(lib, 'layouts', 'chart.html')
-    html = render_template(template, list(chartParams = toJSON(params)))
+    html = render_template(template, getPayload(chartId))
     return(html)
   },
   printChart = function(chartId = NULL){
