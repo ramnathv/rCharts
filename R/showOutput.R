@@ -1,22 +1,30 @@
 showOutput <- function(outputId) {
   # Add javascript resources
-  scripts = setupResources()
+  assets = setupResources()
   
   div(class="rChart", 
     # Add Javascripts
-    tagList(scripts),
+    tagList(assets),
     # Add chart html
     htmlOutput(outputId)
   )
 }
 
-setupResources <- function(){
-  lib = .rChart_object$lib
-  suppressMessages(singleton(addResourcePath(lib, system.file(lib, package='rCharts'))))
-  cfg_file = system.file(lib, 'config.yml', package = 'rCharts')
+setupResources <- function(package = 'rCharts'){
+  # need to figure out a way to automatically determine this. maybe getOption.
+  lib = 'polycharts'
+  suppressMessages(singleton(addResourcePath(lib, system.file(lib, package=package))))
+  cfg_file = system.file(lib, 'config.yml', package = package)
   scripts = paste(lib, yaml.load_file(cfg_file)[[1]]$jshead, sep = "/")
   scripts = lapply(scripts, function(script){
     singleton(tags$head(tags$script(src = script, type = 'text/javascript')))
   })
-  return(scripts)
+  styles = yaml.load_file(cfg_file)[[1]]$css
+  if (!is.null(styles)){
+    styles = paste(lib, yaml.load_file(cfg_file)[[1]]$css, sep = "/")
+    styles = lapply(styles, function(style){
+      singleton(tags$head(tags$link(href = style, rel="stylesheet")))
+    })
+  }
+  return(c(styles, scripts))
 }
