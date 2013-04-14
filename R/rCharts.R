@@ -7,36 +7,16 @@ PolyChart = setRefClass('PolyChart', list(params = 'list'), methods = list(
     params <<- modifyList(params, list(...))
   },
   layer = function(...){
-    tmp <- list(...)[[1]]
-    if (is.character(tmp) || is.list(tmp)){
-     .self$layerDefault(...)
+    len = length(params$layers)
+    params$layers[[len + 1]] <<- getLayer(...)
+  },
+  facet = function(..., from_layer = FALSE){
+    if (from_layer){
+      facet_ = getFacet(params$layers[[1]]$facet)
     } else {
-     .self$layerFormula(...)
+      facet_ = list(...)
     }
-  },
-  layerFormula = function(x, data, ...){
-    len = length(params$layers)
-    fml = lattice::latticeParseFormula(x, data = data)
-    params$layers[[len + 1]] <<- list(x = fml$right.name, y = fml$left.name, 
-      data = data, ...)
-    if (!is.null(fml$condition)){
-      facet = names(fml$condition)
-      if (length(facet) == 1){
-        params$facet <<- list(type = 'wrap', var = facet)
-      } else {
-        params$facet <<- list(type = 'grid', x = facet[1], y = facet[2])
-      }
-    }
-  },
-  layerDefault = function(x, y, data, facet = NULL, ...){
-    len = length(params$layers)
-    params$layers[[len + 1]] <<- list(x = x, y = y, data = data, ...)
-    if (!is.null(facet)){
-      params$facet <<- modifyList(params$facet, facet)
-    }
-  },
-  facet = function(...){
-    params$facet <<- modifyList(params$facet, list(...))
+    params$facet <<- modifyList(params$facet, facet_)
   },
   guides = function(...){
     params$guides <<- modifyList(params$guides, addSpec(...))
@@ -44,7 +24,6 @@ PolyChart = setRefClass('PolyChart', list(params = 'list'), methods = list(
   coord = function(...){
     params$coord <<- modifyList(params$coord, list(...))
   },
-  
   html = function(chartId = NULL){
     if (!is.null(chartId)) params$dom <<- chartId
     template = read_template('polycharts', 'layouts', 'chart.html')
