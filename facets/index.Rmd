@@ -1,0 +1,76 @@
+---
+title: Faceting
+subtitle: rCharts
+author: Ramnath Vaidyanathan
+github:
+  user: ramnathv
+  repo: rCharts
+framework: minimal
+mode: selfcontained
+widgets: polycharts
+hitheme: solarized_dark
+url: {lib: ../libraries}
+background: images/fabric_of_squares_gray.png
+---
+
+```{r setup, echo = F, cache = F}
+opts_chunk$set(results = 'asis', comment = NA, tidy = F, message = F, warning = F)
+```
+
+
+## Facets 
+
+Facets display subsets of the dataset in different panels. Such plots are also referred to as small multiple plots and are useful when dealing with datasets having multiple variables. `rCharts` uses lattice like syntax to specify the faceting variable. Here is an example to get you started, where we get multiple scatterplots of `mpg` vs `cyl` for each level of the variable `cyl`. 
+
+<div id='chart1' class='rChart'></div>
+
+```{r}
+require(rCharts)
+p1 <- rPlot(mpg ~ wt | cyl, data = mtcars, type = 'point', width = 600)
+p1$printChart('chart1')
+```
+
+
+
+It is also possible to split the data based on two variables. In the second example, a scatterplot is created for each unique combination of levels of the variables `cyl` and `am`.
+
+<div id='chart2' class='rChart'></div>
+
+```{r}
+p2 <- rPlot(mpg ~ wt | cyl  + am, data = mtcars, type = 'point', dom = 'chart2', 
+ width = 600)
+p2$printChart('chart2')
+```
+
+
+
+
+`rCharts` allows you to build the faceting specification after you have created your main plot. Here is an example creating the same plots using this alternate approach
+
+```{r eval = F}
+p1 <- rPlot(mpg ~ wt, data = mtcars, type = 'point')
+p1$facet(var = 'cyl', type = 'wrap', rows = 3)
+```
+
+The `facet` method in `rCharts` allows finer control of the faceting. Depending on whether you are splitting the data by one or two data columns, it accepts a different set of arguments.
+
+__Wrap__ : Split by one data column
+
+```
+type      "wrap"                                       (required)
+var       name of the variable to split the data on    (required)
+cols      number of columns of panes
+rows      number of rows of panes
+formatter NOT supported by rCharts
+```
+
+__Grid__ : Split by two data columns
+
+```
+type      "grid"                                     (required)
+x         name of the x variable to split the data on  (required)
+y         name of the y variable to split the data on  (required)
+formatter NOT supported by rCharts
+```
+
+For more details, refer to the documentation on the [PolychartsJS Wiki](https://github.com/Polychart/polychart2/wiki/Facet)

@@ -1,0 +1,91 @@
+---
+title: rCharts
+subtitle: Interactive JS Charts from R
+author: Ramnath Vaidyanathan
+github: {user: ramnathv, repo: rCharts, branch: "gh-pages"}
+framework: minimal
+mode: selfcontained
+widgets: [morris, polycharts, nvd3]
+hitheme: solarized_light
+url: {lib: ../libraries}
+background: images/subtle_freckles.png
+assets:
+  css: 
+    - "http://fonts.googleapis.com/css?family=Open+Sans"
+    - "http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700"
+---
+
+<style>
+p {
+  text-align: justify;
+  font-family: "Open Sans";
+}
+h1 {
+  font-family: "Open Sans Condensed", sanserif;
+  color: darkslategray;
+}
+</style>
+
+```{r echo = F}
+opts_chunk$set(results = 'asis', comment = NA, message = F, tidy = F)
+```
+
+# rCharts | One Interface, Multiple JS Libraries
+
+Recently, I had blogged about two R packages, [rCharts](http://ramnathv.github.io/rCharts) and [rNVD3](http://ramnathv.github.io/rNVD3) that provided R users a lattice like interface to create interactive visualizations using popular javascript libraries. 
+
+There was a lot of repeated code between the two packages, which lead me to think that it might be possible to integrates multiple JS libraries into a single package with a common lattice like interface. After heavy refactoring, I finally managed to implement three popular JS libraries in rCharts: [Polycharts](https://github.com/Polychart/polychart2), [NVD3](http://github.com/novus/nvd3) and [MorrisJS](http://www.oesmith.co.uk/morris.js/).
+
+`rCharts` uses reference classes, which I believe is one of the best things to happen to R. It allowed me to keep the code base pretty concise, while implementing a fair degree of functionality. The current structure of `rCharts` should make it easy to integrate any JS visualization library that uses a configuration variable to create charts. This includes Highcharts and Vega, which have R implementations in [rHighcharts](http://github.com/metagraf/rHighcharts) and [rVega](http://github.com/metagraf/rVega).
+
+A huge advantage of wrapping these libraries within the same package is that they can take advantage of the common code. For example, when I implemented MorrisJS, I only had to focus on the data structure required by the library. All the other parts like rendering, integration with shiny and slidify, were derived from the parent class.
+
+All JS libraris in `rCharts` are compatible with [Slidify](http://slidify.org). In fact, this blog post was created by running Slidify on the source Rmd file! I have provided one example for each of the three libraries to give you a flavor of what is possible, and will be posting more examples shortly.
+
+If you have an interesting JS plotting library that you would like to see added, or have feedback, please post here on [github](https://github.com/ramnathv/rCharts/issues/new).
+
+### Example 1: Polycharts
+
+<div id='chart1' class='rChart'></div>
+
+```{r chart1}
+require(rCharts)
+names(iris) = gsub("\\.", "", names(iris))
+p1 <- rPlot(SepalLength ~ SepalWidth | Species, data = iris, color = 'Species', 
+  type = 'point')
+p1$set(width = 550)
+p1$printChart('chart1') # use p1$show() from your R console 
+```
+
+---
+
+### Example 2: NVD3
+
+
+<div id='chart2' class='NVD3' style='height:400px;'></div>
+
+```{r chart2}
+p2 <- nvd3Plot(SepalLength ~ SepalWidth, group = 'Species', data = iris, 
+  type = 'scatterChart')
+p2$set(width = 550)
+p2$printChart('chart2')
+```
+
+---
+
+### Example 3: MorrisJS
+
+<div id='chart3' class='Morris' style='height:400px;'></div>
+
+```{r}
+data(economics, package = 'ggplot2')
+dat = transform(economics, date = as.character(date))
+p3 <- mPlot(x = "date", y = list("psavert", "uempmed"), data = dat, type = 'Area',
+  labels = list('Savings Rate', 'Median Duration of Unemployment'), pointSize = 0)
+p3$printChart('chart3')
+```
+
+
+
+
+

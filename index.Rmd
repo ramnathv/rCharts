@@ -2,9 +2,7 @@
 title: rCharts
 subtitle: Interactive Charts from R using Polycharts
 author: Ramnath Vaidyanathan
-github:
-  user: ramnathv
-  repo: rCharts
+github: {user: ramnathv, repo: rCharts, branch: "gh-pages"}
 framework: minimal
 mode: selfcontained
 widgets: polycharts

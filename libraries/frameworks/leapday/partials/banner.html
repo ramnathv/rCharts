@@ -1,0 +1,19 @@
+<div id="banner">
+  <span id="logo"></span>
+  {{# page.github }}
+  <a href="http://github.com/{{user}}/{{repo}}" class="button fork">
+    <strong>Fork On GitHub</strong>
+  </a>
+  <div class="downloads">
+    <span>Downloads:</span>
+    <ul>
+      <li><a href="https://github.com/{{user}}/{{repo}}/zipball/master" class="button">
+        ZIP
+      </a></li>
+      <li><a href="https://github.com/{{user}}/{{repo}}/tarball/master" class="button">
+        TAR
+      </a></li>
+    </ul>
+  </div>
+  {{/ page.github }}
+</div>

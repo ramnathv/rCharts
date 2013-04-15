@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <head>
+    {{> head }}
+    {{{ page.assets.css }}}
+    {{{ page.assets.jshead }}}
+  </head>
+  <body>
+    <div class="wrapper">
+    
+      {{> header }}
+      
+      <section>
+      
+        {{{ page.content }}}
+        
+      </section>
+      
+      {{> footer }}
+      
+    </div>
+    <script src="{{page.url.framework}}/javascripts/scale.fix.js"></script>
+  </body>
+  <!-- Load Javascripts for Widgets -->
+  {{{ page.assets.js }}}
+  {{> javascripts }}
+</html>

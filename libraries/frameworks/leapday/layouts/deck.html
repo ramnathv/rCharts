@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+  {{> head }}
+  {{{ page.assets.jshead }}}
+  {{{ page.assets.stylesheets }}}
+</head>
+<body>
+  <header>
+    <h1>{{ page.title }}</h1>
+    <p>{{ page.tagline }}</p>
+  </header>
+
+  {{> banner }}
+
+  <div class="wrapper">
+    <nav>
+      <ul></ul>
+    </nav>
+    <section>
+      {{{ page.content }}}
+    </section>
+    {{> footer }}
+  </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+  </body>
+  {{{ page.assets.js }}}
+  {{> javascripts }}
+</html>

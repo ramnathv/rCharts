@@ -1,16 +1,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
-<title>{{{ page.title }}}</title>
+<title>{{ page.title }} by {{ page.author }}</title>
 <link rel="stylesheet" href="{{page.url.framework}}/stylesheets/styles.css">
 <link rel="stylesheet" href="{{page.url.highlighter}}/css/{{page.hitheme}}.css">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="{{page.url.framework}}/javascripts/main.js"></script>
 <!--[if lt IE 9]>
   <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
-{{# page.background }}
-<style>
-body {
-  background-image: url({{page.url.framework}}/{{{ page.background }}})
-}  
-</style>
-{{/ page.background }}
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
