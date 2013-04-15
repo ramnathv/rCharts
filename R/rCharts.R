@@ -10,7 +10,6 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character'), metho
     params$id <<- params$dom
     template = read_template(lib, 'layouts', 'chart.html')
     html = render_template(template, getPayload(chartId))
-    options(RCHART_LIB = lib)
     return(html)
   },
   printChart = function(chartId = NULL){
@@ -41,6 +40,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character'), metho
 PolyChart = setRefClass('PolyChart', contains = 'rCharts', methods = list(
   initialize = function(){
     lib <<- 'polycharts'
+    options(RCHART_LIB = lib)
     params <<- list(dom = basename(tempfile('chart')), width = 700, height = 300,
       layers = list(), facet = list(), guides = list(), coord = list())
   },
