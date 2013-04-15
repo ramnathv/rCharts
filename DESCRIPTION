@@ -13,3 +13,13 @@ Imports:
   whisker,
   yaml
 License: MIT
+Collate:
+  rChartsClass.R
+  PolyCharts.R
+  NVD3.R
+  r2json.R
+  getChartParams.R
+  renderChart.R
+  showOutput.R
+  utils.R
+  VegaClass.R
