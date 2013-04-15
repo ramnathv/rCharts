@@ -16,9 +16,10 @@ License: MIT
 Collate:
   rChartsClass.R
   PolyCharts.R
+  MorrisJS.R
   NVD3.R
-  r2json.R
-  getChartParams.R
+  toJSON.R
+  getLayer.R
   renderChart.R
   showOutput.R
   utils.R
