@@ -1,5 +1,5 @@
 showOutput <- function(outputId, lib = NULL) {
-  div(class="rChart", 
+  div(class="rChart NVD3", 
     # Add Javascripts
     tagList(setupResources(lib)),
     # Add chart html
