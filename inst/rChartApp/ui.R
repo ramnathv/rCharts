@@ -13,6 +13,6 @@ shinyUI(pageWithSidebar(
       selected = "SepalWidth")
   ),
   mainPanel(
-    showOutput("myChart")
+    showOutput("myChart", "polycharts")
   )
 ))
