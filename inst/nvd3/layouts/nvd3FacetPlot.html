@@ -1,0 +1,57 @@
+<div id='{{chartId}}' class='nvd3Plot'></div>
+<script type='text/javascript'>
+    draw{{chartId}}()
+    setupChart = function(data, selector){
+      d3.select(selector)
+        .selectAll("div")
+        .data(data).enter()
+        .append('div').attr('class', 'preview')
+        .append('svg');
+    }
+
+    
+    
+    function draw{{chartId}}(){  
+      var opts = {{{ myparams }}},
+        data = {{{ data }}}
+        
+      var data = d3.nest()
+        .key(function(d){ return d[opts.facet]} )
+        .entries(data)
+        
+      facets = d3.select("#" + opts.id)
+        .selectAll("div")
+        .data(data).enter()
+        .append('div').attr('class', 'facets')
+        .append('svg')
+        
+      facets.each(function(d, i){
+         var data = d3.nest()
+          .key(function(d){
+            return opts.group === undefined ? 'main' : d[opts.group]
+          })
+          .entries([d])
+      
+         nv.addGraph(function() {
+           var chart = nv.models[opts.type]()
+             .x(function(d) { return d[opts.x] })
+             .y(function(d) { return d[opts.y] })
+             .width(opts.width)
+             .height(opts.height)
+         
+           {{{ chart }}}
+          
+           {{{ xAxis }}}
+        
+           {{{ yAxis }}}
+      
+         d3.select(this)
+          .datum([d])
+          .transition().duration(500)
+          .call(chart);
+
+          nv.utils.windowResize(chart.update);
+        });
+      });
+    };
+</script>
