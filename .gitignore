@@ -4,6 +4,6 @@
 .DS_Store
 *.Rproj
 inst/docs
-inst/oecd
+inst/apps/oecd
 inst/forcedirected
 getChartParams.R
