@@ -36,30 +36,3 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character'), metho
     }
   }
 ))
-
-PolyChart = setRefClass('PolyChart', contains = 'rCharts', methods = list(
-  initialize = function(){
-    lib <<- 'polycharts'
-    options(RCHART_LIB = lib)
-    params <<- list(dom = basename(tempfile('chart')), width = 700, height = 300,
-      layers = list(), facet = list(), guides = list(), coord = list())
-  },
-  layer = function(...){
-    len = length(params$layers)
-    params$layers[[len + 1]] <<- getLayer(...)
-  },
-  facet = function(..., from_layer = FALSE){
-    if (from_layer){
-      facet_ = getFacet(params$layers[[1]]$facet)
-    } else {
-      facet_ = list(...)
-    }
-    params$facet <<- modifyList(params$facet, facet_)
-  },
-  guides = function(...){
-    params$guides <<- modifyList(params$guides, addSpec(...))
-  },
-  coord = function(...){
-    params$coord <<- modifyList(params$coord, list(...))
-  }
-))
