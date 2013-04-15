@@ -3,7 +3,7 @@ PolyChart = setRefClass('PolyChart', contains = 'rCharts', methods = list(
     lib <<- 'polycharts'
     options(RCHART_LIB = lib)
     params <<- list(dom = basename(tempfile('chart')), width = 700, height = 300,
-                    layers = list(), facet = list(), guides = list(), coord = list())
+      layers = list(), facet = list(), guides = list(), coord = list())
   },
   layer = function(...){
     len = length(params$layers)
@@ -32,7 +32,6 @@ PolyChart = setRefClass('PolyChart', contains = 'rCharts', methods = list(
 #' rPlot(SepalLength ~ SepalWidth | Species, data = iris, type = 'point', color = 'Species')
 #' 
 #' 
-
 rPlot <- function(x, ...){
   UseMethod('rPlot')
 }
