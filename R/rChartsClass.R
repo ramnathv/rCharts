@@ -2,6 +2,9 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character'), metho
   addParams = function(...){
     params <<- modifyList(params, list(...))
   },
+  set = function(...){
+    params <<- modifyList(params, list(...))
+  },
   getPayload = function(chartId){
     list(chartParams = toJSON(params))
   },
