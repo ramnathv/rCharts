@@ -1,4 +1,4 @@
-nvd3Plot <- function(x, data, ...){
+nPlot <- nvd3Plot <- function(x, data, ...){
   myChart <- NVD3$new()
   myChart$getChartParams(x, data, ...)
   return(myChart$copy())
