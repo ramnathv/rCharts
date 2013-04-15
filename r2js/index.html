@@ -49,7 +49,15 @@ body {
       Fork On <strong>GitHub</strong></a>
     </li>
   </ul>
-</header>      <section>
+  <div style='position:fixed;top:300px;width:270px;'>
+    <h2>Installation</h2>
+    <p>rCharts is an R package and can be installed from <code>github</code> using the <code>devtools</code> package: </p>
+    <pre><code class='r'>require(devtools)
+install_github('rCharts', 'ramnathv')
+    </code></pre>
+  </div>
+</header>      
+<section>
         
 <style>
 p {
@@ -66,7 +74,7 @@ h1 {
 
 <p>Recently, I had blogged about two R packages, <a href="http://ramnathv.github.io/rCharts">rCharts</a> and <a href="http://ramnathv.github.io/rNVD3">rNVD3</a> that provided R users a lattice like interface to create interactive visualizations using popular javascript libraries. </p>
 
-<p>There was a lot of repeated code between the two packages, which lead me to think that it might be possible to integrates multiple JS libraries into a single package with a common lattice like interface. After heavy refactoring, I finally managed to implement three popular JS libraries in rCharts: <a href="https://github.com/Polychart/polychart2">Polycharts</a>, <a href="http://github.com/novus/nvd3">NVD3</a> and <a href="http://www.oesmith.co.uk/morris.js/">MorrisJS</a>.</p>
+<p>There was a lot of repeated code between the two packages, which lead me to think that it might be possible to integrate multiple JS libraries into a single package with a common lattice like interface. After heavy refactoring, I finally managed to implement three popular JS libraries in rCharts: <a href="https://github.com/Polychart/polychart2">Polycharts</a>, <a href="http://github.com/novus/nvd3">NVD3</a> and <a href="http://www.oesmith.co.uk/morris.js/">MorrisJS</a>.</p>
 
 <p><code>rCharts</code> uses reference classes, which I believe is one of the best things to happen to R. It allowed me to keep the code base pretty concise, while implementing a fair degree of functionality. The current structure of <code>rCharts</code> should make it easy to integrate any JS visualization library that uses a configuration variable to create charts. This includes Highcharts and Vega, which have R implementations in <a href="http://github.com/metagraf/rHighcharts">rHighcharts</a> and <a href="http://github.com/metagraf/rVega">rVega</a>.</p>
 
