@@ -1,3 +1,11 @@
+setSpec = function(spec, ... , replace = F){
+  if (replace){
+    list(...)
+  } else {
+    modifyList(spec, list(...))
+  }
+}
+
 addSpec <- function(...){
   UseMethod('addSpec')
 }
