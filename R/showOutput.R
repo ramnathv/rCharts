@@ -1,14 +1,26 @@
-showOutput <- function(outputId, lib = NULL) {
+#' Use rCharts as Shiny output. First, use \code{renderChart} in \code{server.R} to assign 
+#' the chart object to an Shiny output. Then create an chartOutput with the same name in #'
+#' \code{ui.R}. \code{chartOutput} is currently just an alias for \code{htmlOutput}. 
+#' 
+#' @author Thomas Reinholdsson, Ramnath Vaidyanathan
+#' @params outputId output variable to read value from
+#' @params lib name of js library used
+#' @params package name where js library resides
+#' @export
+showOutput <- function(outputId, lib = NULL, package = 'rCharts') {
   div(class="rChart NVD3", 
-    # Add Javascripts
-    tagList(setupResources(lib)),
-    # Add chart html
+    tagList(getAssets(lib, package)),
     htmlOutput(outputId)
   )
 }
 
-setupResources <- function(lib, package = 'rCharts'){
-  # this does not solve the issue still, since RCHART_LIB is not initialized
+#' Get javascript and css assets to add to html output
+#'
+#' @params lib name of js library used
+#' @params package name where js library resides
+#' @keywords internal
+#' @noRd
+getAssets <- function(lib, package){
   if (is.null(lib)) lib = getOption('RCHART_LIB')
   suppressMessages(singleton(addResourcePath(lib, system.file(lib, package=package))))
   cfg_file = system.file(lib, 'config.yml', package = package)
