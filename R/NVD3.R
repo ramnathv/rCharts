@@ -9,7 +9,9 @@ NVD3 <- setRefClass('NVD3', contains = 'rCharts', methods = list(
     lib <<- 'nvd3'
     options(RCHART_LIB = lib)
     params <<- list(dom = basename(tempfile("chart")), 
-      width = 900, height = 400, chart = list(), xAxis = list(), yAxis = list());
+      width = getOption('RCHART_WIDTH', 900), 
+      height = getOption('RCHART_HEIGHT', 400), 
+      chart = list(), xAxis = list(), yAxis = list());
   },
   chart = function(..., replace = T){
     params$chart <<- setSpec(params$chart, ..., replace = replace)
