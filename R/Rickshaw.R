@@ -22,7 +22,7 @@ Rickshaw = setRefClass('Rickshaw', contains = 'rCharts', methods = list(
     list(
       chartParams = toJSON(params[!(names(params) %in% c('opts', 'xAxis'))]), 
       opts = toChain(params$opts, 'graph.renderer'),
-      xAxis = toJSON(params$xAxis)
+      xAxis = toJSON(params$xAxis),
       chartId = chartId
     )
   }
