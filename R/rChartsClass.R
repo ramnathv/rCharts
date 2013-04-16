@@ -6,7 +6,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character'), metho
     params <<- modifyList(params, list(...))
   },
   getPayload = function(chartId){
-    list(chartParams = toJSON(params))
+    list(chartParams = toJSON(params), chartId = chartId)
   },
   html = function(chartId = NULL){
     if (!is.null(chartId)) params$dom <<- chartId else chartId <- params$dom
