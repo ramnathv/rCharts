@@ -1,0 +1,4 @@
+highcharts:
+  jshead: 
+    - js/highcharts.js
+    - js/highcharts-more.js
