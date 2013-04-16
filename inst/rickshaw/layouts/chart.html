@@ -1,0 +1,12 @@
+<script type='text/javascript'> 
+  var chartParams = {{{ chartParams }}},
+    xAxis = {{{ xAxis }}}
+  chartParams.element = document.querySelector('#{{{ chartId }}}')
+  xAxis.element = document.querySelector('#x_axis')
+  
+  var graph{{{ chartId }}} = new Rickshaw.Graph(chartParams);
+  var x_axis = new Rickshaw.Graph.Axis.X()
+  
+  graph{{{ chartId }}}.render();
+
+</script> 
