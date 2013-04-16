@@ -18,9 +18,10 @@ Collate:
   PolyCharts.R
   MorrisJS.R
   NVD3.R
+  Rickshaw.R
   toJSON.R
   getLayer.R
   renderChart.R
   showOutput.R
   utils.R
-  VegaClass.R
+  

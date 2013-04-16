@@ -19,7 +19,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character'), metho
     writeLines(.self$html(chartId))
   },
   render = function(chartId = NULL){
-    if (!is.null(chartId)) params$dom <<- chartId
+    if (!is.null(chartId)) params$dom <<- chartId else chartId <- params$dom
     template = read_template(lib, 'layouts', 'script.html')
     html = render_template(template, list(params = params, script = .self$html(chartId)))
   },
