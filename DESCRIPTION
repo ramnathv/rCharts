@@ -5,23 +5,23 @@ Version: 0.1.1
 Date: 2013-04-09
 Author: Ramnath Vaidyanathan
 Maintainer: Ramnath Vaidyanathan <ramnath.vaidya@gmail.com>
-Description: Create interactive visualizations with a plotting interface familiar to R users
-  using the Polycharts javascript library
+Description: Create interactive visualizations with a plotting interface
+    familiar to R users using the Polycharts javascript library
 Imports:
-  plyr,
-  rjson,
-  whisker,
-  yaml
+    plyr,
+    rjson,
+    whisker,
+    yaml
 License: MIT
 Collate:
-  rChartsClass.R
-  PolyCharts.R
-  MorrisJS.R
-  NVD3.R
-  Rickshaw.R
-  toJSON.R
-  getLayer.R
-  renderChart.R
-  showOutput.R
-  utils.R
-  
+    'rChartsClass.R'
+    'PolyCharts.R'
+    'MorrisJS.R'
+    'NVD3.R'
+    'Rickshaw.R'
+    'Highcharts.r'
+    'toJSON.R'
+    'getLayer.R'
+    'renderChart.R'
+    'showOutput.R'
+    'utils.R'
