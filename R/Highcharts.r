@@ -9,13 +9,13 @@ Highchart <- setRefClass("Highchart", contains = "rCharts", methods = list(
         lib <<- 'highcharts'
         options(RCHART_LIB = lib)
         params <<- list(dom = basename(tempfile('chart')))
-        params$chart$renderTo <<- params$dom
     },
     
     getPayload = function(chartId){
+        params$chart$renderTo <<- chartId
         list(
             chartParams = toJSON(params),
-            id = params$dom
+            renderTo = chartId
         )
     },
     
