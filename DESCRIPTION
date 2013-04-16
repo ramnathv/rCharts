@@ -19,6 +19,7 @@ Collate:
   MorrisJS.R
   NVD3.R
   Rickshaw.R
+  xCharts.R
   toJSON.R
   getLayer.R
   renderChart.R
