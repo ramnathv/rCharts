@@ -37,11 +37,11 @@ fixLayerRickshaw = function(params_){
   return(params_)
 }
 
-toSeries = function(params_){
+toSeries = function(params_, series = 'series'){
   x_ = params_$x; y_ = params_$y; group = params_$group; data_ = params_$data;
   colors_ = brewer.pal(length(group), "Blues")
   data2 = dlply(data_, group)
-  params_$series = llply(seq_along(data2), function(i){list(
+  params_[series] = llply(seq_along(data2), function(i){list(
     data = fixData(data2[[i]][,c(x_, y_)]), 
     color = colors_[i])
   })
