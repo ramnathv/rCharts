@@ -24,8 +24,15 @@ PolyChart = setRefClass('PolyChart', contains = 'rCharts', methods = list(
   },
   coord = function(...){
     params$coord <<- modifyList(params$coord, list(...))
+  },
+  getPayload = function(chartId){
+    list(chartParams = fixJSON(toJSON(params)), chartId = chartId)
   }
 ))
+
+fixJSON = function(x){
+  gsub("\"(function.*\\})\"", "\\1", x)
+}
 
 #' Main plotting function
 #' 
