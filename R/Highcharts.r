@@ -8,8 +8,20 @@ Highchart <- setRefClass("Highchart", contains = "rCharts", methods = list(
     initialize = function() {
         lib <<- 'highcharts'
         options(RCHART_LIB = lib)
-        params <<- list(dom = basename(tempfile('chart')))
-        params$chart$renderTo <<- params$dom
+        params <<- list(
+            dom = basename(tempfile('chart')),
+            
+            # Set defaults
+            credits = list(href = NULL, text = NULL)
+        )
+    },
+    
+    getPayload = function(chartId){
+
+        # Set params before rendering
+        params$chart$renderTo <<- chartId
+
+        list(chartParams = toJSON(params), chartId = chartId)
     },
 
     #' Wrapper methods
