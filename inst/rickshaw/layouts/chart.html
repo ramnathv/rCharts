@@ -1,12 +1,21 @@
 <script type='text/javascript'> 
-  var chartParams = {{{ chartParams }}},
-    xAxis = {{{ xAxis }}}
+  var chartParams = {{{ chartParams }}}
   chartParams.element = document.querySelector('#{{{ chartId }}}')
-  xAxis.element = document.querySelector('#x_axis')
   
   var graph{{{ chartId }}} = new Rickshaw.Graph(chartParams);
-  var x_axis = new Rickshaw.Graph.Axis.X()
   
   graph{{{ chartId }}}.render();
-
+  
+  {{# yAxis }}
+  var yAxis = new Rickshaw.Graph.Axis.Y( {
+    graph: graph{{{ chartId }}},
+	  orientation: '{{{ yAxis.orientation }}}',
+	  tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+	  element: document.getElementById('yAxis{{{ chartId }}}'),
+  });
+  {{/ yAxis }}
+  
+  var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+    graph: graph{{{ chartId }}}
+  });
 </script> 
