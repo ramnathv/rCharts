@@ -7,9 +7,13 @@ PolyChart = setRefClass('PolyChart', contains = 'rCharts', methods = list(
       height = getOption('RCHART_HEIGHT', 300),
       layers = list(), facet = list(), guides = list(), coord = list())
   },
-  layer = function(...){
+  layer = function(..., copy_layer = F){
     len = length(params$layers)
-    params$layers[[len + 1]] <<- getLayer(...)
+    if (!copy_layer){
+      params$layers[[len + 1]] <<- getLayer(...)
+    } else {
+      params$layers[[len + 1]] <<- merge_list(list(...), params$layers[[len]])
+    }
   },
   facet = function(..., from_layer = FALSE){
     if (from_layer){
@@ -30,6 +34,7 @@ PolyChart = setRefClass('PolyChart', contains = 'rCharts', methods = list(
   }
 ))
 
+# this is a hack to return a function in the JSON payload
 fixJSON = function(x){
   gsub("\"(function.*\\})\"", "\\1", x)
 }
