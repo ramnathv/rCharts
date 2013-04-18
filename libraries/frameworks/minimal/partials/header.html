@@ -1,13 +1,15 @@
 <header>
   <h1>{{{ page.title }}}</h1>
   <p>{{{ page.subtitle }}}</p>
+  <pre><code class='r'>require(devtools)
+install_github('rCharts', 'ramnathv')</code></pre>
   {{# page.github }}
   <p class="view">
     <a href="http://github.com/{{user}}/{{repo}}">
      View the Project on GitHub <small>{{user}}/{{repo}}</small>
     </a>
   </p>
-  <ul>
+  <ul class='buttons'>
     <li><a href="https://github.com/{{user}}/{{repo}}/zipball/{{branch}}">
       Download <strong>ZIP File</strong>
     </a></li>
@@ -19,4 +21,11 @@
     </li>
   </ul>
   {{/ page.github }}
+    <ol>
+    {{# page.menu }}
+      <p>{{{ . }}}</p>
+    {{/ page.menu }}
+    </ol>
 </header>
+
+
