@@ -37,5 +37,11 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character'), metho
       assign(".rChart_object", shiny_copy, envir = .GlobalEnv) 
       shiny::runApp(file.path(system.file(package = "rCharts"), "shiny"))
     }
+  },
+  publish = function(description = "", public = TRUE){
+    gist = toJSON(list(description = description, public = public, 
+      files = list('index.html' = list(content = .self$render()))
+    ))
+    post_gist(gist)
   }
 ))
