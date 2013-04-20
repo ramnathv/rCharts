@@ -1,9 +1,3 @@
-# hPlot <- highchartPlot <- function(x, data, ...){
-#     rChart <- Highchart$new()
-#     #rChart$layer(x, data, ...)
-#     return(rChart$copy())
-# }
-
 Highchart <- setRefClass("Highchart", contains = "rCharts", methods = list(
     initialize = function() {
         lib <<- 'highcharts'
