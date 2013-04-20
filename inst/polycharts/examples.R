@@ -7,7 +7,7 @@ p1$show(T)
 ## Example 2 Facetted Barplot
 hair_eye = as.data.frame(HairEyeColor)
 p2 <- rPlot(Freq ~ Hair, color = 'Eye', data = hair_eye, type = 'bar')
-p2$facet(var = 'Eye', type = 'wrap')
+p2$facet(var = 'Eye', type = 'wrap', rows = 2)
 p2$show(T)
 
 ## Example 3 Boxplot
