@@ -52,8 +52,8 @@ Highchart <- setRefClass("Highchart", contains = "rCharts", methods = list(
     pane = function(..., replace = T){
         params$pane <<- setSpec(params$pane, ..., replace = replace)
     },
-    plotparamsions = function(..., replace = T){
-        params$plotparamsions <<- setSpec(params$plotparamsions, ..., replace = replace)
+    plotOptions = function(..., replace = T){
+        params$plotOptions <<- setSpec(params$plotOptions, ..., replace = replace)
     },
     series = function(..., replace = F) {
         params$series <<- if (replace) list(list(...))
