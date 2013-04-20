@@ -6,4 +6,4 @@
 inst/docs
 inst/apps/oecd
 inst/forcedirected
-getChartParams.R
+tests
