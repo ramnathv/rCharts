@@ -34,6 +34,7 @@ fixLayerMorris = function(params_){
     params_$group = NULL
   }
   params_ = rename(params_, c("x" = "xkey", "y" = "ykeys", "dom" = "element"))
+  params_$labels = params_$labels %||% params_$y
   params_$data = toJSONArray(params_$data, json = F)
   return(params_)
 }
