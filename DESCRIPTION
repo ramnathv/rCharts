@@ -9,6 +9,7 @@ Description: Create interactive visualizations with a plotting interface
     familiar to R users using the Polycharts javascript library
 Imports:
     plyr,
+    lattice,
     rjson,
     whisker,
     yaml
