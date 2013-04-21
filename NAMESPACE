@@ -1,6 +1,7 @@
-export(renderChart)
-export(showOutput)
+exportPattern("^[^\\.]")
+import(plyr)
+import(rjson)
+import(whisker)
+import(yaml)
 importFrom(lattice,latticeParseFormula)
-importFrom(RCurl,postForm)
-importFrom(rjson,fromJSON)
-importFrom(rjson,toJSON)
+
