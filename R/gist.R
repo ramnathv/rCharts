@@ -6,6 +6,7 @@
 #' @importFrom RCurl postForm
 #' @importFrom rjson fromJSON
 #' 
+#' @examples
 #' gist = create_gist(gfiles, description = 'description', public = T)
 post_gist <- function(gist){
   if (is.null(getOption('github.username'))){
@@ -30,7 +31,7 @@ post_gist <- function(gist){
 }
 
 
-#" Function that takes a list of files and creates payload for API
+#' Function that takes a list of files and creates payload for API
 #'
 #' @param filenames names of files to post
 #' @param description brief description of gist (optional)
