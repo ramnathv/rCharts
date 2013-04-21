@@ -10,6 +10,7 @@ Description: Create interactive visualizations with a plotting interface
 Imports:
     plyr,
     lattice,
+    RCurl,
     rjson,
     whisker,
     yaml
