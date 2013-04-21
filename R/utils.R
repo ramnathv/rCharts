@@ -1,7 +1,15 @@
 #' Create page head for a library
-get_assets <- function(lib, package = 'rCharts'){
- yaml.load_file(system.file(lib, 'config.yml', package = package))[[1]]
+get_assets <- function(lib, cdn = F, package = 'rCharts'){
+  config = yaml.load_file(system.file(lib, 'config.yml', package = package))[[1]]
+  if (cdn) {
+    config$cdn 
+  } else {
+    assets = config[names(config) != 'cdn']
+    LIB_URL = system.file(lib, package = 'rCharts')
+    lapply(assets, function(asset) paste(LIB_URL, asset, sep = '/'))
+  }
 }
+
 
 merge_list <- function (x, y, ...){
   if (length(x) == 0) 

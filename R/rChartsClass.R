@@ -20,14 +20,12 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character'), metho
     chartDiv = sprintf("<div id='%s' class='rChart nvd3Plot'></div>", chartId)
     writeLines(c(chartDiv, .self$html(chartId)))
   },
-  render = function(chartId = NULL, offline = TRUE){
+  render = function(chartId = NULL, cdn = F){
     if (!is.null(chartId)) params$dom <<- chartId else chartId <- params$dom
-    template = ifelse(offline, read_template('rChart.html'), 
-      read_template(lib, 'layouts', 'script.html'))
+    template = read_template('rChart.html')
     html = render_template(template, list(
       params = params,
-      assets = get_assets(lib),
-      LIB_URL = system.file(lib, package = 'rCharts'),
+      assets = get_assets(lib, cdn),
       chartId = chartId,
       script = .self$html(chartId))
     )
@@ -49,7 +47,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character'), metho
   },
   publish = function(description = "", ..., host = 'gist'){
     htmlFile = file.path(tempdir(), 'index.html'); on.exit(unlink(htmlFile))
-    .self$save(destfile = htmlFile, offline = F)
+    .self$save(destfile = htmlFile, cdn = T)
     class(htmlFile) = host
     publish_(htmlFile = htmlFile, description = description, ...)
   }
