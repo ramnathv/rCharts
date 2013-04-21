@@ -42,8 +42,10 @@ fixJSON = function(x){
 #' Main plotting function
 #' 
 #' @examples
+#' \dontrun{
 #' names(iris) = gsub('\\.', '', names(iris))
 #' rPlot(SepalLength ~ SepalWidth | Species, data = iris, type = 'point', color = 'Species')
+#' }
 #' 
 #' 
 rPlot <- function(x, ...){

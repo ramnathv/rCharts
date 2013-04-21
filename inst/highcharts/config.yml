@@ -1,0 +1,5 @@
+highcharts:
+  jshead:
+    - js/jquery-1.9.1.min.js
+    - js/highcharts.js
+    - js/highcharts-more.js
