@@ -1,0 +1,3 @@
+rickshaw:
+  css: css/rickshaw.min.css
+  jshead: [js/d3.v2.min.js, js/rickshaw.min.js]

@@ -1,0 +1,19 @@
+<!doctype HTML>
+<html>
+  <head>
+    {{# assets.css }}
+    <link rel='stylesheet' href='{{ LIB_URL }}/{{{ . }}}'>
+    {{/ assets.css }}
+    
+    {{# assets.jshead }}
+    <script src='{{ LIB_URL }}/{{{ . }}}' type='text/javascript'></script>
+    {{/ assets.jshead }}
+    
+  </head>
+  <body>
+  
+    <div id='{{chartId}}' class='rChart nvd3Plot'></div>  
+    {{{ script }}}
+    
+  </body>
+</html>

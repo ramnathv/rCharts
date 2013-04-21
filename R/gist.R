@@ -39,7 +39,7 @@ create_gist <- function(filenames, description = "", public = TRUE){
   files = lapply(filenames, function(file){
     x = list(content =  paste(readLines(file, warn = F), collapse = "\n"))
   })
-  names(files) = filenames
+  names(files) = basename(filenames)
   body = list(description = description, public = public, files = files)
   toJSON(body)
 }
