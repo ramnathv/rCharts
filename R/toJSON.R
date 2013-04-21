@@ -8,7 +8,9 @@
 #' @importFrom rjson toJSON
 #' @keywords internal
 #' @examples
+#' \dontrun{
 #' toJSONArray(head(iris))
+#' }
 toJSONArray <- function(obj, json = TRUE){
   list2keyval <- function(l){
     keys = names(l)
@@ -37,8 +39,10 @@ toJSONArray <- function(obj, json = TRUE){
 #' @keywords internal
 #' @importFrom rjson toJSON
 #' @examples
+#' \dontrun{
 #' toChain(list(showControls = TRUE, showDistX = TRUE), "chart")
 #' ## chart.showControls(true).showDistX(true)
+#' }
 toChain <- function(x, obj){
   config <- sapply(names(x), USE.NAMES = F, function(i){
     sprintf("  .%s(%s)", i, toJSON(x[[i]]))
