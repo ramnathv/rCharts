@@ -1,4 +1,4 @@
-Highchart <- setRefClass("Highchart", contains = "rCharts", methods = list(
+Highchart <- setRefClass("Highcharts", contains = "rCharts", methods = list(
     initialize = function() {
         lib <<- 'highcharts'
         options(RCHART_LIB = lib)
