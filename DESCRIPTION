@@ -1,7 +1,7 @@
 Package: rCharts
 Type: Package
 Title: Interactive Charts using Polycharts.js
-Version: 0.1.6
+Version: 0.1.7
 Date: 2013-04-09
 Author: Ramnath Vaidyanathan, Thomas Reinholdsson
 Maintainer: Ramnath Vaidyanathan <ramnath.vaidya@gmail.com>
