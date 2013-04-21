@@ -29,4 +29,4 @@ Collate:
     'utils.R'
     'gist.R'
     'publish.R'
-    'Highcharts.R'
+    'Highchart.R'
