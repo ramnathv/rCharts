@@ -15,6 +15,8 @@
   Publish a list of files as a gist
 }
 \examples{
+\dontrun{
 gist = create_gist(gfiles, description = 'description', public = T)
+}
 }
 

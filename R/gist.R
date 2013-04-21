@@ -7,7 +7,9 @@
 #' @importFrom rjson fromJSON
 #' 
 #' @examples
+#' \dontrun{
 #' gist = create_gist(gfiles, description = 'description', public = T)
+#' }
 post_gist <- function(gist){
   if (is.null(getOption('github.username'))){
     username <- readline("Please enter your github username: ")
