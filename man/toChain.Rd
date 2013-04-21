@@ -9,8 +9,10 @@
   acting on a specified object.
 }
 \examples{
+\dontrun{
 toChain(list(showControls = TRUE, showDistX = TRUE), "chart")
 ## chart.showControls(true).showDistX(true)
+}
 }
 \author{
   Ramnath Vaidyanathan

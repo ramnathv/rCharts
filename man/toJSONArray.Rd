@@ -11,7 +11,9 @@
   row of the data frame. This utility function does that.
 }
 \examples{
+\dontrun{
 toJSONArray(head(iris))
+}
 }
 \author{
   Ramnath Vaidyanathan

@@ -1,3 +1,8 @@
+#' Create page head for a library
+get_assets <- function(lib, package = 'rCharts'){
+ yaml.load_file(system.file(lib, 'config.yml', package = package))[[1]]
+}
+
 merge_list <- function (x, y, ...){
   if (length(x) == 0) 
     return(y)

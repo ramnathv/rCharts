@@ -16,15 +16,24 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character'), metho
     return(html)
   },
   printChart = function(chartId = NULL){
-    writeLines(.self$html(chartId))
-  },
-  render = function(chartId = NULL){
     if (!is.null(chartId)) params$dom <<- chartId else chartId <- params$dom
-    template = read_template(lib, 'layouts', 'script.html')
-    html = render_template(template, list(params = params, script = .self$html(chartId)))
+    chartDiv = sprintf("<div id='%s' class='rChart nvd3Plot'></div>", chartId)
+    writeLines(c(chartDiv, .self$html(chartId)))
   },
-  save = function(destfile = 'index.html'){
-    writeLines(.self$render(), destfile)
+  render = function(chartId = NULL, offline = TRUE){
+    if (!is.null(chartId)) params$dom <<- chartId else chartId <- params$dom
+    template = ifelse(offline, read_template('rChart.html'), 
+      read_template(lib, 'layouts', 'script.html'))
+    html = render_template(template, list(
+      params = params,
+      assets = get_assets(lib),
+      LIB_URL = system.file(lib, package = 'rCharts'),
+      chartId = chartId,
+      script = .self$html(chartId))
+    )
+  },
+  save = function(destfile = 'index.html', ...){
+    writeLines(.self$render(...), destfile)
   },
   show = function(static = !("shiny" %in% rownames(installed.packages()))){
     if (static){
@@ -38,10 +47,12 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character'), metho
       shiny::runApp(file.path(system.file(package = "rCharts"), "shiny"))
     }
   },
-  publish = function(description = "", public = TRUE){
-    gist = toJSON(list(description = description, public = public, 
-      files = list('index.html' = list(content = .self$render()))
-    ))
-    post_gist(gist)
+  publish = function(description = "", ..., host = 'gist'){
+    htmlFile = file.path(tempdir(), 'index.html'); on.exit(unlink(htmlFile))
+    .self$save(destfile = htmlFile, offline = F)
+    class(htmlFile) = host
+    publish_(htmlFile = htmlFile, description = description, ...)
   }
 ))
+
+

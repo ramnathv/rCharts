@@ -1,4 +1,6 @@
 export(renderChart)
 export(showOutput)
 importFrom(lattice,latticeParseFormula)
+importFrom(RCurl,postForm)
+importFrom(rjson,fromJSON)
 importFrom(rjson,toJSON)

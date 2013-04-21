@@ -1,7 +1,7 @@
 Package: rCharts
 Type: Package
 Title: Interactive Charts using Polycharts.js
-Version: 0.1.4
+Version: 0.1.6
 Date: 2013-04-09
 Author: Ramnath Vaidyanathan, Thomas Reinholdsson
 Maintainer: Ramnath Vaidyanathan <ramnath.vaidya@gmail.com>
@@ -10,6 +10,7 @@ Description: Create interactive visualizations with a plotting interface
 Imports:
     plyr,
     lattice,
+    RCurl,
     rjson,
     whisker,
     yaml
@@ -21,10 +22,11 @@ Collate:
     'NVD3.R'
     'Rickshaw.R'
     'xCharts.R'
-    'Highcharts.R'
     'toJSON.R'
     'getLayer.R'
     'renderChart.R'
     'showOutput.R'
     'utils.R'
     'gist.R'
+    'publish.R'
+    'Highcharts.R'
