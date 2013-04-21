@@ -1,3 +1,8 @@
 rickshaw:
   css: css/rickshaw.min.css
   jshead: [js/d3.v2.min.js, js/rickshaw.min.js]
+  cdn:
+    css: "https://raw.github.com/shutterstock/rickshaw/master/rickshaw.min.css"
+    jshead:
+      - "http://d3js.org/d3.v2.min.js"
+      - "https://raw.github.com/shutterstock/rickshaw/master/rickshaw.min.js"

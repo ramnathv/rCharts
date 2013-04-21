@@ -1,2 +1,4 @@
 polycharts:
   jshead: js/polychart2.standalone.js
+  cdn:
+    jshead: "https://raw.github.com/Polychart/polychart2/develop/polychart2.standalone.js"
