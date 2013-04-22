@@ -20,6 +20,9 @@ showOutput <- function(outputId, lib = NULL, package = 'rCharts') {
 #' @params package name where js library resides
 #' @keywords internal
 #' @noRd
+#  TODO: 
+#  1. Rename this function to better reflect its role.
+#  2. Use get_assets to return the css and script source files.
 getAssets <- function(lib, package){
   if (is.null(lib)) lib = getOption('RCHART_LIB')
   suppressMessages(singleton(addResourcePath(lib, system.file(lib, package=package))))
