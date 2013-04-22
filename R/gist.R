@@ -10,7 +10,7 @@
 #' \dontrun{
 #' gist = create_gist(gfiles, description = 'description', public = T)
 #' }
-post_gist <- function(gist){
+post_gist <- function(gist, viewer = getOption('GIST_VIEWER', 'http://pagist.github.io')){
   if (is.null(getOption('github.username'))){
     username <- readline("Please enter your github username: ")
     options(github.username = username)
@@ -29,7 +29,7 @@ post_gist <- function(gist){
   ) 
   html_url = fromJSON(response[1])$html_url
   message('Your gist has been published')
-  message('View chart at ', paste0('http://bl.ocks.org/', basename(html_url)))
+  message('View chart at ', paste(viewer, basename(html_url), sep = "/"))
 }
 
 
