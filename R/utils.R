@@ -1,3 +1,14 @@
+#' Creates an rChart, given a file with source code
+#'
+#' 
+create_chart <- function(rFile){
+  rCode = paste(readLines(rFile, warn = F), collapse = '\n')
+  chart = source(rFile, local = TRUE)$value
+  chart$field('srccode', rCode)
+  options(RCHART_TEMPLATE = 'rChart2.html')
+  return(chart)
+}
+
 #' Create page head for a library
 get_assets <- function(lib, cdn = F, package = 'rCharts'){
   config = yaml.load_file(system.file(lib, 'config.yml', package = package))[[1]]
@@ -67,7 +78,11 @@ read_file <- function(file){
 #' @keywords internal
 #' @noRd
 read_template <- function(..., package = 'rCharts'){
-  template = system.file(..., package = package)
+  if (is.null(package)){
+    template = file.path(...)
+  } else {
+    template = system.file(..., package = package)
+  }
   read_file(template)
 }
 
