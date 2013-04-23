@@ -1,11 +1,8 @@
 PolyChart = setRefClass('PolyChart', contains = 'rCharts', methods = list(
   initialize = function(){
-    lib <<- 'polycharts'
-    options(RCHART_LIB = lib)
-    params <<- list(dom = basename(tempfile('chart')),
-      width = getOption('RCHART_WIDTH', 700), 
-      height = getOption('RCHART_HEIGHT', 300),
-      layers = list(), facet = list(), guides = list(), coord = list())
+    callSuper(); lib <<- 'polycharts'; options(RCHART_LIB = lib)
+    params <<- c(params, list(layers = list(), facet = list(), guides = list(), 
+      coord = list()))
   },
   layer = function(..., copy_layer = F){
     len = length(params$layers)
@@ -52,19 +49,15 @@ rPlot <- function(x, ...){
   UseMethod('rPlot')
 }
 
-rPlot.default <- function(x, y, data, facet = NULL, ..., 
-    width = getOption('RCHART_WIDTH', 700), height = getOption('RCHART_HEIGHT', 300)){
+rPlot.default <- function(x, y, data, facet = NULL, ...){
   myChart <- PolyChart$new()
-  myChart$addParams(width = width, height = height)
   myChart$layer(x = x, y = y, data = data, facet = facet, ...)
   myChart$facet(from_layer = TRUE)
   return(myChart$copy())
 }
 
-rPlot.formula <- function(x, data, ..., 
-   width = getOption('RCHART_WIDTH', 700), height = getOption('RCHART_HEIGHT', 300)){
+rPlot.formula <- function(x, data, ...){
   myChart <- PolyChart$new()
-  myChart$addParams(width = width, height = height)
   myChart$layer(x, data, ...)
   myChart$facet(from_layer = TRUE)
   return(myChart$copy())

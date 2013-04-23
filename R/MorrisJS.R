@@ -1,8 +1,6 @@
 Morris = setRefClass('Morris', contains = 'rCharts', methods = list(
   initialize = function(){
-    lib <<- 'morris'
-    options(RCHART_LIB = lib)
-    params <<- list(dom = basename(tempfile('chart')), width = 400, height = 300)
+    callSuper(); lib <<- 'morris'; options(RCHART_LIB = lib)
   },
   layer = function(...){
     params <<- modifyList(params, getLayer(...))
@@ -21,8 +19,6 @@ mPlot <- morrisPlot <- function(x, data, ...){
   return(rChart$copy())
 }
 
-# dat = as.data.frame(HairEyeColor)
-# params_ = getLayer(Freq ~ Hair, data = dat, type = 'Bar')
 
 fixLayerMorris = function(params_){
   require(reshape2)

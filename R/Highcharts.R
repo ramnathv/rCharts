@@ -1,13 +1,7 @@
 Highcharts <- setRefClass("Highcharts", contains = "rCharts", methods = list(
     initialize = function() {
-        lib <<- 'highcharts'
-        options(RCHART_LIB = lib)
-        params <<- list(
-            dom = basename(tempfile('chart')),
-            
-            # Set defaults
-            credits = list(href = NULL, text = NULL)
-        )
+      callSuper(); lib <<- 'highcharts'; options(RCHART_LIB = lib)
+      params <<- c(params, list(credits = list(href = NULL, text = NULL)))
     },
     
     getPayload = function(chartId){
