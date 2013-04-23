@@ -14,7 +14,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', srccod
     params <<- modifyList(params, list(...))
   },
   getPayload = function(chartId){
-    list(chartParams = toJSON(params), chartId = chartId)
+    list(chartParams = toJSON(params), chartId = chartId, lib = lib)
   },
   html = function(chartId = NULL){
     if (!is.null(chartId)) params$dom <<- chartId else chartId <- params$dom
@@ -31,7 +31,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', srccod
   },
   print = function(chartId = NULL){
     if (!is.null(chartId)) params$dom <<- chartId else chartId <- params$dom
-    chartDiv = sprintf("<div id='%s' class='rChart nvd3Plot'></div>", chartId)
+    chartDiv = sprintf("<div id='%s' class='rChart nvd3Plot %s'></div>", chartId, .self$lib)
     writeLines(c(chartDiv, .self$html(chartId)))
   },
   render = function(chartId = NULL, cdn = F){
@@ -42,7 +42,8 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', srccod
       assets = get_assets(lib, cdn),
       chartId = chartId,
       script = .self$html(chartId),
-      CODE = srccode
+      CODE = srccode,
+      lib = lib
     ))
   },
   save = function(destfile = 'index.html', ...){
