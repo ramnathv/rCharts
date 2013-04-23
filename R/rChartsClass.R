@@ -1,4 +1,12 @@
-rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character'), methods = list(
+rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', srccode = 'ANY'), 
+    methods = list(
+  initialize = function(){
+    srccode <<- NULL;
+    params <<- list(dom = basename(tempfile('chart')),
+      width = getOption('RCHART_WIDTH', 800), 
+      height = getOption('RCHART_HEIGHT', 400)
+    )
+  },
   addParams = function(...){
     params <<- modifyList(params, list(...))
   },
@@ -22,21 +30,22 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character'), metho
   },
   render = function(chartId = NULL, cdn = F){
     if (!is.null(chartId)) params$dom <<- chartId else chartId <- params$dom
-    template = read_template('rChart.html')
+    template = read_template(getOption('RCHART_TEMPLATE', 'rChart.html'))
     html = render_template(template, list(
       params = params,
       assets = get_assets(lib, cdn),
       chartId = chartId,
-      script = .self$html(chartId))
-    )
+      script = .self$html(chartId),
+      CODE = srccode
+    ))
   },
   save = function(destfile = 'index.html', ...){
     writeLines(.self$render(...), destfile)
   },
-  show = function(static = !("shiny" %in% rownames(installed.packages()))){
+  show = function(static = T, ...){
     if (static){
       tf <- tempfile(fileext = 'html');
-      writeLines(.self$render(), tf)
+      writeLines(.self$render(...), tf)
       system(sprintf("open %s", tf))
     } else {
       shiny_copy = .self$copy()
