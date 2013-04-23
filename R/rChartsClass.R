@@ -23,7 +23,13 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', srccod
     html = render_template(template, getPayload(chartId))
     return(html)
   },
+  # TO DEPRECATE
   printChart = function(chartId = NULL){
+    if (!is.null(chartId)) params$dom <<- chartId else chartId <- params$dom
+    chartDiv = sprintf("<div id='%s' class='rChart nvd3Plot'></div>", chartId)
+    writeLines(c(chartDiv, .self$html(chartId)))
+  },
+  print = function(chartId = NULL){
     if (!is.null(chartId)) params$dom <<- chartId else chartId <- params$dom
     chartDiv = sprintf("<div id='%s' class='rChart nvd3Plot'></div>", chartId)
     writeLines(c(chartDiv, .self$html(chartId)))
@@ -44,7 +50,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', srccod
   },
   show = function(static = T, ...){
     if (static){
-      tf <- tempfile(fileext = 'html');
+      tf <- tempfile(fileext = '.html');
       writeLines(.self$render(...), tf)
       system(sprintf("open %s", tf))
     } else {
