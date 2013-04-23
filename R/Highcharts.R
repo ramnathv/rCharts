@@ -1,7 +1,11 @@
 Highcharts <- setRefClass("Highcharts", contains = "rCharts", methods = list(
     initialize = function() {
       callSuper(); lib <<- 'highcharts'; options(RCHART_LIB = lib)
-      params <<- c(params, list(credits = list(href = NULL, text = NULL)))
+      params <<- c(params, list(
+          credits = list(href = "", text = ""), 
+          title = list(text = NULL),
+          yAxis = list(title = list(text = NULL))
+          ))
     },
     
     getPayload = function(chartId){
@@ -92,3 +96,36 @@ Highcharts <- setRefClass("Highcharts", contains = "rCharts", methods = list(
         }
     }
 ))
+
+hPlot <- highchartPlot <- function(x, y = NULL, data, color = NULL, ...){
+    rChart <- Highcharts$new()
+
+    # Get layers
+    layers <- getLayer(x = x, y = y, data = data, ...)
+
+    # Remove NA
+    layers$data <- layers$data[!is.na(layers$data[[layers$x]]) & !is.na(layers$data[[layers$y]]), ]
+    
+    # Sort data by x and y
+    layers$data <- layers$data[order(layers$data[[layers$x]], layers$data[[layers$y]]), ]
+
+    # Get additional parameters
+    pars <- layers[!names(layers) %in% c("x", "y", "data", "facet")]
+
+    rChart$params$chart <- pars
+
+    if (!is.null(color)) {
+        plyr::ddply(layers$data, color, function(x) {
+            rChart$data(
+                x = x[[layers$x]],
+                y = x[[layers$y]],
+                name = unique(x[[color]]))
+            return(NULL)
+        })
+    } else {
+        rChart$data(x = layers$data[[layers$x]], y = layers$data[[layers$y]])
+        rChart$legend(enabled = FALSE)
+    }
+
+    return(rChart$copy())
+}
