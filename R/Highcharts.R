@@ -97,33 +97,39 @@ Highcharts <- setRefClass("Highcharts", contains = "rCharts", methods = list(
     }
 ))
 
-hPlot <- highchartPlot <- function(x, y = NULL, data, color = NULL, ...){
+hPlot <- highchartPlot <- function(...){
     rChart <- Highcharts$new()
 
     # Get layers
-    layers <- getLayer(x = x, y = y, data = data, ...)
+    d <- getLayer(...)
 
-    # Remove NA
-    layers$data <- layers$data[!is.na(layers$data[[layers$x]]) & !is.na(layers$data[[layers$y]]), ]
+    # Remove NA and sort data
+    d$data <- d$data[!is.na(d$data[[d$x]]) & !is.na(d$data[[d$y]]), ]
+    d$data <- d$data[order(d$data[[d$x]], d$data[[d$y]]), ]
+
+    if (!is.null(d$color)) {
+        d$data[[d$color]] <- as.character(d$data[[d$color]])
+        d$data[[d$color]][is.na(d$data[[d$color]])] <- "NA"
+        
+        # Convert to character because of NA-values
+        colors <- sort(as.character(unique(d$data[[d$color]])))
+        
+        # Repeat types to match length of colors
+        types <- rep(d$type, length(colors))
     
-    # Sort data by x and y
-    layers$data <- layers$data[order(layers$data[[layers$x]], layers$data[[layers$y]]), ]
-
-    # Get additional parameters
-    pars <- layers[!names(layers) %in% c("x", "y", "data", "facet")]
-
-    rChart$params$chart <- pars
-
-    if (!is.null(color)) {
-        plyr::ddply(layers$data, color, function(x) {
+        plyr::ddply(d$data, d$color, function(x) {
+            clr <- unique(x[[d$color]])
+            i <- which(colors == clr)
+            
             rChart$data(
-                x = x[[layers$x]],
-                y = x[[layers$y]],
-                name = unique(x[[color]]))
+                x = x[[d$x]],
+                y = x[[d$y]],
+                name = clr,
+                type = types[[i]])
             return(NULL)
         })
     } else {
-        rChart$data(x = layers$data[[layers$x]], y = layers$data[[layers$y]])
+        rChart$data(x = d$data[[d$x]], y = d$data[[d$y]], type = d$type[[1]])
         rChart$legend(enabled = FALSE)
     }
 
