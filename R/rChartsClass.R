@@ -1,7 +1,7 @@
-rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', srccode = 'ANY'), 
-    methods = list(
+rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', 
+    srccode = 'ANY', tObj = 'list'), methods = list(
   initialize = function(){
-    srccode <<- NULL;
+    srccode <<- NULL; tObj <<- list();
     params <<- list(dom = basename(tempfile('chart')),
       width = getOption('RCHART_WIDTH', 800), 
       height = getOption('RCHART_HEIGHT', 400)
@@ -43,7 +43,8 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', srccod
       chartId = chartId,
       script = .self$html(chartId),
       CODE = srccode,
-      lib = lib
+      lib = lib,
+      tObj = tObj
     ))
   },
   save = function(destfile = 'index.html', ...){
