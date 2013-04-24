@@ -44,8 +44,13 @@ toJSONArray <- function(obj, json = TRUE){
 #' ## chart.showControls(true).showDistX(true)
 #' }
 toChain <- function(x, obj){
-  config <- sapply(names(x), USE.NAMES = F, function(i){
-    sprintf("  .%s(%s)", i, fixJSON2(toJSON(x[[i]])))
+  config <- sapply(names(x), USE.NAMES = F, function(key){
+    value = x[[key]]
+    if(grepl('^#!', value)){
+      sprintf("  .%s(%s)", key, toObj(value))
+    } else {
+      sprintf("  .%s(%s)", key, toJSON(value))
+    }
   })
   if (length(config) != 0L){
     paste(c(obj, config), collapse = '\n')
@@ -54,7 +59,7 @@ toChain <- function(x, obj){
   }
 }
 
-fixJSON2 <- function(x){
-  x <- gsub('\\\\n', "", x)
-  gsub('\"#!(.*)!#\"', "\\1", x)
+
+toObj <- function(x){
+  gsub('#!(.*)!#', "\\1", x)
 }
