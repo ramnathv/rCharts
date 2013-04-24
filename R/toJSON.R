@@ -45,11 +45,16 @@ toJSONArray <- function(obj, json = TRUE){
 #' }
 toChain <- function(x, obj){
   config <- sapply(names(x), USE.NAMES = F, function(i){
-    sprintf("  .%s(%s)", i, toJSON(x[[i]]))
+    sprintf("  .%s(%s)", i, fixJSON2(toJSON(x[[i]])))
   })
   if (length(config) != 0L){
     paste(c(obj, config), collapse = '\n')
   } else {
     ""
   }
+}
+
+fixJSON2 <- function(x){
+  x <- gsub('\\\\n', "", x)
+  gsub('\"#!(.*)!#\"', "\\1", x)
 }
