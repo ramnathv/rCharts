@@ -10,7 +10,8 @@
 #' \dontrun{
 #' gist = create_gist(gfiles, description = 'description', public = T)
 #' }
-post_gist <- function(gist, viewer = getOption('GIST_VIEWER', 'http://pagist.github.io')){
+post_gist_oauth <- function(gist, 
+    viewer = getOption('GIST_VIEWER', 'http://pagist.github.io')){
   if (is.null(getOption('github.username'))){
     username <- readline("Please enter your github username: ")
     options(github.username = username)
@@ -61,4 +62,30 @@ get_token <- function(username, pwd){
     )
   )
   return(fromJSON(response[1])$token)
+}
+
+post_gist <- function(gist, viewer = getOption('GIST_VIEWER', 'http://pagist.github.io')){
+  if (is.null(getOption('github.username'))){
+    username <- readline("Please enter your github username: ")
+    options(github.username = username)
+  }
+  if (is.null(getOption('github.password'))){
+    password <- readline("Please enter your github password: ")
+    options(github.password = password)
+  }
+  response = POST(
+    url = 'https://api.github.com/gists',
+    body = gist,
+    config = c(
+      authenticate(
+        getOption('github.username'), 
+        getOption('github.password'), 
+        type = 'basic'
+      ),
+      add_headers("User-Agent" = "Dummy")
+    )
+  )
+  html_url = content(response)$html_url
+  message('Your gist has been published')
+  message('View chart at ', paste(viewer, basename(html_url), sep = "/"))
 }
