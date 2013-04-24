@@ -65,6 +65,7 @@ get_token <- function(username, pwd){
 }
 
 post_gist <- function(gist, viewer = getOption('GIST_VIEWER', 'http://pagist.github.io')){
+  require(httr)
   if (is.null(getOption('github.username'))){
     username <- readline("Please enter your github username: ")
     options(github.username = username)
