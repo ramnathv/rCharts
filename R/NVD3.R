@@ -11,7 +11,7 @@ NVD3 <- setRefClass('NVD3', contains = 'rCharts', methods = list(
       chart = list(), xAxis = list(), yAxis = list()
     ))
   },
-  chart = function(..., replace = T){
+  chart = function(..., replace = F){
     params$chart <<- setSpec(params$chart, ..., replace = replace)
   },
   xAxis = function(..., replace = F){
