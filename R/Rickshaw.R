@@ -1,7 +1,6 @@
 Rickshaw = setRefClass('Rickshaw', contains = 'rCharts', methods = list(
   initialize = function(){
-    lib <<- 'rickshaw'
-    options(RCHART_LIB = lib)
+    callSuper(); lib <<- 'rickshaw'; options(RCHART_LIB = lib)
     params <<- list(dom = basename(tempfile('chart')), width = 400, height = 300,
       opts = list(), xAxis = list(), yAxis = list())
   },
