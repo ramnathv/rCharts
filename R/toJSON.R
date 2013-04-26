@@ -24,7 +24,7 @@ toJSONArray <- function(obj, json = TRUE){
     return(l)
   }
   if (json){
-    rjson::toJSON(obj2list(obj))
+    toJSON(obj2list(obj))
   } else {
     obj2list(obj)
   }
@@ -37,7 +37,7 @@ toJSONArray <- function(obj, json = TRUE){
 #' @params name of object to apply the configuration to
 #' 
 #' @keywords internal
-#' @importFrom rjson toJSON
+#' @importFrom RJSONIO toJSON
 #' @examples
 #' \dontrun{
 #' toChain(list(showControls = TRUE, showDistX = TRUE), "chart")
@@ -45,12 +45,8 @@ toJSONArray <- function(obj, json = TRUE){
 #' }
 toChain <- function(x, obj){
   config <- sapply(names(x), USE.NAMES = F, function(key){
-    value = x[[key]]
-    if(grepl('^#!', value)){
-      sprintf("  .%s(%s)", key, toObj(value))
-    } else {
-      sprintf("  .%s(%s)", key, toJSON(value))
-    }
+    value = toObj(toJSON(x[[key]], container = F, .escapeEscapes = F))
+    sprintf("  .%s(%s)", key, value)
   })
   if (length(config) != 0L){
     paste(c(obj, config), collapse = '\n')
@@ -59,7 +55,30 @@ toChain <- function(x, obj){
   }
 }
 
-
 toObj <- function(x){
-  gsub('#!(.*)!#', "\\1", x)
+  gsub('\"#!(.*)!#\"', "\\1", x)
 }
+
+toJSON2 <- function(x){
+  toObj(toJSON(x, .escapeEscapes = F))
+}
+
+# toObj <- function(x){
+#   gsub('#!(.*)!#', "\\1", x)
+# }
+
+# toChain <- function(x, obj){
+#   config <- sapply(names(x), USE.NAMES = F, function(key){
+#     value = x[[key]]
+#     if(any(grepl('^#!', value))){
+#       sprintf("  .%s(%s)", key, toObj(value))
+#     } else {
+#       sprintf("  .%s(%s)", key, toJSON(value))
+#     }
+#   })
+#   if (length(config) != 0L){
+#     paste(c(obj, config), collapse = '\n')
+#   } else {
+#     ""
+#   }
+# }

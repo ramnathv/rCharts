@@ -7,8 +7,8 @@ Morris = setRefClass('Morris', contains = 'rCharts', methods = list(
   },
   getPayload = function(chartId){
     params_ = fixLayerMorris(params)
-    chartParams = toJSON(params_[names(params_) != 'type'])
-    chartType = toJSON(params_$type)
+    chartParams = toJSON2(params_[names(params_) != 'type'])
+    chartType = toJSON2(params_$type)
     list(chartParams = chartParams, chartType = chartType)
   }
 ))
