@@ -20,6 +20,9 @@ data(economics, package = 'ggplot2')
 dat = transform(economics, date = as.character(date))
 p3 <- mPlot(x = "date", y = list("psavert", "uempmed"), data = dat, type = 'Line',
  pointSize = 0, lineWidth = 1)
+p3$set(xLabelFormat = "#! function (x) { 
+  return x.toString(); } 
+!#")
 p3
 
 
