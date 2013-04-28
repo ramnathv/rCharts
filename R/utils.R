@@ -3,7 +3,7 @@ get_lib <- function(lib){
     lib_url <- normalizePath(lib)
     lib <- basename(lib_url)
   } else {
-    lib_url <- system.file(lib, package = 'rCharts')
+    lib_url <- system.file('libraries', lib, package = 'rCharts')
   }
   return(list(name = basename(lib), url = lib_url))
 }
