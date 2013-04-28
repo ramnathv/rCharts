@@ -1,7 +1,7 @@
 rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', LIB = 'list',
-    srccode = 'ANY', tObj = 'list'), methods = list(
+    srccode = 'ANY', tObj = 'list', container = 'character'), methods = list(
   initialize = function(){
-    srccode <<- NULL; tObj <<- list(); LIB <<- list()
+    srccode <<- NULL; tObj <<- list(); LIB <<- list(); container <<- 'div'
     params <<- list(dom = basename(tempfile('chart')),
       width = getOption('RCHART_WIDTH', 800), 
       height = getOption('RCHART_HEIGHT', 400)
@@ -34,7 +34,8 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', LIB = 
   },
   print = function(chartId = NULL){
     if (!is.null(chartId)) params$dom <<- chartId else chartId <- params$dom
-    chartDiv = sprintf("<div id='%s' class='rChart nvd3Plot %s'></div>", chartId, LIB$name)
+    chartDiv = sprintf("<%s id='%s' class='rChart nvd3Plot %s'></%s>", 
+      container, chartId, LIB$name, container)
     writeLines(c(chartDiv, .self$html(chartId)))
   },
   render = function(chartId = NULL, cdn = F){
@@ -47,7 +48,8 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', LIB = 
       script = .self$html(chartId),
       CODE = srccode,
       lib = LIB$name,
-      tObj = tObj
+      tObj = tObj,
+      container = container
     ))
   },
   save = function(destfile = 'index.html', ...){
