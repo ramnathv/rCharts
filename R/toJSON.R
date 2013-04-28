@@ -5,7 +5,6 @@
 #' each row of the data frame. This utility function does that.
 #' 
 #' @author Ramnath Vaidyanathan
-#' @importFrom rjson toJSON
 #' @keywords internal
 #' @examples
 #' \dontrun{
@@ -30,6 +29,16 @@ toJSONArray <- function(obj, json = TRUE){
   }
 }
 
+toJSONArray2 <- function(obj, json = TRUE, ...){
+  value = apply(obj, 1, as.list)
+  if (json){
+    return(toJSON(value, .withNames = F, ...))
+  } else {
+    names(value) <- NULL;
+    return(value)
+  }
+}
+
 #' Converts an R list to a sequence of chained functions acting on a specified object.
 #' 
 #' @author Ramnath Vaidyanathan
@@ -45,8 +54,7 @@ toJSONArray <- function(obj, json = TRUE){
 #' }
 toChain <- function(x, obj){
   config <- sapply(names(x), USE.NAMES = F, function(key){
-    value = toObj(toJSON(x[[key]], container = F, .escapeEscapes = F))
-    sprintf("  .%s(%s)", key, value)
+    sprintf("  .%s(%s)", key, toJSON2(x[[key]]))
   })
   if (length(config) != 0L){
     paste(c(obj, config), collapse = '\n')
@@ -60,7 +68,8 @@ toObj <- function(x){
 }
 
 toJSON2 <- function(x){
-  toObj(toJSON(x, .escapeEscapes = F))
+  container_ = is.list(x) || (length(x) > 1)
+  toObj(toJSON(x, .escapeEscapes = F, container = container_))
 }
 
 # toObj <- function(x){
