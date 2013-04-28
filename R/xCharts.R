@@ -1,11 +1,7 @@
 xCharts = setRefClass('xCharts', contains = 'rCharts', methods = list(
   initialize = function(){
-    lib <<- 'xCharts'
-    options(RCHART_LIB = lib)
-    params <<- list(dom = basename(tempfile('chart')),
-      width = getOption('RCHART_WIDTH', 900), 
-      height = getOption('RCHART_HEIGHT', 400)
-    )
+    callSuper(); lib <<- 'xCharts'; LIB <<- get_lib(lib)
+    container <<- 'figure'
   },
   layer = function(...){
     params_ = toXSeries(getLayer(...), series = 'main')
@@ -31,10 +27,28 @@ xCharts = setRefClass('xCharts', contains = 'rCharts', methods = list(
 
 toXSeries = function(params_, series = 'main'){
   x_ = params_$x; y_ = params_$y; group = params_$group; data_ = params_$data;
+  params_$xScale = ifelse(is.numeric(params_$data[[x_]]), 'linear', 'ordinal')
+  params_$yScale = ifelse(is.numeric(params_$data[[y_]]), 'linear', 'ordinal')
   data2 = dlply(data_, group)
   params_[series] = list(llply(seq_along(data2), function(i){list(
     data = fixData(data2[[i]][,c(x_, y_)]))
   }))
   params_$x <- params_$y <- params_$group <- params_$data <- NULL
   return(params_)
+}
+
+xPlot <- function(x, ...){
+  UseMethod('xPlot')
+}
+
+xPlot.default <- function(x, y, dataL, ...){
+  myChart <- xCharts$new()
+  myChart$layer(x = x, y = y, data = data, ...)
+  return(myChart$copy())
+}
+
+xPlot.formula <- function(x, data, ...){
+  myChart <- xCharts$new()
+  myChart$layer(x, data, ...)
+  return(myChart$copy())
 }
