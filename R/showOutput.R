@@ -7,36 +7,28 @@
 #' @params lib name of js library used
 #' @params package name where js library resides
 #' @export
-showOutput <- function(outputId, lib = NULL, package = 'rCharts') {
-  div(class="rChart NVD3", 
-    tagList(getAssets(lib, package)),
-    htmlOutput(outputId)
+showOutput <- function(outputId, lib = NULL, package = 'rCharts'){
+  if (!is.null(lib)){
+    LIB <- get_lib(lib)
+  } else if (exists(".rChart_object")) {
+    LIB <- .rChart_object$LIB
+  }
+  suppressMessages(singleton(addResourcePath(LIB$name, LIB$url)))
+  div(
+    id = outputId, 
+    class=paste('shiny-html-output', basename(LIB$name)),
+    tagList(get_assets_shiny(LIB))
   )
 }
 
-#' Get javascript and css assets to add to html output
-#'
-#' @params lib name of js library used
-#' @params package name where js library resides
-#' @keywords internal
-#' @noRd
-#  TODO: 
-#  1. Rename this function to better reflect its role.
-#  2. Use get_assets to return the css and script source files.
-getAssets <- function(lib, package){
-  if (is.null(lib)) lib = getOption('RCHART_LIB')
-  suppressMessages(singleton(addResourcePath(lib, system.file(lib, package=package))))
-  cfg_file = system.file(lib, 'config.yml', package = package)
-  scripts = paste(lib, yaml.load_file(cfg_file)[[1]]$jshead, sep = "/")
-  scripts = lapply(scripts, function(script){
+
+get_assets_shiny <- function(LIB){
+  assets <- get_assets(LIB, static = F)
+  scripts <- lapply(assets$jshead, function(script){
     singleton(tags$head(tags$script(src = script, type = 'text/javascript')))
   })
-  styles = yaml.load_file(cfg_file)[[1]]$css
-  if (!is.null(styles)){
-    styles = paste(lib, yaml.load_file(cfg_file)[[1]]$css, sep = "/")
-    styles = lapply(styles, function(style){
-      singleton(tags$head(tags$link(href = style, rel="stylesheet")))
-    })
-  }
+  styles <- lapply(assets$css, function(style){
+    singleton(tags$head(tags$link(href = style, rel="stylesheet")))
+  })
   return(c(styles, scripts))
 }
