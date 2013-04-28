@@ -2,6 +2,8 @@
 names(iris) = gsub("\\.", "", names(iris))
 p1 <- rPlot(SepalLength ~ SepalWidth | Species, data = iris, color = 'Species', type = 'point')
 p1
+p1$show(cdn = T)
+# p1$show(static = F)
 
 
 ## Example 2 Facetted Barplot
