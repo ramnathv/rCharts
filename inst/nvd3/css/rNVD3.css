@@ -1,6 +1,7 @@
-.rChart {
-    display: block
-    margin: auto auto;
+.nvd3 {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     width: 800px;
     height: 400px;
     /* background: #eee; */
