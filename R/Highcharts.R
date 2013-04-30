@@ -1,6 +1,6 @@
 Highcharts <- setRefClass("Highcharts", contains = "rCharts", methods = list(
     initialize = function() {
-      callSuper(); lib <<- 'highcharts'; options(RCHART_LIB = lib)
+      callSuper(); lib <<- 'highcharts'; LIB <<- get_lib(lib)
       params <<- c(params, list(credits = list(href = NULL, text = NULL)))
     },
     
