@@ -59,7 +59,8 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', LIB = 
     if (static){
       tf <- tempfile(fileext = '.html');
       writeLines(.self$render(...), tf)
-      system(sprintf("open %s", tf))
+      browseURL(tf)
+      # system(sprintf("open %s", tf))
     } else {
       shiny_copy = .self$copy()
       shiny_copy$params$dom = 'show'
