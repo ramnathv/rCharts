@@ -64,3 +64,7 @@ a
 
 ## Example 7
 hPlot(x = "Wr.Hnd", y = "NW.Hnd", data = MASS::survey, type = c("line", "bubble", "scatter"), color = "Clap", size = "Age")
+
+## Example 8
+x <- data.frame(key = c("a", "b", "c"), value = c(1, 2, 3))
+hPlot(x = "key", y = "value", data = x, type = "pie")
