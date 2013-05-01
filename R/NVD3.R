@@ -7,11 +7,12 @@ nPlot <- nvd3Plot <- function(x, data, ...){
 NVD3 <- setRefClass('NVD3', contains = 'rCharts', methods = list(
   initialize = function(){
     callSuper(); lib <<- 'nvd3'; options(RCHART_LIB = lib)
+    LIB <<- get_lib(lib)
     params <<- c(params, list(
       chart = list(), xAxis = list(), yAxis = list()
     ))
   },
-  chart = function(..., replace = T){
+  chart = function(..., replace = F){
     params$chart <<- setSpec(params$chart, ..., replace = replace)
   },
   xAxis = function(..., replace = F){

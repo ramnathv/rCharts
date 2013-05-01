@@ -1,14 +1,14 @@
 Morris = setRefClass('Morris', contains = 'rCharts', methods = list(
   initialize = function(){
-    callSuper(); lib <<- 'morris'; options(RCHART_LIB = lib)
+    callSuper(); lib <<- 'morris'; LIB <<- get_lib(lib)
   },
   layer = function(...){
     params <<- modifyList(params, getLayer(...))
   },
   getPayload = function(chartId){
     params_ = fixLayerMorris(params)
-    chartParams = toJSON(params_[names(params_) != 'type'])
-    chartType = toJSON(params_$type)
+    chartParams = toJSON2(params_[names(params_) != 'type'])
+    chartType = toJSON2(params_$type)
     list(chartParams = chartParams, chartType = chartType)
   }
 ))

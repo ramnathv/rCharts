@@ -1,0 +1,9 @@
+<script type="text/javascript">
+// parse a spec and create a visualization view
+function parse(spec) {
+  vg.parse.spec(spec, function(chart) { 
+    chart({el:"#{{{ chartId }}}"}).update(); 
+  }); 
+}
+parse({{{ chartParams }}});
+</script>

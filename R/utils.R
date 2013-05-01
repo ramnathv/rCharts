@@ -1,3 +1,28 @@
+get_lib <- function(lib){
+  if (file.exists(lib)){
+    lib_url <- normalizePath(lib)
+    lib <- basename(lib_url)
+  } else {
+    lib_url <- system.file('libraries', lib, package = 'rCharts')
+  }
+  return(list(name = basename(lib), url = lib_url))
+}
+
+get_assets <- function(LIB, static = T, cdn = F){
+  config = yaml.load_file(file.path(LIB$url, 'config.yml'))[[1]]
+  if (cdn) {
+    config$cdn 
+  } else {
+    assets = config[names(config) != 'cdn']
+    prefix = ifelse(static, LIB$url, LIB$name)
+    lapply(assets, function(asset) paste(prefix, asset, sep = '/'))
+  }
+}
+
+`%||%` <- function(x, y){
+  if (is.null(x)) y else x
+}
+
 #' Creates an rChart, given a file with source code
 #'
 #' 
@@ -7,18 +32,6 @@ create_chart <- function(rFile){
   chart$field('srccode', rCode)
   options(RCHART_TEMPLATE = 'rChart2.html')
   return(chart)
-}
-
-#' Create page head for a library
-get_assets <- function(lib, cdn = F, package = 'rCharts'){
-  config = yaml.load_file(system.file(lib, 'config.yml', package = package))[[1]]
-  if (cdn) {
-    config$cdn 
-  } else {
-    assets = config[names(config) != 'cdn']
-    LIB_URL = system.file(lib, package = 'rCharts')
-    lapply(assets, function(asset) paste(LIB_URL, asset, sep = '/'))
-  }
 }
 
 

@@ -28,8 +28,23 @@
   <body>
     <div class='container'>
       <div class='row'>
+        {{# tObj }}
+        <div class='span3'>
+          <div class='well'>
+            <ul class='nav nav-list'>
+            {{# menu }}
+              <li class='{{{ class }}}'>
+                <a href='{{{ href}}}'>
+                  {{{ title }}}
+                </a>
+              </li>
+            {{/ menu }}
+            </ul>
+          </div>
+        </div>
+        {{/ tObj }}
         <div class='span9'>
-          <div id='{{chartId}}' class='rChart nvd3Plot'></div>
+          <div id='{{chartId}}' class='rChart nvd3Plot {{ lib}}'></div>
 {{# CODE }}
 <pre><code class='r'>{{CODE}}
 </code></pre>

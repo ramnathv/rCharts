@@ -5,7 +5,6 @@
 #' each row of the data frame. This utility function does that.
 #' 
 #' @author Ramnath Vaidyanathan
-#' @importFrom rjson toJSON
 #' @keywords internal
 #' @examples
 #' \dontrun{
@@ -24,9 +23,19 @@ toJSONArray <- function(obj, json = TRUE){
     return(l)
   }
   if (json){
-    rjson::toJSON(obj2list(obj))
+    toJSON(obj2list(obj))
   } else {
     obj2list(obj)
+  }
+}
+
+toJSONArray2 <- function(obj, json = TRUE, ...){
+  value = apply(obj, 1, as.list)
+  if (json){
+    return(toJSON(value, .withNames = F, ...))
+  } else {
+    names(value) <- NULL;
+    return(value)
   }
 }
 
@@ -37,15 +46,15 @@ toJSONArray <- function(obj, json = TRUE){
 #' @params name of object to apply the configuration to
 #' 
 #' @keywords internal
-#' @importFrom rjson toJSON
+#' @importFrom RJSONIO toJSON
 #' @examples
 #' \dontrun{
 #' toChain(list(showControls = TRUE, showDistX = TRUE), "chart")
 #' ## chart.showControls(true).showDistX(true)
 #' }
 toChain <- function(x, obj){
-  config <- sapply(names(x), USE.NAMES = F, function(i){
-    sprintf("  .%s(%s)", i, toJSON(x[[i]]))
+  config <- sapply(names(x), USE.NAMES = F, function(key){
+    sprintf("  .%s(%s)", key, toJSON2(x[[key]]))
   })
   if (length(config) != 0L){
     paste(c(obj, config), collapse = '\n')
@@ -53,3 +62,32 @@ toChain <- function(x, obj){
     ""
   }
 }
+
+toObj <- function(x){
+  gsub('\"#!(.*)!#\"', "\\1", x)
+}
+
+toJSON2 <- function(x){
+  container_ = is.list(x) || (length(x) > 1)
+  toObj(toJSON(x, .escapeEscapes = F, container = container_))
+}
+
+# toObj <- function(x){
+#   gsub('#!(.*)!#', "\\1", x)
+# }
+
+# toChain <- function(x, obj){
+#   config <- sapply(names(x), USE.NAMES = F, function(key){
+#     value = x[[key]]
+#     if(any(grepl('^#!', value))){
+#       sprintf("  .%s(%s)", key, toObj(value))
+#     } else {
+#       sprintf("  .%s(%s)", key, toJSON(value))
+#     }
+#   })
+#   if (length(config) != 0L){
+#     paste(c(obj, config), collapse = '\n')
+#   } else {
+#     ""
+#   }
+# }

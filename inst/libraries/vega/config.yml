@@ -1,0 +1,6 @@
+vega:
+  jshead: [d3.v3.min.js, vega.js]
+  cdn:
+    jshead: 
+     - http://trifacta.github.com/vega/d3.v3.min.js
+     - http://trifacta.github.com/vega/vega.js

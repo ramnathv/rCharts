@@ -1,6 +1,7 @@
 PolyChart = setRefClass('PolyChart', contains = 'rCharts', methods = list(
   initialize = function(){
     callSuper(); lib <<- 'polycharts'; options(RCHART_LIB = lib)
+    LIB <<- get_lib(lib)
     params <<- c(params, list(layers = list(), facet = list(), guides = list(), 
       coord = list()))
   },

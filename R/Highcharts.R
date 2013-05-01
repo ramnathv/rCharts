@@ -1,11 +1,11 @@
 Highcharts <- setRefClass("Highcharts", contains = "rCharts", methods = list(
     initialize = function() {
-      callSuper(); lib <<- 'highcharts'; options(RCHART_LIB = lib)
+      callSuper(); lib <<- 'highcharts'; LIB <<- get_lib(lib)
       params <<- c(params, list(
-          credits = list(href = "", text = ""), 
-          title = list(text = NULL),
-          yAxis = list(title = list(text = NULL))
-          ))
+        credits = list(href = NULL, text = NULL), 
+        title = list(text = NULL),
+        yAxis = list(title = list(text = NULL))
+      ))
     },
     
     getPayload = function(chartId){
@@ -143,3 +143,5 @@ hPlot <- highchartPlot <- function(..., size = 3, title = NULL, subtitle = NULL)
 
     return(rChart$copy())
 }
+
+# hPlot(Height ~ Pulse, data = MASS::survey, type = c("scatter", "line"), color = "Sex", size = 4, title = "Title", subtitle = "Subtitle")

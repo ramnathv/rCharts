@@ -1,0 +1,4 @@
+polycharts:
+  jshead: js/polychart2.standalone.js
+  cdn:
+    jshead: "http://polychart.com/s/third_party/polychart2.standalone.js"
