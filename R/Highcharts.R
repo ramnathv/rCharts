@@ -97,7 +97,16 @@ Highcharts <- setRefClass("Highcharts", contains = "rCharts", methods = list(
     }
 ))
 
-hPlot <- highchartPlot <- function(..., size = 3, title = NULL, subtitle = NULL){
+#' Highcharts Plot
+#' 
+#' ...
+#' 
+#' @param ... see getLayer(...)
+#' @param radius circle size
+#' @param title chart title
+#' @param subtitle chart subttitle
+
+hPlot <- highchartPlot <- function(..., radius = 3, title = NULL, subtitle = NULL){
     rChart <- Highcharts$new()
 
     # Get layers
@@ -122,16 +131,17 @@ hPlot <- highchartPlot <- function(..., size = 3, title = NULL, subtitle = NULL)
             clr <- unique(x[[d$color]])
             i <- which(colors == clr)
             
+            # TODO: Different data structure depending on type
             rChart$data(
                 x = x[[d$x]],
                 y = x[[d$y]],
                 name = clr,
                 type = types[[i]],
-                marker = list(radius = size))
+                marker = list(radius = radius))
             return(NULL)
         })
     } else {
-        rChart$data(x = d$data[[d$x]], y = d$data[[d$y]], type = d$type[[1]], marker = list(radius = size))
+        rChart$data(x = d$data[[d$x]], y = d$data[[d$y]], type = d$type[[1]], marker = list(radius = radius))
         rChart$legend(enabled = FALSE)
     }
 
