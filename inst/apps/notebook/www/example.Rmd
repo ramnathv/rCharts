@@ -1,0 +1,94 @@
+## R Notebook and rCharts
+
+This is a live coding demo on how to embed d3js style interactive charts in an R Markdown notebook using rCharts. If you want to follow along, you will need to install `rCharts` from `github` using the `devtools` package.
+
+
+```{r eval = F}
+require(devtools)
+install_github('rCharts', 'ramnathv')
+```
+
+If you are familiar with R notebooks and just want to play with the notebook, you just need to 
+
+
+
+---
+
+### Setup
+
+Before we get started charting, we need to do a couple of things to set up this Rmd notebook.
+
+First, we will add some YAML front matter to instruct Slidify how to process this Rmd notebook,
+
+Second, we will customize settings for rCharts and knitr.
+
+```{r setup, cache = F, message = F}
+require(rCharts)
+options(RCHART_WIDTH = 600, RCHART_HEIGHT = 400)
+knitr::opts_chunk$set(comment = NA, results = 'asis', tidy = F, message = F)
+```
+
+<style>.rChart {width: 600px; height: 400px;}</style>
+
+Let us slidify our document now to test if we have set up things correctly. If you are using RStudio, you just need to load slidify into your workspace and clicking the Knit HTML button.
+
+Perfect, it seems to be working! Now, time to get charting.
+
+---
+
+## Polycharts
+
+We will create our first chart using Polychart, a javascript charting library, based on the grammar of graphics, and inspired by ggplot2. To use Polycharts in an Rmd notebook, we will need to load it as a widget in the YAML front matter.
+
+```{r}
+p1 <- rPlot(mpg ~ wt | am + vs, color = 'gear', data = mtcars, type = 'point')
+p1$print('chart')
+```
+
+---
+
+## Morris
+
+The next library I will demonstrate is Morris. As usual, we first need to load morris as a widget for slidify.
+
+```{r}
+data(economics, package = 'ggplot2')
+econ <- transform(economics, date = as.character(date))
+m1 <- mPlot(x = 'date', y = c('psavert', 'uempmed'), data = econ, type = 'Line')
+m1$set(pointSize = 0, lineWidth = 1)
+m1$print('chart2')
+```
+
+---
+
+## NVD3
+
+This is one of my all time favorite d3.js libraries as it provides for amazing interactivity with little customization required.
+
+```{r}
+hair_eye_male <- subset(as.data.frame(HairEyeColor), Sex == 'Male')
+n1 <- nPlot(Freq ~ Hair, group = 'Eye', data = hair_eye_male, type = 'multiBarChart')
+n1$print('chart3')
+```
+
+---
+
+## xCharts
+
+Finally, xCharts is a slick looking charting library based on d3.js made by TenXer
+
+```{r}
+uspexp = reshape2::melt(USPersonalExpenditure)
+names(uspexp)[1:2] = c('category', 'year')
+x1 <- xPlot(value ~ year, group = 'category', data = uspexp, type = 'line-dotted')
+x1$print('chart4')  
+```
+
+---
+
+## Note
+
+I would like to thank @yihui and @rstudio for their efforts in bringing Rmd notebooks to the R community. This demo was constructed using a modified version of the shiny app in knitr.
+
+
+

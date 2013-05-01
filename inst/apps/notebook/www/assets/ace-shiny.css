@@ -1,0 +1,36 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700);
+
+body {
+  font-family: "Open Sans", "Helvetica";
+  text-align: justify;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Open Sans Condensed", "Helvetica";
+}
+
+#proxy {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: none;
+}
+
+#notebook {
+  position: absolute;
+  width: 400px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+
+#nbOut {
+  position: absolute;
+  left: 750px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  padding-right: 30px;
+  overflow-y: scroll;
+}

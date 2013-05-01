@@ -6,3 +6,4 @@
 inst/docs
 inst/apps/oecd
 tests
+.cache

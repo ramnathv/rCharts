@@ -1,7 +1,7 @@
 Package: rCharts
 Type: Package
 Title: Interactive Charts using Polycharts.js
-Version: 0.2.32
+Version: 0.2.35
 Date: 2013-04-09
 Author: Ramnath Vaidyanathan, Thomas Reinholdsson
 Maintainer: Ramnath Vaidyanathan <ramnath.vaidya@gmail.com>
@@ -11,7 +11,7 @@ Imports:
     plyr,
     lattice,
     RCurl,
-    rjson,
+    RJSONIO,
     whisker,
     yaml
 License: MIT
@@ -30,4 +30,5 @@ Collate:
     'gist.R'
     'publish.R'
     'Highcharts.R'
+    'Vega.R'
     
