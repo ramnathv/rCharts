@@ -97,7 +97,7 @@ Highcharts <- setRefClass("Highcharts", contains = "rCharts", methods = list(
     }
 ))
 
-hPlot <- highchartPlot <- function(...){
+hPlot <- highchartPlot <- function(..., size = 3, title = NULL, subtitle = NULL){
     rChart <- Highcharts$new()
 
     # Get layers
@@ -116,6 +116,7 @@ hPlot <- highchartPlot <- function(...){
         
         # Repeat types to match length of colors
         types <- rep(d$type, length(colors))
+        #sizes <- rep(d$size, length(colors))
     
         plyr::ddply(d$data, d$color, function(x) {
             clr <- unique(x[[d$color]])
@@ -125,13 +126,20 @@ hPlot <- highchartPlot <- function(...){
                 x = x[[d$x]],
                 y = x[[d$y]],
                 name = clr,
-                type = types[[i]])
+                type = types[[i]],
+                marker = list(radius = size))
             return(NULL)
         })
     } else {
-        rChart$data(x = d$data[[d$x]], y = d$data[[d$y]], type = d$type[[1]])
+        rChart$data(x = d$data[[d$x]], y = d$data[[d$y]], type = d$type[[1]], marker = list(radius = size))
         rChart$legend(enabled = FALSE)
     }
+
+    # Set arguments
+    rChart$xAxis(title = list(text= d$x), replace = T)
+    rChart$yAxis(title = list(text= d$y), replace = T)
+    rChart$title(text = title, replace = T)
+    rChart$subtitle(text = title, replace = T)
 
     return(rChart$copy())
 }
