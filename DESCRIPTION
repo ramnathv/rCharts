@@ -11,7 +11,7 @@ Imports:
     plyr,
     lattice,
     RCurl,
-    rjson,
+    RJSONIO,
     whisker,
     yaml
 License: MIT
@@ -30,4 +30,5 @@ Collate:
     'gist.R'
     'publish.R'
     'Highcharts.R'
+    'Vega.R'
     
