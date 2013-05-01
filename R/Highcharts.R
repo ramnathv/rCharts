@@ -73,30 +73,28 @@ Highcharts <- setRefClass("Highcharts", contains = "rCharts", methods = list(
     yAxis = function(..., replace = F) {
         params$yAxis <<- if (replace) list(list(...))
         else c(params$yAxis, list(list(...)))
+    },
+    
+    # Custom add data method
+    data = function(x = NULL, y = NULL, ...) {
+        if (is.data.frame(x)) {
+            for (i in colnames(x)) {
+                if (is.numeric(x[[i]])) {
+                    series(name = i, data = x[[i]], ...)
+                } else {
+                    warning (sprintf("Column '%s' wasn't added since it's not a numeric", i))
+                }
+            }
+        } else {
+            if (is.null(y) || !is.numeric(y)) {
+                series(data = x, ...)
+            } else {
+                if (length(x) != length(y)) stop ("Arguments x and y must be of the same length")
+                xy <- lapply(1:length(x), function(i) list(x[i], y[i]))
+                series(data = xy, ...)
+            }
+        }
     }
-    
-    #,
-    
-    #' Custom add data method
-#     data = function(x = NULL, y = NULL, ...) {
-#         if (is.data.frame(x)) {
-#             for (i in colnames(x)) {
-#                 if (is.numeric(x[[i]])) {
-#                     series(name = i, data = x[[i]], ...)
-#                 } else {
-#                     warning (sprintf("Column '%s' wasn't added since it's not a numeric", i))
-#                 }
-#             }
-#         } else {
-#             if (is.null(y) || !is.numeric(y)) {
-#                 series(data = x, ...)
-#             } else {
-#                 if (length(x) != length(y)) stop ("Arguments x and y must be of the same length")
-#                 xy <- lapply(1:length(x), function(i) list(x[i], y[i]))
-#                 series(data = xy, ...)
-#             }
-#         }
-#     }
 ))
 
 #' Highcharts Plot
@@ -164,11 +162,3 @@ hPlot <- highchartPlot <- function(..., radius = 3, title = NULL, subtitle = NUL
 
     return(rChart$copy())
 }
-
-# hPlot(Height ~ Pulse, data = MASS::survey, type = c("scatter", "line"), color = "Sex", size = 4)
-
-# hPlot(x = "Pulse", y = "Height", data = MASS::survey, type = "bubble", color = "Sex", title = "Demo", subtitle = "bubble chart", size = "Age")
-
-# a <- hPlot(x = "Height", y = "Pulse", data = MASS::survey, type = "bubble", title = "Demo (zoom)", subtitle = "bubble chart", size = "Age", color = "Exer")
-# a$chart(zoomType = "xy")
-# a
