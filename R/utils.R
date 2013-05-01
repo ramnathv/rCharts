@@ -1,6 +1,6 @@
 open_notebook <- function(){
  require(shiny)
- app <- system.file('notebook', package = 'rCharts')
+ app <- system.file('apps', 'notebook', package = 'rCharts')
  runApp(app)
 }
 
