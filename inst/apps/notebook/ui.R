@@ -39,6 +39,6 @@ shinyUI(
     tagList(lapply(libs, get_rCharts_assets)),
     # add_rCharts(c('nvd3', 'polycharts')),
     htmlOutput('nbOut'),
-    div(id = 'proxy', submitButton('Knit Notebook'))
+    div(id = 'proxy', submitButton('Knit HTML'))
   )
 )
