@@ -1,5 +1,5 @@
 require(rCharts)
-option(RCHART_WIDTH = 800, RCHART_HEIGHT = 400)
+options(RCHART_WIDTH = 800, RCHART_HEIGHT = 400)
 
 ### {title: Bar Chart}
 p1 <- xCharts$new()
