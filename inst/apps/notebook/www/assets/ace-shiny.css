@@ -12,9 +12,12 @@ h1, h2, h3, h4, h5, h6 {
 
 #proxy {
   position: absolute;
-  top: 0;
-  right: 0;
-  display: none;
+  top: 10px;
+  right: -20px;
+  transform: rotate(45deg);
+  -ms-transform: rotate(45deg); /* IE 9 */
+  -webkit-transform: rotate(45deg); /* Safari and Chrome */
+  /* display: none; */
 }
 
 #notebook {

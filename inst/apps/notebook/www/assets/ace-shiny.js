@@ -1,6 +1,6 @@
 var editor = ace.edit("notebook");
 editor.setTheme("ace/theme/solarized_light");
-editor.getSession().setMode('ace/mode/r');
+editor.getSession().setMode('ace/mode/markdown');
 editor.getSession().setUseWrapMode(true);
 editor.getSession().setTabSize(2);
 editor.getSession().setFoldStyle('markbegin');
