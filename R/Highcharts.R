@@ -116,19 +116,19 @@ hPlot <- highchartPlot <- function(..., radius = 3, title = NULL, subtitle = NUL
     d$data <- d$data[!is.na(d$data[[d$x]]) & !is.na(d$data[[d$y]]), ]
     d$data <- d$data[order(d$data[[d$x]], d$data[[d$y]]), ]
 
-    if (!is.null(d$color)) {
-        d$data[[d$color]] <- as.character(d$data[[d$color]])
-        d$data[[d$color]][is.na(d$data[[d$color]])] <- "NA"
+    if (!is.null(d$group)) {
+        d$data[[d$group]] <- as.character(d$data[[d$group]])
+        d$data[[d$group]][is.na(d$data[[d$group]])] <- "NA"
         
         # Convert to character because of NA-values
-        colors <- sort(as.character(unique(d$data[[d$color]])))
+        groups <- sort(as.character(unique(d$data[[d$group]])))
         
-        # Repeat types to match length of colors
-        types <- rep(d$type, length(colors))
+        # Repeat types to match length of groups
+        types <- rep(d$type, length(groups))
 
-        plyr::ddply(d$data, d$color, function(x) {
-            clr <- unique(x[[d$color]])
-            i <- which(colors == clr)
+        plyr::ddply(d$data, d$group, function(x) {
+            g <- unique(x[[d$group]])
+            i <- which(groups == g)
             
             # Requirements depending on chart type
             if (types[[i]] %in% c("bubble")) {
@@ -137,7 +137,7 @@ hPlot <- highchartPlot <- function(..., radius = 3, title = NULL, subtitle = NUL
             
             rChart$series(
                 data = toJSONArray2(x[c(d$x, d$y, d$size)], json = F, names = F),
-                name = clr,
+                name = g,
                 type = types[[i]],
                 marker = list(radius = radius)
             )

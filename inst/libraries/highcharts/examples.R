@@ -54,16 +54,16 @@ a$data(x)
 a
 
 ## Example 5
-hPlot(x = "Height", y = "Pulse", data = MASS::survey, type = "scatter", color = "Exer")
+hPlot(x = "Height", y = "Pulse", data = MASS::survey, type = "scatter", group = "Exer")
 
 ## Example 6
 
-a <- hPlot(x = "Height", y = "Pulse", data = MASS::survey, type = "bubble", title = "Zoom demo", subtitle = "bubble chart", size = "Age", color = "Exer")
+a <- hPlot(x = "Height", y = "Pulse", data = MASS::survey, type = "bubble", title = "Zoom demo", subtitle = "bubble chart", size = "Age", group = "Exer")
 a$chart(zoomType = "xy")
 a
 
 ## Example 7
-hPlot(x = "Wr.Hnd", y = "NW.Hnd", data = MASS::survey, type = c("line", "bubble", "scatter"), color = "Clap", size = "Age")
+hPlot(x = "Wr.Hnd", y = "NW.Hnd", data = MASS::survey, type = c("line", "bubble", "scatter"), group = "Clap", size = "Age")
 
 ## Example 8
 x <- data.frame(key = c("a", "b", "c"), value = c(1, 2, 3))
