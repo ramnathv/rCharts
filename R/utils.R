@@ -1,7 +1,24 @@
-open_notebook <- function(){
- require(shiny)
- app <- system.file('apps', 'notebook', package = 'rCharts')
- runApp(app)
+open_notebook <- function(rmdFile = NULL){
+  if (!is.null(rmdFile)) {
+    options(NOTEBOOK_TO_OPEN = normalizePath(rmdFile))
+    on.exit(options(NOTEBOOK_TO_OPEN = NULL))
+  }
+  app <- system.file('apps', 'notebook', package = 'rCharts')
+  shiny::runApp(app)
+}
+
+add_rCharts <- function(libs){
+  LIBS <- lapply(libs, get_lib)
+  invisible(lapply(LIBS, function(LIB){
+    suppressMessages(singleton(addResourcePath(LIB$name, LIB$url)))
+  }))
+  return(NULL)
+}
+
+get_rCharts_assets <- function(lib){
+  LIB <- get_lib(lib)
+  assets = get_assets_shiny(LIB)
+  assets[!grepl('jquery', assets)]
 }
 
 get_lib <- function(lib){
@@ -23,6 +40,18 @@ get_assets <- function(LIB, static = T, cdn = F){
     prefix = ifelse(static, LIB$url, LIB$name)
     lapply(assets, function(asset) paste(prefix, asset, sep = '/'))
   }
+}
+
+#' Add library assets (useful in knitr documents)
+add_lib_assets <- function(lib, cdn = F){
+  assets = get_assets(get_lib(lib), cdn = cdn)
+  styles <- lapply(assets$css, function(style){
+    sprintf("<link rel='stylesheet' href=%s>", style)
+  })
+  scripts <- lapply(assets$jshead, function(script){
+    sprintf("<script type='text/javascript' src=%s></script>", script)
+  })
+  paste(c(styles, scripts), collapse = '\n')
 }
 
 #' Set a default value for an object
