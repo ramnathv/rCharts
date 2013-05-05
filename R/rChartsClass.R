@@ -32,11 +32,12 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', LIB = 
     chartDiv = sprintf("<div id='%s' class='rChart nvd3Plot'></div>", chartId)
     writeLines(c(chartDiv, .self$html(chartId)))
   },
-  print = function(chartId = NULL){
+  print = function(chartId = NULL, include_assets = F, ...){
     if (!is.null(chartId)) params$dom <<- chartId else chartId <- params$dom
-    chartDiv = sprintf("<%s id='%s' class='rChart nvd3Plot %s'></%s>", 
+    assetHTML <- ifelse(include_assets, add_lib_assets(lib, ...), "")
+    chartDiv = sprintf("<%s id='%s' class='rChart %s'></%s>", 
       container, chartId, LIB$name, container)
-    writeLines(c(chartDiv, .self$html(chartId)))
+    writeLines(c(assetHTML, chartDiv, .self$html(chartId)))
   },
   render = function(chartId = NULL, cdn = F){
     if (!is.null(chartId)) params$dom <<- chartId else chartId <- params$dom
