@@ -26,12 +26,6 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', LIB = 
     html = render_template(template, getPayload(chartId))
     return(html)
   },
-  # TO DEPRECATE
-  printChart = function(chartId = NULL){
-    if (!is.null(chartId)) params$dom <<- chartId else chartId <- params$dom
-    chartDiv = sprintf("<div id='%s' class='rChart nvd3Plot'></div>", chartId)
-    writeLines(c(chartDiv, .self$html(chartId)))
-  },
   print = function(chartId = NULL, include_assets = F, ...){
     if (!is.null(chartId)) params$dom <<- chartId else chartId <- params$dom
     assetHTML <- ifelse(include_assets, add_lib_assets(lib, ...), "")
