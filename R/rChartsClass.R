@@ -1,10 +1,14 @@
 rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', LIB = 'list',
     srccode = 'ANY', tObj = 'list', container = 'character'), methods = list(
   initialize = function(){
-    srccode <<- NULL; tObj <<- list(); LIB <<- list(); container <<- 'div'
-    params <<- list(dom = basename(tempfile('chart')),
-      width = getOption('RCHART_WIDTH', 800), 
-      height = getOption('RCHART_HEIGHT', 400)
+    srccode <<- NULL     # source code to create the chart
+    tObj <<- list()      # 
+    LIB <<- list()       # library name and url to library folder
+    container <<- 'div'  # type of container holding the chart
+    params <<- list(
+      dom = basename(tempfile('chart')),       # id of dom element of chart
+      width = getOption('RCHART_WIDTH', 800),  # width of the container
+      height = getOption('RCHART_HEIGHT', 400) # height of the container
     )
   },
   addParams = function(...){
