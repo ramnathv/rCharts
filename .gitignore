@@ -5,5 +5,11 @@
 *.Rproj
 inst/docs
 inst/apps/oecd
+inst/apps/n*
+inst/apps/strikeouts
+inst/x512paths
+inst/gh-pages
+inst/livecoding
+inst/d3timeline
 tests
 .cache
