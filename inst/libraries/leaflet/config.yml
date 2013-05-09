@@ -1,6 +1,6 @@
 leaflet:
   css: external/leaflet.css
-  jshead: external/leaflet.js
+  jshead: [external/leaflet.js, external/leaflet.geocsv.js]
   cdn:
     css: http://leafletjs.com/dist/leaflet.css
     jshead: 
