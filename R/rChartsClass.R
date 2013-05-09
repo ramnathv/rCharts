@@ -11,6 +11,8 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', LIB = 
     params <<- modifyList(params, list(...))
   },
   set = function(...){
+    # this is a hack, currently for external libraries
+    # idea is to initialize LIB, since the set method will always be used.
     if (length(LIB) == 0){
       LIB <<- get_lib(lib)
     }
@@ -52,10 +54,8 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', LIB = 
   },
   show = function(static = T, ...){
     if (static){
-      tf <- tempfile(fileext = '.html');
-      writeLines(.self$render(...), tf)
+      writeLines(.self$render(...), tf <- tempfile(fileext = '.html'))
       browseURL(tf)
-      # system(sprintf("open %s", tf))
     } else {
       shiny_copy = .self$copy()
       shiny_copy$params$dom = 'show'
