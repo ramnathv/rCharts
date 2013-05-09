@@ -1,0 +1,8 @@
+leaflet:
+  css: external/leaflet.css
+  jshead: external/leaflet.js
+  cdn:
+    css: http://leafletjs.com/dist/leaflet.css
+    jshead: 
+      - http://leafletjs.com/dist/leaflet.js
+      - https://rawgithub.com/joker-x/Leaflet.geoCSV/gh-pages/leaflet.geocsv-src.js

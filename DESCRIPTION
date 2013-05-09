@@ -31,4 +31,5 @@ Collate:
     'publish.R'
     'Highcharts.R'
     'Vega.R'
+    'Leaflet.R'
     
