@@ -6,6 +6,10 @@
   
   graph{{{ chartId }}}.render();
   
+  var x_axis = new Rickshaw.Graph.Axis.Time( { 
+    graph: graph{{{ chartId }}} 
+  } );
+  
   {{# yAxis }}
   var yAxis = new Rickshaw.Graph.Axis.Y( {
     graph: graph{{{ chartId }}},
@@ -15,7 +19,17 @@
   });
   {{/ yAxis }}
   
-  var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+  var hoverDetail{{{ chartId }}} = new Rickshaw.Graph.HoverDetail( {
     graph: graph{{{ chartId }}}
+  });
+  
+  var legend{{{ chartId }}} = new Rickshaw.Graph.Legend( {
+    graph: graph{{{ chartId }}},
+    element: document.getElementById('legend{{{ chartId }}}')
+  });
+
+  var shelving{{{ chartId }}} = new Rickshaw.Graph.Behavior.Series.Toggle({
+    graph: graph{{{ chartId }}},
+    legend: legend{{{ chartId }}}
   });
 </script> 
