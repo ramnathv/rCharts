@@ -6,11 +6,15 @@ Leaflet = setRefClass('Leaflet', contains = 'rCharts', methods = list(
     params$center <<- list(lat, long)
     params$viewOpts <<- list(zoom, ...)
   },
-  tileLayer = function(urlTemplate, ...){
-    params$urlTemplate <<- urlTemplate
-    params$layerOpts <<- list(..., 
-      attribution =  'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a>contributors, Imagery © <a href="http://mapbox.com">MapBox</a>'
-    )
+  tileLayer = function(urlTemplate, provider = NULL, ...){
+    if (!is.null(provider)){
+      params$provider <<- provider
+    } else {
+      params$urlTemplate <<- urlTemplate
+      params$layerOpts <<- list(..., 
+        attribution =  'Map data<a href="http://openstreetmap.org">OpenStreetMap</a>contributors, Imagery<a href="http://mapbox.com">MapBox</a>'
+      )
+    }
   },
   marker = function(lat, long, ...){
     marker = list(
@@ -24,8 +28,15 @@ Leaflet = setRefClass('Leaflet', contains = 'rCharts', methods = list(
       params$marker <<- marker
     }
   },
-  circle = function(lat, long, radius, ...){
-    
+  circle = function(circleData){
+    require(plyr)
+    dat = alply(circleData, 1, function(c){
+      list(
+        center = list(c$lat, c$lng), 
+        radius = c$radius, 
+        options = c[!(names(c) %in% c('lat', 'lng', 'radius'))])
+    })
+    params$circle <<- setNames(dat, nm = NULL)
   },
   geocsv = function(data){
     paste2 = function(...) {paste(..., sep = ';')}
