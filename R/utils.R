@@ -156,6 +156,32 @@ render_template <- function(..., data = parent.frame(1)){
   paste(capture.output(cat(whisker.render(...))), collapse = "\n")
 }
 
+#' Convert list to markdown
+#'
+#' Function to convert a list to a character string containing markdown syntax
+#'
+#' @param lst readme list
+#' @param str initial character string (used recursively)
+#' @param h initial header level
+#' 
+#' @export
+#'
+toMarkdown <- function(lst, str = "", h = 1) {
+    if (length(lst) != 0) {
+        lst_names <- names(lst)
+        for (i in 1:length(lst_names)) {
+            if (lst_names[[i]] != "") {
+                str <- sprintf("%s%s %s\n\n", str, paste(rep("#", h), collapse = ""), lst_names[[i]])
+            }
+            str <- if (is.list(lst[[i]])) {
+                toMarkdown(lst[[i]], str, h + 1)
+            } else {
+                sprintf("%s%s\n\n", str, lst[[i]])
+            }
+        }
+    }
+    return(str)
+}
 
 # tpl <- '{{# items }} {{{.}}}\n {{/ items}}'
 # items <- letters[1:5]
