@@ -3,12 +3,24 @@
   var map = L.map(spec.dom)
     .setView(spec.center, spec.viewOpts);
 
-		L.tileLayer(spec.urlTemplate, spec.layerOpts)
-     .addTo(map);
+    if (spec.provider){
+      L.tileLayer.provider(spec.provider).addTo(map)    
+    } else {
+		  L.tileLayer(spec.urlTemplate, spec.layerOpts).addTo(map)
+    }
      
     {{{ marker }}}
     
-    if (spec.geocsv.data.length > 0){
+    /*
+    if (spec.circle){
+      for (var c in spec.circle){
+        var circle = L.circle(c.center, c.radius, c.opts)
+         .addTo(map);
+      }
+    }
+    */
+
+    if (spec.geocsv.data){
       var geo_csv = L.geoCsv(null, {
         titles: spec.geocsv.titles,
         fieldSeparator: ';',
