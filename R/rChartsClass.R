@@ -67,19 +67,25 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', LIB = 
       shiny::runApp(file.path(system.file(package = "rCharts"), "shiny"))
     }
   },
-  publish = function(description = "", ..., host = 'gist'){
-    htmlFile = file.path(tempdir(), 'index.html'); on.exit(unlink(htmlFile))
-    .self$save(destfile = htmlFile, cdn = T)
-    if (!is.null(.self$srccode)){
-      codeFile = file.path(tempdir(), 'code.R'); on.exit(unlink(htmlFile))
-      writeLines(.self$srccode, con = codeFile)
-      files = c(htmlFile, codeFile)
-    } else {
-      files = htmlFile
-    }
-    class(files) = host
-    publish_(files = files, description = description, ...)
+  publish = function(description = "", ..., host = 'gist', readme = NULL){
+      htmlFile = file.path(tempdir(), 'index.html'); on.exit(unlink(htmlFile))
+      .self$save(destfile = htmlFile, cdn = T)
+      
+      # Add source code
+      if (!is.null(.self$srccode)){
+          codeFile = file.path(tempdir(), 'code.R'); on.exit(unlink(codeFile))
+          writeLines(.self$srccode, con = codeFile)
+      } else codeFile = NULL
+      
+      # Add readme
+      if (!is.null(readme)){
+          readmeFile = file.path(tempdir(), 'README.md'); on.exit(unlink(readmeFile))
+          writeLines(toMarkdown(readme), con = readmeFile)
+      }
+      
+      files = c(readmeFile, htmlFile, codeFile)
+      
+      class(files) = host
+      publish_(files = files, description = description, ...)
   }
 ))
-
-
