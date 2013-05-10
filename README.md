@@ -1,8 +1,8 @@
-## rCharts
+# rCharts
 
-This R package provides a familiar plotting interface for R users to create interactive visualizations using [polychart.js](https://github.com/Polychart/polychart2).
+rCharts is an R package to create, customize and publish interactive javascript visualizations from R using a familiar lattice style plotting interface.
 
-### Installation
+## Installation
 
 You can install `rCharts` from `github` using the `devtools` package
 
@@ -11,7 +11,11 @@ require(devtools)
 install_github('rCharts', 'ramnathv')
 ```
 
-### Usage
+## Features
+
+The design philosophy behind rCharts is to make the process of creating, customizing and sharing interactive visualizations easy. 
+
+### Create
 
 `rCharts` uses a formula interface to specify plots, just like the `lattice` package. Here are a few examples you can try out in your R console.
 
@@ -25,13 +29,40 @@ hair_eye = as.data.frame(HairEyeColor)
 rPlot(Freq ~ Hair | Eye, color = 'Eye', data = hair_eye, type = 'bar')
 ```
 
-`rCharts` is also compatible with [Slidify](http://slidify.org).
+### Customize
 
-More documentation is underway.
+rCharts supports multiple javascript charting libraries, each with its own strengths. Each of these libraries has multiple customization options, most of which are supported within rCharts. Here is a list of libraries currently supported.
 
-### Using with Shiny
+1. [Polychart](https://github.com/Polychart/polychart2).
+2. [NVD3](https://github.com/novus/nvd3)
+3. [MorrisJS](https://github.com/oesmith/morris.js)
+4. [Rickshaw](https://github.com/shutterstock/rickshaw)
+5. [HighCharts](http://www.highcharts.com/)
+6. [xCharts](https://github.com/tenXer/xcharts/)
+7. [Leaflet](http://leafletjs.com/)
 
-rCharts is compatible with Shiny. You can see the [rCharts Shiny App](http://glimmer.rstudio.com/ramnathv/rChartApp/).
+More documentation is underway on how to use rCharts with each of these libraries.
+
+### Share
+
+rCharts allows you to share your visualization in multiple ways, as a standalone page, embedded in a shiny application, or in a tutorial/blog post.
+
+#### Standalone
+
+You can publish your visualization as a standalone html page using the `publish` method. Here is an example. Currently, you can publish your chart as a `gist` or to `rpubs`.
+
+```
+## 
+names(iris) = gsub("\\.", "", names(iris))
+r1 <- rPlot(SepalLength ~ SepalWidth | Species, data = iris, 
+  color = 'Species', type = 'point')
+r1$publish('Scatterplot', host = 'gist')
+r1$publish('Scatterplot', host = 'rpubs')
+```
+
+#### Shiny Application
+
+rCharts is easy to embed into a Shiny application using the utility functions `renderChart` and `showOutput`. Here is an example of an [rCharts Shiny App](http://glimmer.rstudio.com/ramnathv/rChartApp/).
 
 ```
 ## server.r
@@ -62,10 +93,17 @@ shinyUI(pageWithSidebar(
       selected = "SepalWidth")
   ),
   mainPanel(
-    showOutput("myChart")
+    showOutput("myChart", "polycharts")
   )
 ))
 ```
+
+#### Blog Post
+
+rCharts can also be embedded into an Rmd document using `knit2html` or in a blog post using `slidify`. Here are a few examples of tutorials written using `rCharts` and `slidify`.
+
+1. [Parallel Coordinate Plots](http://ramnathv.github.io/rChartsParCoords/)
+2. [NY Times Graphics Tutorial](http://ramnathv.github.io/rChartsNYT/)
 
 ### Credits
 
@@ -81,6 +119,5 @@ There has been a lot of interest recently in creating packages that allow R user
 
 - [gg2v](https://github.com/hadley/gg2v) by [Hadley Wickham](https://github.com/hadley)
 - [clickme](https://github.com/nachocab/clickme) by [Nacho Caballero](https://github.com/nachocab)
-- [rHighcharts](https://github.com/metagraf/rHighcharts) by [Thomas Reinholdsson](https://github.com/reinholdsson)
-- [rHighcharts](https://github.com/metagraf/rVega) by [Thomas Reinholdsson](https://github.com/reinholdsson)
-- [rNVD3](https://github.com/ramnathv/rNVD3) by [Ramnath Vaidyanathan](https://github.com/ramnathv)
+- [rVega](https://github.com/metagraf/rVega) by [Thomas Reinholdsson](https://github.com/reinholdsson)
+
