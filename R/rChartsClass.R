@@ -26,27 +26,27 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', LIB = 
     list(chartParams = toJSON(params), chartId = chartId, lib = basename(lib))
   },
   html = function(chartId = NULL){
-    if (!is.null(chartId)) params$dom <<- chartId else chartId <- params$dom
+    params$dom <<- chartId %||% params$dom
     params$id <<- params$dom
     template = read_file(file.path(LIB$url, 'layouts', 'chart.html'))
-    html = render_template(template, getPayload(chartId))
+    html = render_template(template, getPayload(params$dom))
     return(html)
   },
   print = function(chartId = NULL, include_assets = F, ...){
-    if (!is.null(chartId)) params$dom <<- chartId else chartId <- params$dom
+    params$dom <<- chartId %||% params$dom
     assetHTML <- ifelse(include_assets, add_lib_assets(lib, ...), "")
     chartDiv = sprintf("<%s id='%s' class='rChart %s'></%s>", 
-      container, chartId, LIB$name, container)
-    writeLines(c(assetHTML, chartDiv, .self$html(chartId)))
+      container, params$dom, LIB$name, container)
+    writeLines(c(assetHTML, chartDiv, .self$html(params$dom)))
   },
   render = function(chartId = NULL, cdn = F){
-    if (!is.null(chartId)) params$dom <<- chartId else chartId <- params$dom
+    params$dom <<- chartId %||% params$dom
     template = read_template(getOption('RCHART_TEMPLATE', 'rChart.html'))
     html = render_template(template, list(
       params = params,
       assets = get_assets(LIB, static = T, cdn = cdn),
-      chartId = chartId,
-      script = .self$html(chartId),
+      chartId = params$dom,
+      script = .self$html(params$dom),
       CODE = srccode,
       lib = LIB$name,
       tObj = tObj,
@@ -54,6 +54,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', LIB = 
     ))
   },
   save = function(destfile = 'index.html', ...){
+    'Save chart as a standalone html page'
     writeLines(.self$render(...), destfile)
   },
   show = function(static = T, ...){
