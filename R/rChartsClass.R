@@ -71,7 +71,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', LIB = 
     htmlFile = file.path(tempdir(), 'index.html'); on.exit(unlink(htmlFile))
     .self$save(destfile = htmlFile, cdn = T)
     if (!is.null(.self$srccode)){
-      codeFile = file.path(tempdir(), 'code.R'); on.exit(unlink(htmlFile))
+      codeFile = file.path(tempdir(), 'code.R'); on.exit(unlink(codeFile))
       writeLines(.self$srccode, con = codeFile)
       files = c(htmlFile, codeFile)
     } else {
