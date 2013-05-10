@@ -105,6 +105,8 @@ rCharts can also be embedded into an Rmd document using `knit2html` or in a blog
 1. [Parallel Coordinate Plots](http://ramnathv.github.io/rChartsParCoords/)
 2. [NY Times Graphics Tutorial](http://ramnathv.github.io/rChartsNYT/)
 
+## More
+
 ### Credits
 
 Most of the implementation in `rCharts` is inspired by [rHighcharts](https://github.com/metagraf/rHighcharts) and [rVega](https://github.com/metagraf/rVega). I have reused some code from these packages verbatim, and would like to acknowledge the efforts of its author [Thomas Reinholdsson](https://github.com/reinholdsson).
