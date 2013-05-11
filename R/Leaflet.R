@@ -17,15 +17,15 @@ Leaflet = setRefClass('Leaflet', contains = 'rCharts', methods = list(
     }
   },
   marker = function(lat, long, ...){
-    marker = list(
+    m = list(
       marker = list(lat, long),
       addTo = '#! map !#',
       ...
     )
     if (length(params$marker) > 0){
-      params$marker <<- list(params$marker, marker)
+      params$marker <<- c(params$marker, list(m))
     } else {
-      params$marker <<- marker
+      params$marker <<- list(m)
     }
   },
   circle = function(circleData){
