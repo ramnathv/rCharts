@@ -7,7 +7,7 @@
 #' @params lib name of js library used
 #' @params package name where js library resides
 #' @export
-showOutput <- function(outputId, lib = NULL, package = 'rCharts'){
+chartOutput <- showOutput <- function(outputId, lib = NULL, package = 'rCharts'){
   if (!is.null(lib)){
     LIB <- get_lib(lib)
   } else if (exists(".rChart_object")) {
