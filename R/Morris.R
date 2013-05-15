@@ -1,7 +1,4 @@
 Morris = setRefClass('Morris', contains = 'rCharts', methods = list(
-  initialize = function(){
-    callSuper(); lib <<- 'morris'; LIB <<- get_lib(lib)
-  },
   layer = function(...){
     params <<- modifyList(params, getLayer(...))
   },

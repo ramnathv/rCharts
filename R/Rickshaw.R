@@ -1,8 +1,7 @@
 Rickshaw = setRefClass('Rickshaw', contains = 'rCharts', methods = list(
   initialize = function(){
-    callSuper(); lib <<- 'rickshaw'; LIB <<- get_lib(lib);
-    params <<- list(dom = basename(tempfile('chart')), width = 400, height = 300,
-      opts = list(), xAxis = list(), yAxis = list())
+    callSuper();
+    params <<- c(params, list(opts = list(), xAxis = list(), yAxis = list()))
   },
   layer = function(...){
     params_ = toSeries(getLayer(...))

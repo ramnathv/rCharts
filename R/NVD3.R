@@ -1,13 +1,12 @@
 nPlot <- nvd3Plot <- function(x, data, ...){
-  myChart <- NVD3$new()
+  myChart <- Nvd3$new()
   myChart$getChartParams(x, data, ...)
   return(myChart$copy())
 }
 
-NVD3 <- setRefClass('NVD3', contains = 'rCharts', methods = list(
+Nvd3 <- setRefClass('Nvd3', contains = 'rCharts', methods = list(
   initialize = function(){
-    callSuper(); lib <<- 'nvd3'; options(RCHART_LIB = lib)
-    LIB <<- get_lib(lib)
+    callSuper(); 
     params <<- c(params, list(
       chart = list(), xAxis = list(), yAxis = list()
     ))

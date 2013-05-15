@@ -1,6 +1,6 @@
 xCharts = setRefClass('xCharts', contains = 'rCharts', methods = list(
   initialize = function(){
-    callSuper(); lib <<- 'xCharts'; LIB <<- get_lib(lib)
+    callSuper()
     container <<- 'figure'
   },
   layer = function(...){

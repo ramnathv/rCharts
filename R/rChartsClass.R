@@ -3,7 +3,8 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', LIB = 
   initialize = function(){
     srccode <<- NULL     # source code to create the chart
     tObj <<- list()      # 
-    LIB <<- list()       # library name and url to library folder
+    lib <<- tolower(as.character(class(.self)))
+    LIB <<- get_lib(lib) # library name and url to library folder
     container <<- 'div'  # type of container holding the chart
     params <<- list(
       dom = basename(tempfile('chart')),       # id of dom element of chart

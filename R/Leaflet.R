@@ -1,7 +1,4 @@
 Leaflet = setRefClass('Leaflet', contains = 'rCharts', methods = list(
-  initialize = function(){
-    callSuper(); lib <<- 'leaflet'; LIB <<- get_lib(lib);
-  },
   setView = function(lat, long, zoom = 4, ...){
     params$center <<- list(lat, long)
     params$viewOpts <<- list(zoom, ...)

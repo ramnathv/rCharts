@@ -1,7 +1,6 @@
-PolyCharts = setRefClass('PolyCharts', contains = 'rCharts', methods = list(
+Polycharts = setRefClass('Polycharts', contains = 'rCharts', methods = list(
   initialize = function(){
-    callSuper(); lib <<- 'polycharts'; options(RCHART_LIB = lib)
-    LIB <<- get_lib(lib)
+    callSuper(); 
     params <<- c(params, list(layers = list(), facet = list(), guides = list(), 
       coord = list()))
   },
@@ -51,14 +50,14 @@ rPlot <- function(x, ...){
 }
 
 rPlot.default <- function(x, y, data, facet = NULL, ...){
-  myChart <- PolyCharts$new()
+  myChart <- Polycharts$new()
   myChart$layer(x = x, y = y, data = data, facet = facet, ...)
   myChart$facet(from_layer = TRUE)
   return(myChart$copy())
 }
 
 rPlot.formula <- function(x, data, ...){
-  myChart <- PolyCharts$new()
+  myChart <- Polycharts$new()
   myChart$layer(x, data, ...)
   myChart$facet(from_layer = TRUE)
   return(myChart$copy())
