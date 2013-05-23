@@ -2,7 +2,7 @@ Polycharts = setRefClass('Polycharts', contains = 'rCharts', methods = list(
   initialize = function(){
     callSuper(); 
     params <<- c(params, list(layers = list(), facet = list(), guides = list(), 
-      coord = list()))
+                              coord = list()))
   },
   layer = function(..., copy_layer = F){
     len = length(params$layers)
