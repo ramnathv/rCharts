@@ -30,6 +30,6 @@ Nvd3 <- setRefClass('Nvd3', contains = 'rCharts', methods = list(
     yAxis = toChain(params$yAxis, 'chart.yAxis')
     opts = toJSON(params[!(names(params) %in% c('data', 'chart', 'xAxis', 'yAxis'))])
     list(opts = opts, xAxis = xAxis, yAxis = yAxis, data = data, 
-      chart = chart, chartId = chartId)
+         chart = chart, chartId = chartId)
   }
 ))
