@@ -1,7 +1,7 @@
 <script>
   var spec = {{{ chartParams }}}
   var map = L.map(spec.dom)
-    .setView(spec.center, spec.viewOpts);
+    .setView(spec.center, spec.zoom);
 
     if (spec.provider){
       L.tileLayer.provider(spec.provider).addTo(map)    
@@ -11,6 +11,8 @@
      
     {{{ marker }}}
     
+    {{{ circle }}}
+    
     /*
     if (spec.circle){
       for (var c in spec.circle){
@@ -19,8 +21,8 @@
       }
     }
     */
-
-    if (spec.geocsv){
+    
+    {{# addons.geocsv }}
       var geo_csv = L.geoCsv(null, {
         titles: spec.geocsv.titles,
         fieldSeparator: ';',
@@ -39,5 +41,18 @@
     
       geo_csv.addData(spec.geocsv.data)
       map.addLayer(geo_csv)
-    }
+    {{/ addons.geocsv }}
+    
+    {{# addons.enablePopover }}
+      var popup = L.popup();
+      function onMapClick(e) {
+        popup
+          .setLatLng(e.latlng)
+          .setContent("<b>Latitude:</b> " + e.latlng.lat.toFixed(2) + "<br />" +
+            "<b>Longitude:</b> " + e.latlng.lng.toFixed(2))
+          .openOn(map);
+      }
+      map.on('click', onMapClick);
+    {{/ addons.enablePopover }}
+    
 </script>
