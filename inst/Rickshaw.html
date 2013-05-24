@@ -1,0 +1,54 @@
+<!doctype HTML>
+<html>
+  <head>
+    {{# assets.css }}
+    <link rel='stylesheet' href='{{{ . }}}'>
+    {{/ assets.css }}
+    
+    {{# assets.jshead }}
+    <script src='{{{ . }}}' type='text/javascript'></script>
+    {{/ assets.jshead }}
+    
+    <style>
+    .chart_container {
+        position: relative;
+        display: inline-block;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .rChart {
+        display: inline-block;
+        margin-left: 40px;
+    }
+   .yAxis {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 40px;
+   }
+   .legend {
+        display: inline-block;
+        vertical-align: top;
+        margin: 0 0 0 10px;
+    }
+    .slider {
+      margin-left: 40px;
+      margin-top: 12px;
+    }
+    </style>
+    
+  </head>
+  <body>
+    {{# chartId }}
+    <div class='chart_container'>
+      <div id='yAxis{{{ chartId }}}' class='yAxis'></div>
+      <div id='{{{ chartId }}}' class='rChart rickshaw'></div>
+      <div id='xAxis{{{ chartId }}}' class='xAxis'></div>
+      <div id='slider{{{ chartId }}}' class='slider'></div>
+    </div>
+    <div id='legend{{{ chartId }}}' class='legend'></div>
+    {{/ chartId }}
+    
+    {{{ script }}}
+    
+  </body>
+</html>
