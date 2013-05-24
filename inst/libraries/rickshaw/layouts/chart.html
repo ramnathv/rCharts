@@ -4,11 +4,11 @@
   
   var graph{{{ chartId }}} = new Rickshaw.Graph(chartParams);
   
-  graph{{{ chartId }}}.render();
-  
-  var x_axis = new Rickshaw.Graph.Axis.Time( { 
+  {{# xAxis }}
+  var x_axis = new Rickshaw.Graph.Axis.{{xAxis.type}}( { 
     graph: graph{{{ chartId }}} 
   } );
+  {{/ xAxis }}
   
   {{# yAxis }}
   var yAxis = new Rickshaw.Graph.Axis.Y( {
@@ -18,6 +18,8 @@
 	  element: document.getElementById('yAxis{{{ chartId }}}'),
   });
   {{/ yAxis }}
+  
+  graph{{{ chartId }}}.render();
   
   var hoverDetail{{{ chartId }}} = new Rickshaw.Graph.HoverDetail( {
     graph: graph{{{ chartId }}}
@@ -32,4 +34,18 @@
     graph: graph{{{ chartId }}},
     legend: legend{{{ chartId }}}
   });
+  
+  if (chartParams.highlight){
+    var highlighter{{{ chartId }}} = new Rickshaw.Graph.Behavior.Series.Highlight( {
+        graph: graph{{{ chartId }}},
+        legend: legend{{{ chartId }}}
+    });
+  }
+
+  if (chartParams.slider){
+    var slider{{{ chartId }}} = new Rickshaw.Graph.RangeSlider( {
+      graph: graph{{{ chartId }}},
+      element: document.getElementById('slider{{{ chartId }}}')
+    });
+  }
 </script> 
