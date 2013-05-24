@@ -2,6 +2,7 @@ Rickshaw = setRefClass('Rickshaw', contains = 'rCharts', methods = list(
   initialize = function(){
     callSuper();
     params <<- c(params, list(opts = list(), xAxis = list(), yAxis = list()))
+    params$slider <<- FALSE
   },
   layer = function(...){
     params_ = toSeries(getLayer(...))
@@ -21,9 +22,10 @@ Rickshaw = setRefClass('Rickshaw', contains = 'rCharts', methods = list(
   },
   getPayload = function(chartId){
     list(
-      chartParams = toJSON(params[!(names(params) %in% c('opts', 'xAxis'))], digits = 13), 
+      chartParams = toJSON(params[!(names(params) %in% c('opts', 'xAxis', 'yAxis'))], 
+        digits = 13), 
       opts = toChain(params$opts, 'graph.renderer'),
-      xAxis = toJSON(params$xAxis),
+      xAxis = params$xAxis,
       yAxis = params$yAxis,
       chartId = chartId
     )
@@ -43,15 +45,16 @@ fixLayerRickshaw = function(params_){
 
 toSeries = function(params_, series = 'series'){
   x_ = params_$x; y_ = params_$y; group = params_$group; data_ = params_$data;
-  colors_ = params_$colors %||% brewer.pal(length(group), "Blues")
   data2 = dlply(data_, group)
   if (is.null(group)){
     names(data2) = params_$y
   }
   nm2 = names(data2)
+  colors_ = params_$colors %||% brewer.pal(length(nm2), "Blues")
   params_[[series]] = llply(seq_along(nm2), function(i){list(
     data = fixData(data2[[i]][,c(x_, y_)]), 
     name = nm2[i],
+    info = toJSONArray(data2[[i]][,!(names(data2[[i]]) %in% y_)], json = F, nonames = F),
     color = colors_[i])
   })
   params_$renderer = params_$type
