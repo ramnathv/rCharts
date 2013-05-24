@@ -21,7 +21,7 @@ Rickshaw = setRefClass('Rickshaw', contains = 'rCharts', methods = list(
   },
   getPayload = function(chartId){
     list(
-      chartParams = toJSON(params[!(names(params) %in% c('opts', 'xAxis'))]), 
+      chartParams = toJSON(params[!(names(params) %in% c('opts', 'xAxis'))], digits = 13), 
       opts = toChain(params$opts, 'graph.renderer'),
       xAxis = toJSON(params$xAxis),
       yAxis = params$yAxis,
@@ -44,7 +44,11 @@ fixLayerRickshaw = function(params_){
 toSeries = function(params_, series = 'series'){
   x_ = params_$x; y_ = params_$y; group = params_$group; data_ = params_$data;
   colors_ = params_$colors %||% brewer.pal(length(group), "Blues")
-  data2 = dlply(data_, group); nm2 = names(data2)
+  data2 = dlply(data_, group)
+  if (is.null(group)){
+    names(data2) = params_$y
+  }
+  nm2 = names(data2)
   params_[[series]] = llply(seq_along(nm2), function(i){list(
     data = fixData(data2[[i]][,c(x_, y_)]), 
     name = nm2[i],
