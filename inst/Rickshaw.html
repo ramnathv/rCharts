@@ -26,9 +26,10 @@
         width: 40px;
    }
    .legend {
-        display: inline-block;
+        position: absolute;
+        top: 0;
+        right: -160px;
         vertical-align: top;
-        margin: 0 0 0 10px;
     }
     .slider {
       margin-left: 40px;
@@ -43,9 +44,9 @@
       <div id='yAxis{{{ chartId }}}' class='yAxis'></div>
       <div id='{{{ chartId }}}' class='rChart rickshaw'></div>
       <div id='xAxis{{{ chartId }}}' class='xAxis'></div>
+      <div id='legend{{{ chartId }}}' class='legend'></div>
       <div id='slider{{{ chartId }}}' class='slider'></div>
     </div>
-    <div id='legend{{{ chartId }}}' class='legend'></div>
     {{/ chartId }}
     
     {{{ script }}}
