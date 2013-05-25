@@ -9,9 +9,12 @@ datm = reshape2::melt(
   economics[,c('date', 'psavert', 'uempmed')],
   id = 'date'
 )
+datm <- transform(datm, date = to_jsdate(date))
 p2 <- Rickshaw$new()
 p2$layer(value ~ date, group = 'variable', data = datm, type = 'line', 
   colors = c("darkred", "darkslategrey"))
+p2$xAxis(type = 'Time')
+p2$yAxis(orientation = 'left')
 
 
 p3 <- Rickshaw$new()
