@@ -1,7 +1,8 @@
 Rickshaw = setRefClass('Rickshaw', contains = 'rCharts', methods = list(
   initialize = function(){
     callSuper();
-    params <<- c(params, list(opts = list(), xAxis = list(), yAxis = list()))
+    params <<- c(params, list(opts = list(), xAxis = list(), 
+      yAxis = list(), hoverDetail = list()))
     params$slider <<- FALSE
   },
   layer = function(...){
@@ -18,15 +19,24 @@ Rickshaw = setRefClass('Rickshaw', contains = 'rCharts', methods = list(
     params$xAxis <<- setSpec(params$xAxis, ..., replace = replace)
   },
   yAxis = function(...){
-    params$yAxis <<- list(...)
+    params$yAxis <<- list(
+      orientation = 'left',
+      tickFormat = 'Rickshaw.Fixtures.Number.formatKMBT'
+    )
+    params$yAxis <<- modifyList(params$yAxis, list(...))
+  },
+  hoverDetail = function(..., replace = F){
+    params$hoverDetail <<- setSpec(params$hoverDetail, ..., replace = replace)
   },
   getPayload = function(chartId){
+    skip = c('opts', 'xAxis', 'yAxis', 'hoverDetail')
     list(
-      chartParams = toJSON(params[!(names(params) %in% c('opts', 'xAxis', 'yAxis'))], 
+      chartParams = toJSON2(params[!(names(params) %in% skip)], 
         digits = 13), 
       opts = toChain(params$opts, 'graph.renderer'),
       xAxis = params$xAxis,
       yAxis = params$yAxis,
+      hoverDetail = params$hoverDetail,
       chartId = chartId
     )
   }
