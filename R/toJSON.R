@@ -67,9 +67,9 @@ toObj <- function(x){
   gsub('\"#!(.*)!#\"', "\\1", x)
 }
 
-toJSON2 <- function(x){
+toJSON2 <- function(x, ...){
   container_ = is.list(x) || (length(x) > 1)
-  toObj(toJSON(x, .escapeEscapes = F, container = container_))
+  toObj(toJSON(x, .escapeEscapes = F, container = container_, ...))
 }
 
 # toObj <- function(x){
