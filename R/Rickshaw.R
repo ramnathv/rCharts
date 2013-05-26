@@ -78,7 +78,13 @@ fixData = function(d){
   toJSONArray(d, json = F)
 }
 
-
-
-# params_ = getLayer(~ cyl, group = 'am', data = mtcars, type = 'bar')
-
+#' Function to create Rickshaw plots
+riPlot <- function(x, y, data, type, ..., xAxis = list(type = 'Time'), 
+   yAxis = list(orientation = 'left')){
+  options(RCHART_TEMPLATE = 'Rickshaw.html')
+  r1 <- Rickshaw$new()
+  r1$layer(x = x, y = y, data = data, type = type, ...)
+  do.call(r1$xAxis, xAxis)
+  do.call(r1$yAxis, yAxis)
+  return(r1)
+}
