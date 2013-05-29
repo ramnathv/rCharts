@@ -1,0 +1,10 @@
+body {
+  margin: 0px;
+}
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+  background-color: black;
+}
+.leaflet-popup-content{
+  color: white;
+  font-family: "Helvetica"
+}
