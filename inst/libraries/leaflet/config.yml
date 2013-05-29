@@ -1,8 +1,8 @@
 leaflet:
-  css: external/leaflet.css
-  jshead: [external/leaflet.js, external/leaflet.geocsv.js, external/leaflet-providers.js]
+  css: [external/leaflet.css, external/leaflet-rCharts.css]
+  jshead: [external/leaflet.js, external/leaflet-providers.js]
   cdn:
-    css: http://leafletjs.com/dist/leaflet.css
+    css: http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css
     jshead: 
-      - http://leafletjs.com/dist/leaflet.js
-      - https://rawgithub.com/joker-x/Leaflet.geoCSV/gh-pages/leaflet.geocsv-src.js
+      - http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js
+      - https://rawgithub.com/leaflet-extras/leaflet-providers/gh-pages/leaflet-providers.js

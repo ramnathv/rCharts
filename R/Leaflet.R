@@ -44,9 +44,9 @@ Leaflet = setRefClass('Leaflet', contains = 'rCharts', methods = list(
       list(
         center = list(c$lat, c$lng), 
         radius = c$radius, 
-        options = c[!(names(c) %in% c('lat', 'lng', 'radius'))])
+        opts = c[!(names(c) %in% c('lat', 'lng', 'radius'))])
     })
-    params$circle <<- setNames(dat, nm = NULL)
+    params$circle2 <<- setNames(dat, nm = NULL)
   },
   geocsv = function(data){
     paste2 = function(...) {paste(..., sep = ';')}
@@ -56,18 +56,31 @@ Leaflet = setRefClass('Leaflet', contains = 'rCharts', methods = list(
       data = paste(do.call('paste2', data), collapse = '\n')
     )
   },
+  geoJson = function(list_, ...){
+    params$addons$geoJson <<- TRUE
+    params$features <<- list_
+    dotlist = list(...)
+    if (length(dotlist) > 0){
+      params$geoJson <<- list(...)
+    } else {
+      params$geoJson <<- FALSE
+    }
+  },
   getPayload = function(chartId){
+    skip = c('marker', 'circle', 'addons', 'geoJson')
+    geoJson = toJSON2(params$geoJson)
     marker = paste(lapply(params$marker, toChain, obj =  'L'), collapse = '\n')
-    circle = paste(lapply(params$circle, toChain, obj =  'L'), collapse = '\n')
+    # circle = paste(lapply(params$circle, toChain, obj =  'L'), collapse = '\n')
     # circle = toChain(params$circle, obj = 'L')
-    chartParams = toJSON(params[!(names(params) %in% c('marker', 'circle', 'addons'))])
+    chartParams = toJSON(params[!(names(params) %in% skip)])
     list(
       chartParams = chartParams, 
       chartId = chartId, 
       lib = basename(lib),
       marker = marker,
-      circle = circle,
-      addons = params$addons
+      # circle = circle,
+      addons = params$addons,
+      geoJson = geoJson
     )
   }
 ))

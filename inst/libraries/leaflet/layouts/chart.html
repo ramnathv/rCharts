@@ -13,14 +13,13 @@
     
     {{{ circle }}}
     
-    /*
-    if (spec.circle){
-      for (var c in spec.circle){
+    
+    if (spec.circle2){
+      for (var c in spec.circle2){
         var circle = L.circle(c.center, c.radius, c.opts)
          .addTo(map);
       }
     }
-    */
     
     {{# addons.geocsv }}
       var geo_csv = L.geoCsv(null, {
@@ -55,4 +54,12 @@
       map.on('click', onMapClick);
     {{/ addons.enablePopover }}
     
+    
+    {{# addons.geoJson }}
+      L.geoJson(spec.features 
+        {{# geoJson }}, 
+         {{{ geoJson }}}
+        {{/ geoJson }}
+      ).addTo(map)
+    {{/ addons.geoJson }}
 </script>
