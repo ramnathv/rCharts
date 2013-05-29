@@ -63,13 +63,22 @@ toChain <- function(x, obj){
   }
 }
 
+# Thanks to @sigpwned and @mathematical.coffee from SO (http://goo.gl/eb0kN)
 toObj <- function(x){
-  gsub('\"#!(.*)!#\"', "\\1", x)
+  gsub('\"#!(.*?)!#\"', "\\1", x)
 }
 
 toJSON2 <- function(x, ...){
   container_ = is.list(x) || (length(x) > 1)
   toObj(toJSON(x, .escapeEscapes = F, container = container_, ...))
+}
+
+toChain2 <- function(x, obj){
+  if (length(x) == 0 || is.null(x)) return("")
+  config <- sapply(names(x), USE.NAMES = F, function(key){
+    sprintf("  .%s(%s)", key, toJSON2(x[[key]]))
+  })
+  paste(c(obj, config), collapse = '\n')
 }
 
 # toObj <- function(x){
