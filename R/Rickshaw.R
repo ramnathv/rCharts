@@ -64,7 +64,10 @@ toSeries = function(params_, series = 'series'){
   params_[[series]] = llply(seq_along(nm2), function(i){list(
     data = fixData(data2[[i]][,c(x_, y_)]), 
     name = nm2[i],
-    info = toJSONArray(data2[[i]][,!(names(data2[[i]]) %in% y_)], json = F, nonames = F),
+    info = setNames(
+      toJSONArray(data2[[i]][,!(names(data2[[i]]) %in% y_)], json = F, nonames = F),
+      data2[[i]][,x_]
+    ),
     color = colors_[i])
   })
   params_$renderer = params_$type
