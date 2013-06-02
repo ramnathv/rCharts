@@ -35,7 +35,7 @@ a
 a1 <- rCharts:::Highcharts$new()
 a1$title(text = "Fruits")
 a1$data(x = c("Apples", "Bananas", "Oranges"), y = c(15, 20, 30), type = "pie", 
-  name = "Amount")
+        name = "Amount")
 a1
 
 ## Example 4
@@ -52,3 +52,19 @@ a$xAxis(categories = rownames(x))
 a$yAxis(title = list(text = "Billions of dollars"))
 a$data(x)
 a
+
+## Example 5
+hPlot(x = "Height", y = "Pulse", data = MASS::survey, type = "scatter", group = "Exer")
+
+## Example 6
+
+a <- hPlot(x = "Height", y = "Pulse", data = MASS::survey, type = "bubble", title = "Zoom demo", subtitle = "bubble chart", size = "Age", group = "Exer")
+a$chart(zoomType = "xy")
+a
+
+## Example 7
+hPlot(x = "Wr.Hnd", y = "NW.Hnd", data = MASS::survey, type = c("line", "bubble", "scatter"), group = "Clap", size = "Age")
+
+## Example 8
+x <- data.frame(key = c("a", "b", "c"), value = c(1, 2, 3))
+hPlot(x = "key", y = "value", data = x, type = "pie")

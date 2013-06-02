@@ -16,7 +16,7 @@ get_rCharts_assets <- function(lib){
   assets[!grepl('jquery', assets)]
 }
 
-libs = c('polycharts', 'nvd3', 'morris', 'xcharts')
+libs = c('polycharts', 'nvd3', 'morris', 'xcharts', 'highcharts')
 add_rCharts(libs)
 
 # div nbSrc takes source code from div notebook (via Ace editor), and div nbOut
