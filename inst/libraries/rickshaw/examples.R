@@ -3,6 +3,8 @@ p1 <- Rickshaw$new()
 p1$layer(~ cyl, group = 'am', data = mtcars, type = 'bar')
 
 # Example 2
+require(rCharts)
+options(RCHART_TEMPLATE = 'Rickshaw.html')
 require(RColorBrewer)
 data(economics, package = 'ggplot2')
 datm = reshape2::melt(
@@ -13,8 +15,12 @@ datm <- transform(datm, date = to_jsdate(date))
 p2 <- Rickshaw$new()
 p2$layer(value ~ date, group = 'variable', data = datm, type = 'line', 
   colors = c("darkred", "darkslategrey"))
-p2$xAxis(type = 'Time')
-p2$yAxis(orientation = 'left')
+
+
+to_jsdate <- function(date_){
+  val = as.POSIXct(as.Date(date_),origin="1970-01-01")
+  as.numeric(val)
+}
 
 
 p3 <- Rickshaw$new()
@@ -39,11 +45,12 @@ dat <- data.frame(
     203211926, 226545805,  248709873,  281421906, 308745538)
 )
 
+data(USPop, package = 'car')
 dat <- USPop
 dat <- transform(dat, year = to_jsdate(as.Date(paste(year, '01', '01', sep = '-'))))
 p4 <- Rickshaw$new()
 p4$layer(population ~ year, data = dat, type = 'area', colors = 'steelblue')
-p4$yAxis(orientation = 'left')
+p4$yAxis(orientation = 'right')
 p4$set(width = 540, height = 240)
 options(RCHART_TEMPLATE = 'Rickshaw.html')
 p4$save('inst/libraries/rickshaw/test-rickshaw2.html')
