@@ -4,51 +4,8 @@
   
   var graph{{{ chartId }}} = new Rickshaw.Graph(chartParams);
   
-  {{# xAxis }}
-  var x_axis = new Rickshaw.Graph.Axis.{{xAxis.type}}( { 
-    graph: graph{{{ chartId }}} 
-  } );
-  {{/ xAxis }}
-  
-  {{# yAxis }}
-  var yAxis = new Rickshaw.Graph.Axis.Y( {
-    graph: graph{{{ chartId }}},
-	  orientation: '{{{ yAxis.orientation }}}',
-	  tickFormat: {{{ yAxis.tickFormat }}},
-	  element: document.getElementById('yAxis{{{ chartId }}}'),
-  });
-  {{/ yAxis }}
-  
   graph{{{ chartId }}}.render();
   
-  var hoverDetail{{{ chartId }}} = new Rickshaw.Graph.HoverDetail( {
-    graph: graph{{{ chartId }}}
-    {{# hoverDetail.formatter }}, 
-     formatter: {{{ hoverDetail.formatter }}}
-    {{/ hoverDetail.formatter }}
-  });
+  {{{ chartExtensions }}}
   
-  var legend{{{ chartId }}} = new Rickshaw.Graph.Legend( {
-    graph: graph{{{ chartId }}},
-    element: document.getElementById('legend{{{ chartId }}}')
-  });
-
-  var shelving{{{ chartId }}} = new Rickshaw.Graph.Behavior.Series.Toggle({
-    graph: graph{{{ chartId }}},
-    legend: legend{{{ chartId }}}
-  });
-  
-  if (chartParams.highlight){
-    var highlighter{{{ chartId }}} = new Rickshaw.Graph.Behavior.Series.Highlight( {
-        graph: graph{{{ chartId }}},
-        legend: legend{{{ chartId }}}
-    });
-  }
-
-  if (chartParams.slider){
-    var slider{{{ chartId }}} = new Rickshaw.Graph.RangeSlider( {
-      graph: graph{{{ chartId }}},
-      element: document.getElementById('slider{{{ chartId }}}')
-    });
-  }
 </script> 
