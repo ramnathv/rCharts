@@ -10,6 +10,14 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Open Sans Condensed", "Helvetica";
 }
 
+#static {
+  position: absolute;
+  top: 10px;
+  right: 40px;
+  display: block;
+  z-index: 999;
+}
+
 #proxy {
   position: absolute;
   top: 10px;
@@ -23,7 +31,7 @@ h1, h2, h3, h4, h5, h6 {
 #notebook {
   position: absolute;
   width: 400px;
-  top: 0;
+  top: 40px; /* changed from 0 */
   left: 0;
   bottom: 0;
 }
@@ -31,7 +39,7 @@ h1, h2, h3, h4, h5, h6 {
 #nbOut {
   position: absolute;
   left: 750px;
-  top: 0;
+  top: 40px;  /* changed from 0 */
   right: 0;
   bottom: 0;
   padding-right: 30px;
