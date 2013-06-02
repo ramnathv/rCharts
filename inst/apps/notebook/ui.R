@@ -14,7 +14,11 @@ foo <- function(libs){
 #   rmdFile <- 'www/example.Rmd'
 # }
 
+
 rmdFile <- getOption('NOTEBOOK_TO_OPEN', 'www/example.Rmd')
+libs = c('polycharts', 'nvd3', 'morris', 'xcharts', 'highcharts')
+add_rCharts(libs)
+
 
 # div nbSrc takes source code from div notebook (via Ace editor), and div nbOut
 # holds results from knitr

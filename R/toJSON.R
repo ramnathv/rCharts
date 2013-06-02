@@ -29,8 +29,12 @@ toJSONArray <- function(obj, json = TRUE, nonames = TRUE){
   }
 }
 
-toJSONArray2 <- function(obj, json = TRUE, ...){
-  value = apply(obj, 1, as.list)
+toJSONArray2 <- function(obj, json = TRUE, names = TRUE, ...){
+  value = lapply(1:nrow(obj), function(i) {
+    res <- as.list(obj[i, ])
+    if (!names) names(res) <- NULL  # remove names (e.g. {x = 1, y = 2} => {1, 2})
+    return(res)
+  })
   if (json){
     return(toJSON(value, .withNames = F, ...))
   } else {
