@@ -24,6 +24,7 @@ chartOutput <- showOutput <- function(outputId, lib = NULL, package = 'rCharts')
 
 get_assets_shiny <- function(LIB){
   assets <- get_assets(LIB, static = F)
+  assets$jshead <- Filter(filter_jquery, assets$jshead)
   scripts <- lapply(assets$jshead, function(script){
     singleton(tags$head(tags$script(src = script, type = 'text/javascript')))
   })
@@ -31,4 +32,8 @@ get_assets_shiny <- function(LIB){
     singleton(tags$head(tags$link(href = style, rel="stylesheet")))
   })
   return(c(styles, scripts))
+}
+
+filter_jquery <- function(js){
+  !(basename(js) %in% c('jquery.js', 'jquery.min.js', 'jquery-1.8.2.min.js'))
 }
