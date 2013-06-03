@@ -1,4 +1,5 @@
 <script type='text/javascript'> 
+  var palette = new Rickshaw.Color.Palette({ scheme: "{{{params.scheme}}}" });
   var chartParams = {{{ chartParams }}}
   chartParams.element = document.querySelector('#{{{ chartId }}}')
   

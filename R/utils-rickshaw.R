@@ -115,7 +115,7 @@ toSeries = function(params_, series = 'series'){
     names(data2) = params_$y
   }
   nm2 = names(data2)
-  colors_ = params_$colors %||% brewer.pal(length(nm2), "Blues")
+  colors_ = params_$colors %||% "#! palette.color() !#"
   params_[[series]] = llply(seq_along(nm2), function(i){list(
     data = fixData(data2[[i]][,c(x_, y_)]), 
     name = nm2[i],

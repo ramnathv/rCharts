@@ -1,8 +1,9 @@
 Rickshaw = setRefClass('Rickshaw', contains = 'rCharts', methods = list(
   initialize = function(){
     callSuper();
-    params <<- c(params, list(xAxis = TRUE, yAxis = TRUE, legend = TRUE,
-      shelving = TRUE, hoverDetail = TRUE, highlight = TRUE, slider = FALSE)
+    params <<- c(params, list(xAxis = TRUE, yAxis = TRUE, legend = TRUE, 
+      scheme = 'colorwheel', shelving = TRUE, hoverDetail = TRUE, 
+      highlight = TRUE, slider = FALSE)
     )
   },
   layer = function(...){
@@ -32,7 +33,8 @@ Rickshaw = setRefClass('Rickshaw', contains = 'rCharts', methods = list(
       chartParams = toJSON2(params[!(names(params) %in% extensions)], digits = 13), 
       opts = toChain(params$opts, 'graph.renderer'),
       chartExtensions = make_extensions(extensions, params, defaults),
-      chartId = chartId
+      chartId = chartId,
+      params = params
     )
   }
 ))
