@@ -15,8 +15,8 @@ Rickshaw = setRefClass('Rickshaw', contains = 'rCharts', methods = list(
   opts = function(..., replace = F){
     params$opts <<- setSpec(params$opts, ..., replace = replace)
   },
-  xAxis = function(..., replace = F){
-    params$xAxis <<- list(...)
+  xAxis = function(..., type = 'Time', replace = F){
+    params$xAxis <<- c(list(...), extension = paste('Axis', type, sep = '.'))
   },
   yAxis = function(...){
     params$yAxis <<- list(...)
