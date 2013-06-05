@@ -7,7 +7,7 @@
 #' @params lib name of js library used
 #' @params package name where js library resides
 #' @export
-mapOutput <- chartOutput <- showOutput <- function(outputId, lib = NULL, package = 'rCharts'){
+chartOutput <- showOutput <- function(outputId, lib = NULL, package = 'rCharts'){
   if (!is.null(lib)){
     LIB <- get_lib(lib)
   } else if (exists(".rChart_object")) {
@@ -19,6 +19,10 @@ mapOutput <- chartOutput <- showOutput <- function(outputId, lib = NULL, package
     class=paste('shiny-html-output', basename(LIB$name)),
     tagList(get_assets_shiny(LIB))
   )
+}
+
+mapOutput <- function(outputId){
+  chartOutput(outputId, lib = 'leaflet', package)
 }
 
 get_assets_shiny <- function(LIB){
