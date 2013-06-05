@@ -5,7 +5,8 @@
 *.Rproj
 inst/docs
 inst/apps/oecd
-inst/apps/n*
+inst/apps/notebook0
+inst/apps/notebook2
 inst/apps/strikeouts
 inst/x512paths
 inst/gh-pages

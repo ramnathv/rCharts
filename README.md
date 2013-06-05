@@ -31,17 +31,124 @@ rPlot(Freq ~ Hair | Eye, color = 'Eye', data = hair_eye, type = 'bar')
 
 ### Customize
 
-rCharts supports multiple javascript charting libraries, each with its own strengths. Each of these libraries has multiple customization options, most of which are supported within rCharts. Here is a list of libraries currently supported.
+rCharts supports multiple javascript charting libraries, each with its own strengths. Each of these libraries has multiple customization options, most of which are supported within rCharts. More documentation is underway on how to use rCharts with each of these libraries.
 
-1. [Polychart](https://github.com/Polychart/polychart2).
-2. [NVD3](https://github.com/novus/nvd3)
-3. [MorrisJS](https://github.com/oesmith/morris.js)
-4. [Rickshaw](https://github.com/shutterstock/rickshaw)
-5. [HighCharts](http://www.highcharts.com/)
-6. [xCharts](https://github.com/tenXer/xcharts/)
-7. [Leaflet](http://leafletjs.com/)
+#### [Polychart](https://github.com/Polychart/polychart2).
 
-More documentation is underway on how to use rCharts with each of these libraries.
+We will create our first chart using Polychart, a javascript charting library based on the grammar of graphics, and inspired by ggplot2.
+
+```{r chart1}
+r1 <- rPlot(mpg ~ wt | am + vs, data = mtcars, type = 'point',
+  color = 'gear')
+r1
+```
+
+![polychart](screenshots/polychart.png)
+
+There, we have our first embedded chart with nice tooltips! Let me add some interactivity to this chart now using javascript.
+
+```js
+graph_chart1.addHandler(function(type, e){
+  var data = e.evtData;
+  if (type === 'click'){
+    return alert("You clicked on car with mpg: " + data.mpg.in[0]);
+  }
+})
+```
+
+---
+
+#### [Morris](https://github.com/oesmith/morris.js)
+
+The next library we will be exploring is Morris.
+
+```{r chart2}
+data(economics, package = 'ggplot2')
+econ <- transform(economics, date = as.character(date))
+m1 <- mPlot(x = 'date', y = c('psavert', 'uempmed'), type = 'Line',
+  data = econ)
+m1$set(pointSize = 0, lineWidth = 1)
+m1
+```
+
+![morris](screenshots/morris.png)
+
+Hurray! There we have our second chart!
+
+---
+
+#### [NVD3](https://github.com/novus/nvd3)
+
+Next, I will demonstrate my all time favorite d3js library, NVD3, which produces amazing interactive visualizations with little customization.
+
+```{r chart3}
+hair_eye_male <- subset(as.data.frame(HairEyeColor), Sex == "Male")
+n1 <- nPlot(Freq ~ Hair, group = "Eye", data = hair_eye_male, 
+  type = 'multiBarChart')
+n1
+```
+
+![nvd3](screenshots/nvd3.png)
+
+See the interactivity that comes at zero cost! 
+
+---
+
+#### [xCharts](https://github.com/tenXer/xcharts/)
+
+The next library to demo would be xCharts, a slick looking charting library using d3js, made by TenXer.
+
+```{r chart4}
+require(reshape2)
+uspexp <- melt(USPersonalExpenditure)
+names(uspexp)[1:2] = c('category', 'year')
+x1 <- xPlot(value ~ year, group = 'category', data = uspexp, 
+  type = 'line-dotted')
+x1
+```
+
+![xchart](screenshots/xchart.png)
+
+There is your xChart
+
+---
+
+#### [HighCharts](http://www.highcharts.com/)
+
+```{r chart5}
+h1 <- hPlot(x = "Wr.Hnd", y = "NW.Hnd", data = MASS::survey, 
+  type = c("line", "bubble", "scatter"), group = "Clap", size = "Age")
+h1
+```
+
+![highcharts](screenshots/highcharts.png)
+
+---
+
+#### [Leaflet](http://leafletjs.com/)
+
+```{r}
+map3 <- Leaflet$new()
+map3$setView(c(51.505, -0.09), zoom = 13)
+map3$marker(c(51.5, -0.09), bindPopup = "<p> Hi. I am a popup </p>")
+map3$marker(c(51.495, -0.083), bindPopup = "<p> Hi. I am another popup </p>")
+map3
+```
+
+![leaflet](screenshots/leaflet.png)
+
+---
+
+#### [Rickshaw](https://github.com/shutterstock/rickshaw)
+
+```{r chart6}
+usp = reshape2::melt(USPersonalExpenditure)
+p4 <- Rickshaw$new()
+p4$layer(value ~ Var2, group = 'Var1', data = usp, type = 'area')
+p4
+```
+
+![rickshaw](screenshots/rickshaw.png)
 
 ### Share
 
