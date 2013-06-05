@@ -94,6 +94,39 @@ There is your xChart
 
 ---
 
+## HighCharts
+
+```{r chart5}
+h1 <- hPlot(x = "Wr.Hnd", y = "NW.Hnd", data = MASS::survey, 
+  type = c("line", "bubble", "scatter"), group = "Clap", size = "Age")
+h1$print('chart5')
+```
+
+---
+
+## Leaflet
+
+```{r}
+map3 <- Leaflet$new()
+map3$setView(c(51.505, -0.09), zoom = 13)
+map3$marker(c(51.5, -0.09), bindPopup = "<p> Hi. I am a popup </p>")
+map3$marker(c(51.495, -0.083), bindPopup = "<p> Hi. I am another popup </p>")
+map3$print('chart7')
+```
+
+---
+
+## Rickshaw
+
+```{r chart6}
+usp = reshape2::melt(USPersonalExpenditure)
+p4 <- Rickshaw$new()
+p4$layer(value ~ Var2, group = 'Var1', data = usp, type = 'area')
+p4$print('chart6')
+```
+
+---
+
 ## Credits
 
 I would like to acknowledge the efforts of @yihui and @rstudio in bringing R Notebooks to the R community. I would like to thank @yihui for his excellent shiny app in the knitr package, which was the basis for this app. Without their efforts, rCharts and this demo would not have been possible.

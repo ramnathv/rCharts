@@ -37,13 +37,8 @@ shinyServer(function(input, output) {
       if (length(src) == 0L || src == '')
         return('Nothing to show yet...')
       on.exit(unlink('figure/', recursive = TRUE)) # do not need the figure dir
-      paste(try(knit2html(text = src, fragment.only = TRUE)),
-            '<script>',
-            '// highlight code blocks',
-            "$('#nbOut pre code').each(function(i, e) {hljs.highlightBlock(e)});",
-            'MathJax.Hub.Typeset(); // update MathJax expressions',
-            '</script>', sep = '\n'
-      )
+      src = paste(c(readLines('www/highlight.html'), src), collapse = '\n')
+      paste(try(knit2html(text = src, fragment.only = TRUE)))
     } else {
       paste(c(readLines('www/example.html'), readLines('www/highlight.html')),
         collapse = '\n')

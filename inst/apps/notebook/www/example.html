@@ -1,3 +1,9 @@
+<script>
+// highlight code blocks
+$('#nbOut pre code').each(function(i, e) {hljs.highlightBlock(e)});
+MathJax.Hub.Typeset(); 
+</script>
+
 <h2>R Notebook and rCharts</h2>
 
 <p>This is a short demo on how to embed d3js style charts in an R Markdown notebook, using rCharts and Shiny. If you want to follow along, please install <code>rCharts</code> from <code>github</code> using <code>devtools</code> and run <code>open_notebook()</code>.</p>
@@ -29,7 +35,7 @@ knitr::opts_chunk$set(comment = NA, results = &quot;asis&quot;, tidy = F, messag
 r1$print(&#39;chart1&#39;)
 </code></pre>
 
-<div id='chart1' class='rChart nvd3Plot polycharts'></div>
+<div id='chart1' class='rChart polycharts'></div>
 
 <script type='text/javascript'>
     var chartParams = {
@@ -98,7 +104,7 @@ m1$set(pointSize = 0, lineWidth = 1)
 m1$print(&#39;chart2&#39;)
 </code></pre>
 
-<div id='chart2' class='rChart nvd3Plot morris'></div>
+<div id='chart2' class='rChart morris'></div>
 
 <script type='text/javascript'>
     var chartParams = {
@@ -106,7 +112,10 @@ m1$print(&#39;chart2&#39;)
 "width":    600,
 "height":    400,
 "xkey": "date",
-"ykeys": [ "psavert", "uempmed" ],
+"ykeys": [
+ "psavert",
+"uempmed" 
+],
 "data": [
  {
  "date": "1967-06-30",
@@ -3956,7 +3965,7 @@ n1 &lt;- nPlot(Freq ~ Hair, group = &quot;Eye&quot;, data = hair_eye_male,
 n1$print(&#39;chart3&#39;)
 </code></pre>
 
-<div id='chart3' class='rChart nvd3Plot nvd3'></div>
+<div id='chart3' class='rChart nvd3'></div>
 
 <script type='text/javascript'>
     $(document).ready(function(){
@@ -4119,7 +4128,7 @@ x1 &lt;- xPlot(value ~ year, group = &#39;category&#39;, data = uspexp,
 x1$print(&#39;chart4&#39;)
 </code></pre>
 
-<figure id='chart4' class='rChart nvd3Plot xCharts'></figure>
+<figure id='chart4' class='rChart xcharts'></figure>
 
 <script type='text/javascript'>
     var data = {
@@ -4259,6 +4268,1633 @@ x1$print(&#39;chart4&#39;)
 <style>figure.rChart {height: 400px;}</style>
 
 <p>There is your xChart</p>
+
+<hr/>
+
+<h2>HighCharts</h2>
+
+<pre><code class="r">h1 &lt;- hPlot(x = &quot;Wr.Hnd&quot;, y = &quot;NW.Hnd&quot;, data = MASS::survey, 
+  type = c(&quot;line&quot;, &quot;bubble&quot;, &quot;scatter&quot;), group = &quot;Clap&quot;, size = &quot;Age&quot;)
+h1$print(&#39;chart5&#39;)
+</code></pre>
+
+<div id='chart5' class='rChart highcharts'></div>
+
+<script type='text/javascript'>
+    (function($){
+        $(function () {
+            var chart = new Highcharts.Chart({
+ "dom": "chart5",
+"width":    600,
+"height":    400,
+"credits": {
+ "href": null,
+"text": null 
+},
+"title": {
+ "text": null 
+},
+"yAxis": [
+ {
+ "title": {
+ "text": "NW.Hnd" 
+} 
+} 
+],
+"series": [
+ {
+ "data": [
+ [
+     13,
+    13,
+17.417 
+],
+[
+   15.4,
+  16.4,
+  18.5 
+],
+[
+   15.6,
+  15.8,
+ 17.75 
+],
+[
+     16,
+  15.5,
+17.417 
+],
+[
+   16.5,
+    17,
+17.417 
+],
+[
+   16.7,
+    17,
+23.083 
+],
+[
+     17,
+  17.5,
+19.167 
+],
+[
+     17,
+    18,
+18.333 
+],
+[
+   17.5,
+    17,
+17.667 
+],
+[
+   17.5,
+  17.1,
+18.417 
+],
+[
+   17.5,
+  17.5,
+17.667 
+],
+[
+   17.6,
+  17.2,
+  18.5 
+],
+[
+   17.6,
+  17.8,
+ 17.25 
+],
+[
+   17.9,
+  17.8,
+18.417 
+],
+[
+   17.9,
+  18.4,
+18.917 
+],
+[
+     18,
+  17.5,
+17.583 
+],
+[
+     18,
+  17.7,
+17.583 
+],
+[
+     18,
+  17.9,
+ 30.75 
+],
+[
+   18.3,
+  18.5,
+ 18.75 
+],
+[
+   18.5,
+    18,
+ 18.25 
+],
+[
+   18.5,
+  18.1,
+    21 
+],
+[
+   18.5,
+  18.5,
+24.167 
+],
+[
+   18.5,
+    19,
+23.833 
+],
+[
+   18.7,
+    18,
+19.833 
+],
+[
+     19,
+  18.5,
+ 17.25 
+],
+[
+   19.5,
+  19.5,
+ 16.75 
+],
+[
+   19.5,
+  20.5,
+17.583 
+],
+[
+   19.7,
+  20.1,
+ 17.75 
+],
+[
+   20.5,
+    20,
+19.667 
+],
+[
+   20.5,
+  20.5,
+ 19.75 
+],
+[
+   20.5,
+  20.5,
+ 19.25 
+],
+[
+   20.6,
+    21,
+18.417 
+],
+[
+     21,
+  19.5,
+18.333 
+],
+[
+     21,
+    21,
+ 18.25 
+],
+[
+   21.5,
+    22,
+17.917 
+],
+[
+   21.8,
+  22.3,
+  25.5 
+],
+[
+     22,
+  21.5,
+  18.5 
+],
+[
+     23,
+    22,
+18.917 
+],
+[
+   23.2,
+  22.7,
+18.917 
+] 
+],
+"name": "Left",
+"type": "line",
+"marker": {
+ "radius":      3 
+} 
+},
+{
+ "data": [
+ [
+     14,
+  13.5,
+17.083 
+],
+[
+     14,
+  15.5,
+21.083 
+],
+[
+     15,
+    13,
+    17 
+],
+[
+   15.5,
+  15.4,
+17.167 
+],
+[
+   16.5,
+  16.9,
+29.083 
+],
+[
+     17,
+  17.3,
+19.167 
+],
+[
+     17,
+  17.4,
+17.167 
+],
+[
+     17,
+  17.5,
+  18.5 
+],
+[
+   17.3,
+    18,
+18.583 
+],
+[
+   17.5,
+  16.5,
+  17.5 
+],
+[
+   17.5,
+    17,
+17.083 
+],
+[
+   17.5,
+    17,
+  19.5 
+],
+[
+   17.5,
+  17.5,
+18.583 
+],
+[
+   17.5,
+  17.5,
+ 17.25 
+],
+[
+   17.5,
+    18,
+ 17.75 
+],
+[
+   17.8,
+  17.8,
+21.917 
+],
+[
+     18,
+  13.3,
+16.917 
+],
+[
+     18,
+  17.5,
+18.667 
+],
+[
+     18,
+    18,
+19.333 
+],
+[
+     18,
+    18,
+    20 
+],
+[
+     18,
+  18.5,
+20.167 
+],
+[
+     18,
+    19,
+ 17.75 
+],
+[
+   18.3,
+  18.5,
+17.083 
+],
+[
+   18.5,
+    18,
+18.917 
+],
+[
+   18.5,
+    18,
+20.083 
+],
+[
+   18.5,
+  18.2,
+17.333 
+],
+[
+   18.5,
+  18.5,
+17.583 
+],
+[
+   18.5,
+  18.5,
+18.333 
+],
+[
+   18.5,
+  18.5,
+    19 
+],
+[
+   18.6,
+    18,
+17.167 
+],
+[
+   18.8,
+  18.9,
+20.333 
+],
+[
+   18.8,
+  19.1,
+18.083 
+],
+[
+   18.9,
+  19.1,
+ 17.75 
+],
+[
+     19,
+  18.5,
+17.417 
+],
+[
+     19,
+    19,
+19.917 
+],
+[
+     19,
+  19.1,
+30.667 
+],
+[
+   19.4,
+  18.5,
+17.917 
+],
+[
+   19.4,
+  19.6,
+19.083 
+],
+[
+   19.5,
+  20.2,
+  17.5 
+],
+[
+   19.5,
+  20.2,
+32.667 
+],
+[
+   19.8,
+    19,
+  21.5 
+],
+[
+     20,
+  19.5,
+19.417 
+],
+[
+     20,
+  19.5,
+19.167 
+],
+[
+     20,
+    20,
+  17.5 
+],
+[
+   20.2,
+  20.3,
+  17.5 
+],
+[
+   20.8,
+  20.7,
+  18.5 
+],
+[
+   20.8,
+  21.4,
+18.083 
+],
+[
+     21,
+    21,
+21.333 
+],
+[
+   21.4,
+    21,
+    19 
+],
+[
+   22.8,
+  23.2,
+20.333 
+] 
+],
+"name": "Neither",
+"type": "bubble",
+"marker": {
+ "radius":      3 
+} 
+},
+{
+ "data": [
+ [
+     13,
+  12.5,
+18.167 
+],
+[
+   15.5,
+  15.5,
+  18.5 
+],
+[
+   15.9,
+  16.5,
+17.333 
+],
+[
+     16,
+  15.5,
+17.167 
+],
+[
+     16,
+  15.5,
+17.167 
+],
+[
+     16,
+    16,
+ 18.75 
+],
+[
+     16,
+    16,
+20.833 
+],
+[
+     16,
+    16,
+17.667 
+],
+[
+     16,
+  16.5,
+    19 
+],
+[
+   16.2,
+  15.8,
+ 19.25 
+],
+[
+   16.2,
+  16.4,
+    17 
+],
+[
+   16.3,
+  16.2,
+  23.5 
+],
+[
+   16.3,
+  16.2,
+ 19.25 
+],
+[
+   16.4,
+  16.5,
+18.333 
+],
+[
+   16.5,
+    15,
+ 32.75 
+],
+[
+   16.5,
+    17,
+    73 
+],
+[
+   16.7,
+  15.1,
+18.167 
+],
+[
+   16.9,
+    16,
+  20.5 
+],
+[
+     17,
+  15.9,
+  18.5 
+],
+[
+     17,
+  16.5,
+17.167 
+],
+[
+     17,
+  16.6,
+17.667 
+],
+[
+     17,
+  16.7,
+22.917 
+],
+[
+     17,
+    17,
+24.667 
+],
+[
+     17,
+  17.2,
+  28.5 
+],
+[
+     17,
+  17.3,
+35.833 
+],
+[
+     17,
+  17.5,
+18.667 
+],
+[
+     17,
+  17.5,
+20.417 
+],
+[
+     17,
+  17.6,
+23.583 
+],
+[
+     17,
+  17.6,
+  26.5 
+],
+[
+   17.1,
+  17.5,
+ 39.75 
+],
+[
+   17.2,
+  16.7,
+21.167 
+],
+[
+   17.5,
+    16,
+  17.5 
+],
+[
+   17.5,
+  16.5,
+18.583 
+],
+[
+   17.5,
+    17,
+17.167 
+],
+[
+   17.5,
+    17,
+    18 
+],
+[
+   17.5,
+  17.3,
+20.167 
+],
+[
+   17.5,
+  17.5,
+20.667 
+],
+[
+   17.5,
+  17.5,
+ 23.25 
+],
+[
+   17.5,
+  17.6,
+ 17.25 
+],
+[
+   17.5,
+  17.6,
+17.417 
+],
+[
+   17.5,
+  17.6,
+18.583 
+],
+[
+   17.5,
+  17.6,
+ 20.75 
+],
+[
+   17.5,
+  17.8,
+18.667 
+],
+[
+   17.5,
+    18,
+    18 
+],
+[
+   17.5,
+  18.4,
+18.167 
+],
+[
+   17.6,
+  17.2,
+19.917 
+],
+[
+   17.6,
+  17.3,
+ 17.75 
+],
+[
+   17.7,
+    17,
+ 17.25 
+],
+[
+   17.7,
+  17.7,
+18.833 
+],
+[
+   17.8,
+    18,
+17.083 
+],
+[
+     18,
+    16,
+ 20.75 
+],
+[
+     18,
+  17.6,
+18.417 
+],
+[
+     18,
+  17.7,
+    21 
+],
+[
+     18,
+  17.8,
+17.083 
+],
+[
+     18,
+    18,
+21.583 
+],
+[
+     18,
+    18,
+17.667 
+],
+[
+     18,
+  18.5,
+ 18.75 
+],
+[
+     18,
+  18.5,
+20.333 
+],
+[
+     18,
+  18.5,
+  17.5 
+],
+[
+     18,
+  18.6,
+  17.5 
+],
+[
+   18.1,
+  18.2,
+21.167 
+],
+[
+   18.2,
+  17.5,
+19.667 
+],
+[
+   18.2,
+    18,
+    18 
+],
+[
+   18.2,
+  18.5,
+17.083 
+],
+[
+   18.2,
+  19.8,
+19.333 
+],
+[
+   18.3,
+    19,
+21.083 
+],
+[
+   18.5,
+    18,
+17.833 
+],
+[
+   18.5,
+    18,
+41.583 
+],
+[
+   18.5,
+    18,
+16.917 
+],
+[
+   18.5,
+    18,
+  17.5 
+],
+[
+   18.5,
+    18,
+20.167 
+],
+[
+   18.5,
+    18,
+16.917 
+],
+[
+   18.5,
+  18.5,
+22.333 
+],
+[
+   18.5,
+  18.5,
+  18.5 
+],
+[
+   18.5,
+    19,
+17.917 
+],
+[
+   18.6,
+  18.6,
+17.167 
+],
+[
+   18.6,
+  18.8,
+20.333 
+],
+[
+   18.6,
+  19.6,
+19.333 
+],
+[
+   18.8,
+  17.8,
+18.583 
+],
+[
+   18.8,
+  18.2,
+  17.5 
+],
+[
+   18.8,
+  18.3,
+18.417 
+],
+[
+   18.8,
+  18.5,
+18.167 
+],
+[
+   18.9,
+  19.1,
+43.833 
+],
+[
+   18.9,
+  19.2,
+ 44.25 
+],
+[
+   18.9,
+    20,
+19.083 
+],
+[
+     19,
+  18.5,
+17.333 
+],
+[
+     19,
+  18.8,
+17.083 
+],
+[
+     19,
+  18.8,
+ 17.25 
+],
+[
+     19,
+    19,
+19.917 
+],
+[
+     19,
+  19.5,
+ 18.75 
+],
+[
+     19,
+  19.5,
+23.417 
+],
+[
+   19.1,
+    19,
+19.167 
+],
+[
+   19.1,
+  19.1,
+19.917 
+],
+[
+   19.2,
+  18.9,
+20.167 
+],
+[
+   19.2,
+  19.6,
+18.167 
+],
+[
+   19.3,
+  19.4,
+19.833 
+],
+[
+   19.4,
+  19.2,
+18.333 
+],
+[
+   19.4,
+  19.5,
+17.833 
+],
+[
+   19.5,
+  18.5,
+ 18.25 
+],
+[
+   19.5,
+  18.5,
+18.667 
+],
+[
+   19.5,
+    19,
+17.667 
+],
+[
+   19.5,
+  19.2,
+18.167 
+],
+[
+   19.5,
+  19.4,
+18.083 
+],
+[
+   19.5,
+  19.5,
+ 19.25 
+],
+[
+   19.5,
+  19.7,
+17.417 
+],
+[
+   19.5,
+  19.8,
+    18 
+],
+[
+   19.5,
+    20,
+ 21.25 
+],
+[
+   19.6,
+  19.7,
+  17.5 
+],
+[
+   19.8,
+    20,
+17.417 
+],
+[
+     20,
+  19.5,
+    19 
+],
+[
+     20,
+  19.5,
+21.417 
+],
+[
+     20,
+  19.5,
+18.917 
+],
+[
+     20,
+  19.8,
+17.417 
+],
+[
+     20,
+    20,
+23.667 
+],
+[
+     20,
+  20.5,
+ 18.75 
+],
+[
+     20,
+  20.5,
+19.667 
+],
+[
+   20.1,
+    20,
+17.167 
+],
+[
+   20.1,
+  20.2,
+  17.5 
+],
+[
+   20.1,
+  20.7,
+18.167 
+],
+[
+   20.5,
+  19.5,
+17.417 
+],
+[
+   20.5,
+  19.5,
+18.667 
+],
+[
+   20.5,
+    20,
+  17.5 
+],
+[
+   20.5,
+    20,
+23.583 
+],
+[
+   20.5,
+  20.5,
+36.583 
+],
+[
+   20.5,
+  20.7,
+21.167 
+],
+[
+   20.5,
+    21,
+17.917 
+],
+[
+     21,
+  20.4,
+20.083 
+],
+[
+     21,
+  20.7,
+  17.5 
+],
+[
+     21,
+  20.9,
+17.917 
+],
+[
+     21,
+  21.5,
+17.167 
+],
+[
+   21.3,
+  20.8,
+22.833 
+],
+[
+   21.5,
+  21.2,
+ 18.25 
+],
+[
+   21.5,
+  21.6,
+70.417 
+],
+[
+   21.9,
+  22.2,
+18.917 
+],
+[
+     22,
+  21.5,
+    20 
+],
+[
+     22,
+    22,
+  35.5 
+],
+[
+     22,
+    22,
+19.333 
+],
+[
+     22,
+  22.5,
+27.333 
+],
+[
+   22.2,
+    21,
+    18 
+],
+[
+   22.5,
+  22.5,
+    20 
+],
+[
+   22.5,
+  22.5,
+ 18.25 
+],
+[
+   22.5,
+  22.6,
+    23 
+],
+[
+   22.5,
+    23,
+19.417 
+],
+[
+     23,
+  23.5,
+17.167 
+],
+[
+   23.1,
+  22.5,
+19.167 
+],
+[
+   23.2,
+  23.2,
+18.917 
+],
+[
+   23.2,
+  23.3,
+20.917 
+] 
+],
+"name": "Right",
+"type": "scatter",
+"marker": {
+ "radius":      3 
+} 
+} 
+],
+"xAxis": [
+ {
+ "title": {
+ "text": "Wr.Hnd" 
+} 
+} 
+],
+"subtitle": {
+ "text": null 
+},
+"id": "chart5",
+"chart": {
+ "renderTo": "chart5" 
+} 
+});
+        });
+    })(jQuery);
+</script>
+
+<hr/>
+
+<h2>Leaflet</h2>
+
+<pre><code class="r">map3 &lt;- Leaflet$new()
+map3$setView(c(51.505, -0.09), zoom = 13)
+map3$marker(c(51.5, -0.09), bindPopup = &quot;&lt;p&gt; Hi. I am a popup &lt;/p&gt;&quot;)
+map3$marker(c(51.495, -0.083), bindPopup = &quot;&lt;p&gt; Hi. I am another popup &lt;/p&gt;&quot;)
+map3$print(&#39;chart7&#39;)
+</code></pre>
+
+<div id='chart7' class='rChart leaflet'></div>
+
+<script>
+  var spec = {
+ "dom": "chart7",
+"width":    600,
+"height":    400,
+"urlTemplate": "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
+"layerOpts": {
+ "attribution": "Map data<a href=\"http://openstreetmap.org\">OpenStreetMap</a>\n         contributors, Imagery<a href=\"http://mapbox.com\">MapBox</a>" 
+},
+"center": [ 51.505,  -0.09 ],
+"zoom":     13,
+"id": "chart7" 
+}
+  var map = L.map(spec.dom)
+    .setView(spec.center, spec.zoom);
+
+    if (spec.provider){
+      L.tileLayer.provider(spec.provider).addTo(map)    
+    } else {
+          L.tileLayer(spec.urlTemplate, spec.layerOpts).addTo(map)
+    }
+     
+    L
+  .marker([
+   51.5,
+ -0.09 
+])
+  .addTo( map )
+  .bindPopup("<p> Hi. I am a popup </p>")
+L
+  .marker([
+ 51.495,
+-0.083 
+])
+  .addTo( map )
+  .bindPopup("<p> Hi. I am another popup </p>")
+    
+    
+    
+    
+    if (spec.circle2){
+      for (var c in spec.circle2){
+        var circle = L.circle(c.center, c.radius, c.opts)
+         .addTo(map);
+      }
+    }
+    
+    
+    
+    
+</script>
+
+<hr/>
+
+<h2>Rickshaw</h2>
+
+<pre><code class="r">usp = reshape2::melt(USPersonalExpenditure)
+p4 &lt;- Rickshaw$new()
+p4$layer(value ~ Var2, group = &#39;Var1&#39;, data = usp, type = &#39;area&#39;)
+p4$print(&#39;chart6&#39;)
+</code></pre>
+
+<div id='chart6' class='rChart rickshaw'></div>
+
+<script type='text/javascript'> 
+  var palette = new Rickshaw.Color.Palette({ scheme: "colorwheel" });
+  var chartParams = {
+ "dom": "chart6",
+"width":            600,
+"height":            400,
+"scheme": "colorwheel",
+"series": [
+ {
+ "data": [
+ {
+ "x": 1940,
+"y":           22.2 
+},
+{
+ "x": 1945,
+"y":           44.5 
+},
+{
+ "x": 1950,
+"y":           59.6 
+},
+{
+ "x": 1955,
+"y":           73.2 
+},
+{
+ "x": 1960,
+"y":           86.8 
+} 
+],
+"name": "Food and Tobacco",
+"info": {
+ "1940": {
+ "Var1": "Food and Tobacco",
+"Var2": 1940 
+},
+"1945": {
+ "Var1": "Food and Tobacco",
+"Var2": 1945 
+},
+"1950": {
+ "Var1": "Food and Tobacco",
+"Var2": 1950 
+},
+"1955": {
+ "Var1": "Food and Tobacco",
+"Var2": 1955 
+},
+"1960": {
+ "Var1": "Food and Tobacco",
+"Var2": 1960 
+} 
+},
+"color":  palette.color()  
+},
+{
+ "data": [
+ {
+ "x": 1940,
+"y":           10.5 
+},
+{
+ "x": 1945,
+"y":           15.5 
+},
+{
+ "x": 1950,
+"y":             29 
+},
+{
+ "x": 1955,
+"y":           36.5 
+},
+{
+ "x": 1960,
+"y":           46.2 
+} 
+],
+"name": "Household Operation",
+"info": {
+ "1940": {
+ "Var1": "Household Operation",
+"Var2": 1940 
+},
+"1945": {
+ "Var1": "Household Operation",
+"Var2": 1945 
+},
+"1950": {
+ "Var1": "Household Operation",
+"Var2": 1950 
+},
+"1955": {
+ "Var1": "Household Operation",
+"Var2": 1955 
+},
+"1960": {
+ "Var1": "Household Operation",
+"Var2": 1960 
+} 
+},
+"color":  palette.color()  
+},
+{
+ "data": [
+ {
+ "x": 1940,
+"y":           3.53 
+},
+{
+ "x": 1945,
+"y":           5.76 
+},
+{
+ "x": 1950,
+"y":           9.71 
+},
+{
+ "x": 1955,
+"y":             14 
+},
+{
+ "x": 1960,
+"y":           21.1 
+} 
+],
+"name": "Medical and Health",
+"info": {
+ "1940": {
+ "Var1": "Medical and Health",
+"Var2": 1940 
+},
+"1945": {
+ "Var1": "Medical and Health",
+"Var2": 1945 
+},
+"1950": {
+ "Var1": "Medical and Health",
+"Var2": 1950 
+},
+"1955": {
+ "Var1": "Medical and Health",
+"Var2": 1955 
+},
+"1960": {
+ "Var1": "Medical and Health",
+"Var2": 1960 
+} 
+},
+"color":  palette.color()  
+},
+{
+ "data": [
+ {
+ "x": 1940,
+"y":           1.04 
+},
+{
+ "x": 1945,
+"y":           1.98 
+},
+{
+ "x": 1950,
+"y":           2.45 
+},
+{
+ "x": 1955,
+"y":            3.4 
+},
+{
+ "x": 1960,
+"y":            5.4 
+} 
+],
+"name": "Personal Care",
+"info": {
+ "1940": {
+ "Var1": "Personal Care",
+"Var2": 1940 
+},
+"1945": {
+ "Var1": "Personal Care",
+"Var2": 1945 
+},
+"1950": {
+ "Var1": "Personal Care",
+"Var2": 1950 
+},
+"1955": {
+ "Var1": "Personal Care",
+"Var2": 1955 
+},
+"1960": {
+ "Var1": "Personal Care",
+"Var2": 1960 
+} 
+},
+"color":  palette.color()  
+},
+{
+ "data": [
+ {
+ "x": 1940,
+"y":          0.341 
+},
+{
+ "x": 1945,
+"y":          0.974 
+},
+{
+ "x": 1950,
+"y":            1.8 
+},
+{
+ "x": 1955,
+"y":            2.6 
+},
+{
+ "x": 1960,
+"y":           3.64 
+} 
+],
+"name": "Private Education",
+"info": {
+ "1940": {
+ "Var1": "Private Education",
+"Var2": 1940 
+},
+"1945": {
+ "Var1": "Private Education",
+"Var2": 1945 
+},
+"1950": {
+ "Var1": "Private Education",
+"Var2": 1950 
+},
+"1955": {
+ "Var1": "Private Education",
+"Var2": 1955 
+},
+"1960": {
+ "Var1": "Private Education",
+"Var2": 1960 
+} 
+},
+"color":  palette.color()  
+} 
+],
+"renderer": "area",
+"id": "chart6" 
+}
+  chartParams.element = document.querySelector('#chart6')
+  
+  var graphchart6 = new Rickshaw.Graph(chartParams);
+  
+  graphchart6.render();
+  
+  var xAxischart6 = new Rickshaw.Graph.Axis.Time({
+ "graph":  graphchart6 ,
+"element":  document.getElementById('xAxischart6')  
+})
+var yAxischart6 = new Rickshaw.Graph.Axis.Y({
+ "graph":  graphchart6 ,
+"orientation": "left",
+"element":  document.getElementById('yAxischart6') ,
+"tickFormat":  Rickshaw.Fixtures.Number.formatKMBT  
+})
+graphchart6.render()
+var legendchart6 = new Rickshaw.Graph.Legend({
+ "graph":  graphchart6 ,
+"element":  document.getElementById('legendchart6')  
+})
+var shelvingchart6 = new Rickshaw.Graph.Behavior.Series.Toggle({
+ "graph":  graphchart6 ,
+"legend":  legendchart6  
+})
+var hoverDetailchart6 = new Rickshaw.Graph.HoverDetail({
+ "graph":  graphchart6  
+})
+var highlightchart6 = new Rickshaw.Graph.Behavior.Series.Highlight({
+ "graph":  graphchart6 ,
+"legend":  legendchart6  
+})
+
+  
+  graphchart6.render();
+  
+</script> 
 
 <hr/>
 
