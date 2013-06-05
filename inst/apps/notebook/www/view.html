@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Markdown Edit</title>
+  <link rel="stylesheet" href="vendor/font-awesome-2.0/css/font-awesome.css">
+  <link rel="stylesheet" href="css/github-style.css">
+  <style type="text/css">
+    body {
+      margin:20px 30px;
+    }
+  </style>
+</head>
+<body>
+<script>
+  document.body.onload = function(){
+    var src = opener.document.getElementById("nbOut");
+    var clonenode = src.cloneNode(true);
+    document.body.appendChild(clonenode);
+  }
+</script>
+</body>

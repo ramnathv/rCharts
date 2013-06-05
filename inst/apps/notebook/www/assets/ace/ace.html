@@ -1,0 +1,28 @@
+<style type="text/css" media="screen">
+#aceeditor { 
+  height: 150px;
+  position: relative;
+  border-top: 40px;
+  border: 1px solid #DDD;
+  border-radius: 4px;
+  border-bottom-right-radius: 0px;
+  margin-top: 10px;
+}
+</style>
+<script type="text/javascript" charset="utf-8"
+  src="{{page.url.widgets}}/ace/js/ace.js" >
+</script>
+<script>
+    var aceeditor = ace.edit("aceeditor");
+    aceeditor.setTheme("ace/theme/tomorrow_night_bright");
+    aceeditor.getSession().setMode("ace/mode/r");
+    var texteditor = $('textarea[id="texteditor"]').hide();
+    aceeditor.getSession().setValue(texteditor.val());
+    aceeditor.getSession().on('change', function(e){
+      texteditor.val(aceeditor.getSession().getValue());
+      texteditor.change();
+    });
+    texteditor.onchange = function() {
+        texteditor.select();
+    };
+</script>

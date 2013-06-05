@@ -1,0 +1,9 @@
+.ace_editor { 
+  height: 150px;
+  position: relative;
+  border-top: 40px;
+  border: 1px solid #DDD;
+  border-radius: 4px;
+  border-bottom-right-radius: 0px;
+  margin-top: 10px;
+}

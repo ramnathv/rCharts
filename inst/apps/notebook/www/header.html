@@ -1,0 +1,80 @@
+<header id="header">
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <a class="brand" href="#" ><i class="icon-bookmark"></i>&nbsp;R Notebook</a>
+      <form class="navbar-form pull-left">
+        
+        <button id="btnConv2" class="btn btn-small btn-primary view" 
+          rel="tooltip" type="submit"
+            title="convert &lt;br&gt;Mac : &#8984; + e&lt;br&gt;Win : ctrl + e">
+          <i class="icon-play icon-white"></i>&nbsp;Knit
+        </button>&nbsp;
+       
+        <span id="menu1" class="input-append">
+          <input id="lefile" type="file" style="display:none">
+          <input id="fileinput" class="input-large" type="text" value="www/example.Rmd" 
+             placeholder="set your local file">
+          <button id="btnBrowse" class="btn btn-small view" rel="tooltip" 
+            title="browse file &lt;br&gt;Mac : &#8984; + o&lt;br&gt;Win : ctrl + o">
+            <i class="icon-folder-open"></i>
+          </button>
+          <button id="btnRead" class="btn btn-small view" rel="tooltip" 
+             title="read file &lt;br&gt;Mac : &#8984; + r&lt;br&gt;Win : ctrl + r">
+             <i class="icon-refresh"></i>
+          </button>
+        </span>&nbsp;
+        <span id="menu2" class="btn-group">
+          <a id="downloadRmd" class="btn btn-small btn-success shiny-download-link" href="" 
+            target="_blank">
+            Download
+          </a>
+          <!--
+          <button id="btnRawMd" class="btn btn-small view" rel="tooltip" 
+            title="view Raw .md &lt;br&gt;Mac : &#8984; + m&lt;br&gt;Win : ctrl + m">
+            View
+          </button>
+          <button id="btnRawHtml"   class="btn btn-small view" rel="tooltip" 
+            title="view Raw .html &lt;br&gt;Mac : &#8984; + h&lt;br&gt;Win : ctrl + h">
+            Raw .html
+          </button>
+          <button id="btnHtml"   class="btn btn-small view" rel="tooltip" 
+            title="view html on other window &lt;br&gt;Mac : &#8984; + alt + h&lt;br&gt;Win : ctrl + alt + h">&nbsp;.html&nbsp;
+          </button>
+          -->
+        </span>
+      </form>
+      <ul class="nav pull-right">
+        <li class="dropdown">
+          <a href="#" id="drop6" role="button" class="dropdown-toggle" data-toggle="dropdown">Theme <b class="caret"></b></a>
+          <ul id="theme-list" class="dropdown-menu" role="menu" aria-labelledby="drop6">
+            <li><a tabindex="-1" href="#" data-value="ace/theme/chrome" class="selected">Chrome</a></li>
+            <li><a tabindex="-1" href="#" data-value="ace/theme/clouds">Clouds</a></li>
+            <li><a tabindex="-1" href="#" data-value="ace/theme/clouds_midnight" class="">Clouds Midnight</a></li>
+            <li><a tabindex="-1" href="#" data-value="ace/theme/cobalt" class="">Cobalt</a></li>
+            <li><a tabindex="-1" href="#" data-value="ace/theme/crimson_editor">Crimson Editor</a></li>
+            <li><a tabindex="-1" href="#" data-value="ace/theme/dawn">Dawn</a></li>
+            <li><a tabindex="-1" href="#" data-value="ace/theme/dawn">Dreamweaver</a></li>
+            <li><a tabindex="-1" href="#" data-value="ace/theme/eclipse">Eclipse</a></li>
+            <li><a tabindex="-1" href="#" data-value="ace/theme/idle_fingers">idleFingers</a></li>
+            <li><a tabindex="-1" href="#" data-value="ace/theme/kr_theme">krTheme</a></li>
+            <li><a tabindex="-1" href="#" data-value="ace/theme/merbivore">Merbivore</a></li>
+            <li><a tabindex="-1" href="#" data-value="ace/theme/merbivore_soft">Merbivore Soft</a></li>
+            <li><a tabindex="-1" href="#" data-value="ace/theme/mono_industrial">Mono Industrial</a></li>
+            <li><a tabindex="-1" href="#" data-value="ace/theme/monokai">Monokai</a></li>
+            <li><a tabindex="-1" href="#" data-value="ace/theme/pastel_on_dark">Pastel on Dark</a></li>
+            <li><a tabindex="-1" href="#" data-value="ace/theme/solarized_dark" class="">Solarized Dark</a></li>
+            <li><a tabindex="-1" href="#" data-value="ace/theme/solarized_light">Solarized Light</a></li>
+            <li><a tabindex="-1" href="#" data-value="ace/theme/textmate">TextMate</a></li>
+            <li><a tabindex="-1" href="#" data-value="ace/theme/tomorrow">Tomorrow</a></li>
+            <li><a tabindex="-1" href="#" data-value="ace/theme/tomorrow_night">Tomorrow Night</a></li>
+            <li><a tabindex="-1" href="#" data-value="ace/theme/tomorrow_night_blue">Tomorrow Night Blue</a></li>
+            <li><a tabindex="-1" href="#" data-value="ace/theme/tomorrow_night_bright">Tomorrow Night Bright</a></li>
+            <li><a tabindex="-1" href="#" data-value="ace/theme/tomorrow_night_eighties">Tomorrow Night 80s</a></li>
+            <li><a tabindex="-1" href="#" data-value="ace/theme/twilight">Twilight</a></li>
+            <li><a tabindex="-1" href="#" data-value="ace/theme/vibrant_ink">Vibrant Ink</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
