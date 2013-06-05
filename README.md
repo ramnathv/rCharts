@@ -1,13 +1,5 @@
 # rCharts
 
-<style>
- img {
-   display: block; 
-   margin-left: auto;
-   margin-right: auto;
-}
-</style>
-
 rCharts is an R package to create, customize and publish interactive javascript visualizations from R using a familiar lattice style plotting interface.
 
 ## Installation
