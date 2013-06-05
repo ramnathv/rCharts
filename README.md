@@ -1,12 +1,14 @@
 # rCharts
 
+<style>img {display:block; text-align:center;}</style>
+
 rCharts is an R package to create, customize and publish interactive javascript visualizations from R using a familiar lattice style plotting interface.
 
 ## Installation
 
 You can install `rCharts` from `github` using the `devtools` package
 
-```
+```coffee
 require(devtools)
 install_github('rCharts', 'ramnathv')
 ```
@@ -19,7 +21,7 @@ The design philosophy behind rCharts is to make the process of creating, customi
 
 `rCharts` uses a formula interface to specify plots, just like the `lattice` package. Here are a few examples you can try out in your R console.
 
-```
+```coffee
 ## Example 1 Facetted Scatterplot
 names(iris) = gsub("\\.", "", names(iris))
 rPlot(SepalLength ~ SepalWidth | Species, data = iris, color = 'Species', type = 'point')
@@ -37,9 +39,8 @@ rCharts supports multiple javascript charting libraries, each with its own stren
 
 We will create our first chart using Polychart, a javascript charting library based on the grammar of graphics, and inspired by ggplot2.
 
-```{r chart1}
-r1 <- rPlot(mpg ~ wt | am + vs, data = mtcars, type = 'point',
-  color = 'gear')
+```coffee
+r1 <- rPlot(mpg ~ wt | am + vs, data = mtcars, type = 'point', color = 'gear')
 r1
 ```
 
@@ -62,7 +63,7 @@ graph_chart1.addHandler(function(type, e){
 
 The next library we will be exploring is Morris.
 
-```{r chart2}
+```coffee
 data(economics, package = 'ggplot2')
 econ <- transform(economics, date = as.character(date))
 m1 <- mPlot(x = 'date', y = c('psavert', 'uempmed'), type = 'Line',
@@ -81,7 +82,7 @@ Hurray! There we have our second chart!
 
 Next, I will demonstrate my all time favorite d3js library, NVD3, which produces amazing interactive visualizations with little customization.
 
-```{r chart3}
+```coffee
 hair_eye_male <- subset(as.data.frame(HairEyeColor), Sex == "Male")
 n1 <- nPlot(Freq ~ Hair, group = "Eye", data = hair_eye_male, 
   type = 'multiBarChart')
@@ -98,7 +99,7 @@ See the interactivity that comes at zero cost!
 
 The next library to demo would be xCharts, a slick looking charting library using d3js, made by TenXer.
 
-```{r chart4}
+```coffee
 require(reshape2)
 uspexp <- melt(USPersonalExpenditure)
 names(uspexp)[1:2] = c('category', 'year')
@@ -107,7 +108,7 @@ x1 <- xPlot(value ~ year, group = 'category', data = uspexp,
 x1
 ```
 
-![xchart](screenshots/xchart.png)
+![xchart](screenshots/xcharts.png)
 
 There is your xChart
 
@@ -115,7 +116,7 @@ There is your xChart
 
 #### [HighCharts](http://www.highcharts.com/)
 
-```{r chart5}
+```coffee
 h1 <- hPlot(x = "Wr.Hnd", y = "NW.Hnd", data = MASS::survey, 
   type = c("line", "bubble", "scatter"), group = "Clap", size = "Age")
 h1
@@ -127,7 +128,7 @@ h1
 
 #### [Leaflet](http://leafletjs.com/)
 
-```{r}
+```coffee
 map3 <- Leaflet$new()
 map3$setView(c(51.505, -0.09), zoom = 13)
 map3$marker(c(51.5, -0.09), bindPopup = "<p> Hi. I am a popup </p>")
@@ -141,7 +142,7 @@ map3
 
 #### [Rickshaw](https://github.com/shutterstock/rickshaw)
 
-```{r chart6}
+```coffee
 usp = reshape2::melt(USPersonalExpenditure)
 p4 <- Rickshaw$new()
 p4$layer(value ~ Var2, group = 'Var1', data = usp, type = 'area')
@@ -158,7 +159,7 @@ rCharts allows you to share your visualization in multiple ways, as a standalone
 
 You can publish your visualization as a standalone html page using the `publish` method. Here is an example. Currently, you can publish your chart as a `gist` or to `rpubs`.
 
-```
+```coffee
 ## 
 names(iris) = gsub("\\.", "", names(iris))
 r1 <- rPlot(SepalLength ~ SepalWidth | Species, data = iris, 
@@ -171,7 +172,7 @@ r1$publish('Scatterplot', host = 'rpubs')
 
 rCharts is easy to embed into a Shiny application using the utility functions `renderChart` and `showOutput`. Here is an example of an [rCharts Shiny App](http://glimmer.rstudio.com/ramnathv/rChartApp/).
 
-```
+```coffee
 ## server.r
 require(rCharts)
 shinyServer(function(input, output) {
