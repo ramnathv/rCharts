@@ -119,18 +119,20 @@ replaceNA <- function(dt, new) {
 
 hPlot <- highchartPlot <- function(..., radius = 3, title = NULL, subtitle = NULL){
     rChart <- Highcharts$new()
-
+    
+    # Todo: switch bar -> column (and vice versa) if y is categorical and x is not?
+    
     # Get layers
     d <- getLayer(...)
     
     # Remove NA and sort data
-    #d$data <- d$data[!is.na(d$data[[d$x]]) & !is.na(d$data[[d$y]]), ]
     replaceNA(d$data, "NA")
+        # Todo: add argument "remove_na"? That remove all missing values
+    
     d$data <- d$data[order(d$data[[d$x]], d$data[[d$y]]), ]
 
     if (!is.null(d$group)) {
         d$data[[d$group]] <- as.character(d$data[[d$group]])
-        #d$data[[d$group]][is.na(d$data[[d$group]])] <- "NA"
         
         # Convert to character because of NA-values
         groups <- sort(as.character(unique(d$data[[d$group]])))
@@ -170,14 +172,14 @@ hPlot <- highchartPlot <- function(..., radius = 3, title = NULL, subtitle = NUL
     
     ## xAxis
     if (is.categorical(d$data[[d$x]])) {
-        rChart$xAxis(title = list(text=d$x), categories = as.character(d$data[[d$x]]), replace = T)
+        rChart$xAxis(title = list(text=d$x), categories = unique(as.character(d$data[[d$x]])), replace = T)
     } else {
         rChart$xAxis(title = list(text=d$x), replace = T)
     }
     
     ## yAxis
     if (is.categorical(d$data[[d$y]])) {
-        rChart$yAxis(title = list(text= d$y), categories = as.character(d$data[[d$y]]), replace = T)
+        rChart$yAxis(title = list(text= d$y), categories = unique(as.character(d$data[[d$y]])), replace = T)
     } else {
         rChart$yAxis(title = list(text= d$y), replace = T)
     }
