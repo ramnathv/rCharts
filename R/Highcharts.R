@@ -97,6 +97,17 @@ Highcharts <- setRefClass("Highcharts", contains = "rCharts", methods = list(
     }
 ))
 
+
+# Utils
+is.categorical <- function(x) is.factor(x) || is.character(x)
+
+replaceNA <- function(dt, new) {
+    # Thanks to Matthew Dowle!
+    for (i in 1:ncol(dt)) {
+        set(dt, which(is.na(dt[[i]])), i, new)
+    }
+}
+
 #' Highcharts Plot
 #' 
 #' ...
@@ -111,14 +122,15 @@ hPlot <- highchartPlot <- function(..., radius = 3, title = NULL, subtitle = NUL
 
     # Get layers
     d <- getLayer(...)
-
+    
     # Remove NA and sort data
-    d$data <- d$data[!is.na(d$data[[d$x]]) & !is.na(d$data[[d$y]]), ]
+    #d$data <- d$data[!is.na(d$data[[d$x]]) & !is.na(d$data[[d$y]]), ]
+    replaceNA(d$data, "NA")
     d$data <- d$data[order(d$data[[d$x]], d$data[[d$y]]), ]
 
     if (!is.null(d$group)) {
         d$data[[d$group]] <- as.character(d$data[[d$group]])
-        d$data[[d$group]][is.na(d$data[[d$group]])] <- "NA"
+        #d$data[[d$group]][is.na(d$data[[d$group]])] <- "NA"
         
         # Convert to character because of NA-values
         groups <- sort(as.character(unique(d$data[[d$group]])))
@@ -134,7 +146,7 @@ hPlot <- highchartPlot <- function(..., radius = 3, title = NULL, subtitle = NUL
             if (types[[i]] %in% c("bubble")) {
                 if (is.null(d$size)) stop("Argument 'size' is missing.")
             }
-            
+    
             rChart$series(
                 data = toJSONArray2(x[c(d$x, d$y, d$size)], json = F, names = F),
                 name = g,
@@ -153,12 +165,26 @@ hPlot <- highchartPlot <- function(..., radius = 3, title = NULL, subtitle = NUL
         
         rChart$legend(enabled = FALSE)
     }
-
-    # Set arguments
-    rChart$xAxis(title = list(text= d$x), replace = T)
-    rChart$yAxis(title = list(text= d$y), replace = T)
+    
+    # Fix default arguments
+    
+    ## xAxis
+    if (is.categorical(d$data[[d$x]])) {
+        rChart$xAxis(title = list(text=d$x), categories = as.character(d$data[[d$x]]), replace = T)
+    } else {
+        rChart$xAxis(title = list(text=d$x), replace = T)
+    }
+    
+    ## yAxis
+    if (is.categorical(d$data[[d$y]])) {
+        rChart$yAxis(title = list(text= d$y), categories = as.character(d$data[[d$y]]), replace = T)
+    } else {
+        rChart$yAxis(title = list(text= d$y), replace = T)
+    }
+    
+    ## title/subtitle
     rChart$title(text = title, replace = T)
     rChart$subtitle(text = subtitle, replace = T)
-
+    
     return(rChart$copy())
 }
