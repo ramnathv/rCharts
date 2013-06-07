@@ -67,12 +67,10 @@ Highcharts <- setRefClass("Highcharts", contains = "rCharts", methods = list(
         params$tooltip <<- setSpec(params$tooltip, ..., replace = replace)
     },
     xAxis = function(..., replace = T) {
-        params$xAxis <<- if (replace) list(list(...))
-        else c(params$xAxis, list(list(...)))
+        params$xAxis <<- setSpec(params$xAxis, ..., replace = replace)
     },
     yAxis = function(..., replace = T) {
-        params$yAxis <<- if (replace) list(list(...))
-        else c(params$yAxis, list(list(...)))
+        params$yAxis <<- setSpec(params$yAxis, ..., replace = replace)
     }
 ))
 
