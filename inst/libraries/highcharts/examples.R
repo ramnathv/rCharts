@@ -17,6 +17,7 @@ a <- hPlot(Pulse ~ Height, data = MASS::survey, type = 'scatter', group = 'Sex',
 a$colors('rgba(223, 83, 83, .5)', 'rgba(119, 152, 191, .5)', 'rgba(60, 179, 113, .5)')
 a$legend(align = 'right', verticalAlign = 'top', layout = 'vertical')
 a$plotOptions(scatter = list(marker = list(symbol = 'circle')))
+a$tooltip(formatter = "#! function() { return round(this.x) + ', ' + round(this.y)} !#")
 a
 
 ## Example 6
