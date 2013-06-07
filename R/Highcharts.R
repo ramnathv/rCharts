@@ -99,10 +99,13 @@ hPlot <- highchartPlot <- function(..., radius = 3, title = NULL, subtitle = NUL
         y = d$data[[d$y]]
     )
     
-    if (!is.null(d$group)) data$group <- as.character(d$data[[d$group]])
+    if (!is.null(d$group)) {
+        data$group <- as.character(d$data[[d$group]])
+        #data$group[is.na(data$group)] <- "NA"  # replace NA
+    }
     if (!is.null(d$size)) data$size <- d$data[[d$size]]
     
-    data <- na.omit(data)  # remove observations with NA's
+    data <- na.omit(data)  # remove remaining observations with NA's
     data <- data[order(data$x, data$y), ]  # order data (due to line charts)
     
     if ("bubble" %in% d$type && is.null(data$size)) stop("'size' data is missing")
