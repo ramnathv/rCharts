@@ -21,5 +21,7 @@ a$tooltip(formatter = "#! function() { return this.x + ', ' + this.y; } !#")
 a
 
 ## Example 6
-a <- hPlot(N ~ Exer, data = freq, type = c('column', 'line'), group = 'M.I', radius = 6)
-a
+hPlot(freq ~ Exer, data = plyr::count(MASS::survey, c('Sex', 'Exer')), type = c('column', 'line'), group = 'Sex', radius = 6)
+
+## Example 7
+hPlot(freq ~ Exer, data = plyr::count(MASS::survey, c('Sex', 'Exer')), type = 'bar', group = 'Sex', group.na = 'NA\'s')
