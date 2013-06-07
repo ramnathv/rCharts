@@ -38,5 +38,6 @@ get_assets_shiny <- function(LIB){
 }
 
 filter_jquery <- function(js){
-  !(basename(js) %in% c('jquery.js', 'jquery.min.js', 'jquery-1.8.2.min.js'))
+  jquery = c('jquery.js', 'jquery.min.js', 'jquery-1.8.2.min.js', 'jquery-1.9.1.min.js')
+  !(basename(js) %in% jquery)
 }
