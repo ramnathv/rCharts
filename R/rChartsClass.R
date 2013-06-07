@@ -18,7 +18,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', LIB = 
   set = function(...){
     # this is a hack, currently for external libraries
     # idea is to initialize LIB, since the set method will always be used.
-    if (length(LIB) == 0){
+    if (length(LIB) == 0 || LIB$url == ""){
       LIB <<- get_lib(lib)
     }
     params <<- modifyList(params, list(...))
