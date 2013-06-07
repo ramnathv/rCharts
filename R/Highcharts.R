@@ -76,16 +76,8 @@ Highcharts <- setRefClass("Highcharts", contains = "rCharts", methods = list(
     }
 ))
 
-
 # Utils
 is.categorical <- function(x) is.factor(x) || is.character(x)
-
-replaceNA <- function(dt, new) {
-    # Thanks to Matthew Dowle!
-    for (i in 1:ncol(dt)) {
-        set(dt, which(is.na(dt[[i]])), i, new)
-    }
-}
 
 #' Highcharts Plot
 #' 
@@ -99,37 +91,33 @@ replaceNA <- function(dt, new) {
 hPlot <- highchartPlot <- function(..., radius = 3, title = NULL, subtitle = NULL){
     rChart <- Highcharts$new()
     
-    # Todo: switch bar -> column (and vice versa) if y is categorical and x is not?
-    
     # Get layers
     d <- getLayer(...)
     
-    # Remove NA and sort data
-    replaceNA(d$data, "NA")
-        # Todo: add argument "remove_na"? That remove all missing values
+    data <- data.frame(
+        x = d$data[[d$x]],
+        y = d$data[[d$y]]
+    )
     
-    d$data <- d$data[order(d$data[[d$x]], d$data[[d$y]]), ]
-
+    if (!is.null(d$group)) data$group <- as.character(d$data[[d$group]])
+    if (!is.null(d$size)) data$size <- d$data[[d$size]]
+    
+    data <- na.omit(data)  # remove observations with NA's
+    data <- data[order(data$x, data$y), ]  # order data (due to line charts)
+    
+    if ("bubble" %in% d$type && is.null(data$size)) stop("'size' data is missing")
+    
     if (!is.null(d$group)) {
-        d$data[[d$group]] <- as.character(d$data[[d$group]])
+        groups <- sort(unique(data$group))
+        types <- rep(d$type, length(groups))  # repeat types to match length of groups
         
-        # Convert to character because of NA-values
-        groups <- sort(as.character(unique(d$data[[d$group]])))
-        
-        # Repeat types to match length of groups
-        types <- rep(d$type, length(groups))
-
-        plyr::ddply(d$data, d$group, function(x) {
-            g <- unique(x[[d$group]])
+        plyr::ddply(data, .(group), function(x) {
+            g <- unique(x$group)
             i <- which(groups == g)
             
-            # Requirements depending on chart type
-            if (types[[i]] %in% c("bubble")) {
-                if (is.null(d$size)) stop("Argument 'size' is missing.")
-            }
-    
+            x$group <- NULL  # fix
             rChart$series(
-                data = toJSONArray2(x[c(d$x, d$y, d$size)], json = F, names = F),
+                data = toJSONArray2(x, json = F, names = F),
                 name = g,
                 type = types[[i]],
                 marker = list(radius = radius)
@@ -139,7 +127,7 @@ hPlot <- highchartPlot <- function(..., radius = 3, title = NULL, subtitle = NUL
     } else {
         
         rChart$series(
-            data = toJSONArray2(d$data[c(d$x, d$y, d$size)], json = F, names = F),
+            data = toJSONArray2(data, json = F, names = F),
             type = d$type[[1]],
             marker = list(radius = radius)
         )
@@ -150,17 +138,17 @@ hPlot <- highchartPlot <- function(..., radius = 3, title = NULL, subtitle = NUL
     # Fix default arguments
     
     ## xAxis
-    if (is.categorical(d$data[[d$x]])) {
-        rChart$xAxis(title = list(text=d$x), categories = unique(as.character(d$data[[d$x]])), replace = T)
+    if (is.categorical(data$x)) {
+        rChart$xAxis(title = list(text = d$x), categories = unique(as.character(data$x)), replace = T)
     } else {
-        rChart$xAxis(title = list(text=d$x), replace = T)
+        rChart$xAxis(title = list(text = d$x), replace = T)
     }
     
     ## yAxis
-    if (is.categorical(d$data[[d$y]])) {
-        rChart$yAxis(title = list(text= d$y), categories = unique(as.character(d$data[[d$y]])), replace = T)
+    if (is.categorical(data$y)) {
+        rChart$yAxis(title = list(text = d$y), categories = unique(as.character(data$y)), replace = T)
     } else {
-        rChart$yAxis(title = list(text= d$y), replace = T)
+        rChart$yAxis(title = list(text = d$y), replace = T)
     }
     
     ## title/subtitle
