@@ -87,8 +87,9 @@ is.categorical <- function(x) is.factor(x) || is.character(x)
 #' @param radius circle size
 #' @param title chart title
 #' @param subtitle chart subttitle
+#' @param group.na replace NA's with chosen value in the group column, or else these observations will be removed
 
-hPlot <- highchartPlot <- function(..., radius = 3, title = NULL, subtitle = NULL){
+hPlot <- highchartPlot <- function(..., radius = 3, title = NULL, subtitle = NULL, group.na = NULL){
     rChart <- Highcharts$new()
     
     # Get layers
@@ -101,18 +102,20 @@ hPlot <- highchartPlot <- function(..., radius = 3, title = NULL, subtitle = NUL
     
     if (!is.null(d$group)) {
         data$group <- as.character(d$data[[d$group]])
-        #data$group[is.na(data$group)] <- "NA"  # replace NA
+        if (!is.null(group.na)) {
+            data$group[is.na(data$group)] <- group.na
+        }
     }
     if (!is.null(d$size)) data$size <- d$data[[d$size]]
     
     nrows <- nrow(data)
     data <- na.omit(data)  # remove remaining observations with NA's
     
-    if (nrows != nrow(data)) warning("Observations including NA's has been removed'")
+    if (nrows != nrow(data)) warning("Observations with NA has been removed")
     
     data <- data[order(data$x, data$y), ]  # order data (due to line charts)
     
-    if ("bubble" %in% d$type && is.null(data$size)) stop("'size' data is missing")
+    if ("bubble" %in% d$type && is.null(data$size)) stop("'size' is missing")
     
     if (!is.null(d$group)) {
         groups <- sort(unique(data$group))
@@ -142,7 +145,7 @@ hPlot <- highchartPlot <- function(..., radius = 3, title = NULL, subtitle = NUL
         rChart$legend(enabled = FALSE)
     }
     
-    # Fix default arguments
+    # Fix defaults
     
     ## xAxis
     if (is.categorical(data$x)) {
@@ -158,8 +161,10 @@ hPlot <- highchartPlot <- function(..., radius = 3, title = NULL, subtitle = NUL
         rChart$yAxis(title = list(text = d$y), replace = T)
     }
     
-    ## title/subtitle
+    ## title
     rChart$title(text = title, replace = T)
+    
+    ## subtitle
     rChart$subtitle(text = subtitle, replace = T)
     
     return(rChart$copy())
