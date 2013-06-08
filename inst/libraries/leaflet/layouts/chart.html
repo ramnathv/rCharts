@@ -62,4 +62,22 @@
         {{/ geoJson }}
       ).addTo(map)
     {{/ addons.geoJson }}
+    
+    {{#addons.legend}}
+    var legend = L.control({position: spec.legend.position});
+    legend.onAdd = function (map) {
+      var div = L.DomUtil.create('div', 'info legend'),
+          labels = spec.legend.labels,
+          colors = spec.legend.colors
+
+      // loop through our density intervals and generate a 
+      // label with a colored square for each interval
+      for (var i = 0; i < labels.length; i++) {
+          div.innerHTML += '<i style="background:' +  colors[i] + '"></i>' + 
+            labels[i] + "<br>"
+      }
+     return div;
+    };
+    legend.addTo(map); 
+   {{/addons.legend}}
 </script>

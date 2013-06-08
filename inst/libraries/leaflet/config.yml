@@ -1,5 +1,5 @@
 leaflet:
-  css: [external/leaflet.css, external/leaflet-rCharts.css]
+  css: [external/leaflet.css, external/leaflet-rCharts.css, external/legend.css]
   jshead: [external/leaflet.js, external/leaflet-providers.js]
   cdn:
     css: http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css

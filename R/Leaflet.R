@@ -66,6 +66,10 @@ Leaflet = setRefClass('Leaflet', contains = 'rCharts', methods = list(
       params$geoJson <<- FALSE
     }
   },
+  legend = function(position, colors, labels){
+    params$addons$legend <<- TRUE
+    params$legend <<- list(position = position, colors = colors, labels = labels)
+  },
   getPayload = function(chartId){
     skip = c('marker', 'circle', 'addons', 'geoJson')
     geoJson = toJSON2(params$geoJson)
