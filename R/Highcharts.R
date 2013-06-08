@@ -71,6 +71,27 @@ Highcharts <- setRefClass("Highcharts", contains = "rCharts", methods = list(
     },
     yAxis = function(..., replace = T) {
         params$yAxis <<- setSpec(params$yAxis, ..., replace = replace)
+    },
+    
+    # Custom add data method
+    data = function(x = NULL, y = NULL, ...) {
+        if (is.data.frame(x)) {
+            for (i in colnames(x)) {
+                if (is.numeric(x[[i]])) {
+                    series(name = i, data = x[[i]], ...)
+                } else {
+                    warning (sprintf("Column '%s' wasn't added since it's not a numeric", i))
+                }
+            }
+        } else {
+            if (is.null(y) || !is.numeric(y)) {
+                series(data = x, ...)
+            } else {
+                if (length(x) != length(y)) stop ("Arguments x and y must be of the same length")
+                xy <- lapply(1:length(x), function(i) list(x[i], y[i]))
+                series(data = xy, ...)
+            }
+        }
     }
 ))
 
