@@ -23,9 +23,9 @@ editor.commands.addCommand({
 });
 editor.commands.addCommand({
   name: 'compileNotebook',
-  bindKey: 'F4|Ctrl-Shift-H',
+  bindKey: 'Command-E|Ctrl-E',
   exec: function(editor) {
-    $('#proxy button').trigger('click');
+    $('#btnConv2').trigger('click');
   }
 });
 
