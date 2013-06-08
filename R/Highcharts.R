@@ -13,7 +13,7 @@ Highcharts <- setRefClass("Highcharts", contains = "rCharts", methods = list(
         # Set params before rendering
         params$chart$renderTo <<- chartId
 
-        list(chartParams = toJSON(params), chartId = chartId)
+        list(chartParams = toJSON2(params), chartId = chartId)
     },
 
     #' Wrapper methods
@@ -66,13 +66,11 @@ Highcharts <- setRefClass("Highcharts", contains = "rCharts", methods = list(
     tooltip = function(..., replace = T){
         params$tooltip <<- setSpec(params$tooltip, ..., replace = replace)
     },
-    xAxis = function(..., replace = F) {
-        params$xAxis <<- if (replace) list(list(...))
-        else c(params$xAxis, list(list(...)))
+    xAxis = function(..., replace = T) {
+        params$xAxis <<- setSpec(params$xAxis, ..., replace = replace)
     },
-    yAxis = function(..., replace = F) {
-        params$yAxis <<- if (replace) list(list(...))
-        else c(params$yAxis, list(list(...)))
+    yAxis = function(..., replace = T) {
+        params$yAxis <<- setSpec(params$yAxis, ..., replace = replace)
     },
     
     # Custom add data method
@@ -97,6 +95,9 @@ Highcharts <- setRefClass("Highcharts", contains = "rCharts", methods = list(
     }
 ))
 
+# Utils
+is.categorical <- function(x) is.factor(x) || is.character(x)
+
 #' Highcharts Plot
 #' 
 #' ...
@@ -105,38 +106,47 @@ Highcharts <- setRefClass("Highcharts", contains = "rCharts", methods = list(
 #' @param radius circle size
 #' @param title chart title
 #' @param subtitle chart subttitle
+#' @param group.na replace NA's with chosen value in the group column, or else these observations will be removed
 
-hPlot <- highchartPlot <- function(..., radius = 3, title = NULL, subtitle = NULL){
+hPlot <- highchartPlot <- function(..., radius = 3, title = NULL, subtitle = NULL, group.na = NULL){
     rChart <- Highcharts$new()
-
+    
     # Get layers
     d <- getLayer(...)
-
-    # Remove NA and sort data
-    d$data <- d$data[!is.na(d$data[[d$x]]) & !is.na(d$data[[d$y]]), ]
-    d$data <- d$data[order(d$data[[d$x]], d$data[[d$y]]), ]
-
+    
+    data <- data.frame(
+        x = d$data[[d$x]],
+        y = d$data[[d$y]]
+    )
+    
     if (!is.null(d$group)) {
-        d$data[[d$group]] <- as.character(d$data[[d$group]])
-        d$data[[d$group]][is.na(d$data[[d$group]])] <- "NA"
+        data$group <- as.character(d$data[[d$group]])
+        if (!is.null(group.na)) {
+            data$group[is.na(data$group)] <- group.na
+        }
+    }
+    if (!is.null(d$size)) data$size <- d$data[[d$size]]
+    
+    nrows <- nrow(data)
+    data <- na.omit(data)  # remove remaining observations with NA's
+    
+    if (nrows != nrow(data)) warning("Observations with NA has been removed")
+    
+    data <- data[order(data$x, data$y), ]  # order data (due to line charts)
+    
+    if ("bubble" %in% d$type && is.null(data$size)) stop("'size' is missing")
+    
+    if (!is.null(d$group)) {
+        groups <- sort(unique(data$group))
+        types <- rep(d$type, length(groups))  # repeat types to match length of groups
         
-        # Convert to character because of NA-values
-        groups <- sort(as.character(unique(d$data[[d$group]])))
-        
-        # Repeat types to match length of groups
-        types <- rep(d$type, length(groups))
-
-        plyr::ddply(d$data, d$group, function(x) {
-            g <- unique(x[[d$group]])
+        plyr::ddply(data, .(group), function(x) {
+            g <- unique(x$group)
             i <- which(groups == g)
             
-            # Requirements depending on chart type
-            if (types[[i]] %in% c("bubble")) {
-                if (is.null(d$size)) stop("Argument 'size' is missing.")
-            }
-            
+            x$group <- NULL  # fix
             rChart$series(
-                data = toJSONArray2(x[c(d$x, d$y, d$size)], json = F, names = F),
+                data = toJSONArray2(x, json = F, names = F),
                 name = g,
                 type = types[[i]],
                 marker = list(radius = radius)
@@ -146,19 +156,35 @@ hPlot <- highchartPlot <- function(..., radius = 3, title = NULL, subtitle = NUL
     } else {
         
         rChart$series(
-            data = toJSONArray2(d$data[c(d$x, d$y, d$size)], json = F, names = F),
+            data = toJSONArray2(data, json = F, names = F),
             type = d$type[[1]],
             marker = list(radius = radius)
         )
         
         rChart$legend(enabled = FALSE)
     }
-
-    # Set arguments
-    rChart$xAxis(title = list(text= d$x), replace = T)
-    rChart$yAxis(title = list(text= d$y), replace = T)
+    
+    # Fix defaults
+    
+    ## xAxis
+    if (is.categorical(data$x)) {
+        rChart$xAxis(title = list(text = d$x), categories = unique(as.character(data$x)), replace = T)
+    } else {
+        rChart$xAxis(title = list(text = d$x), replace = T)
+    }
+    
+    ## yAxis
+    if (is.categorical(data$y)) {
+        rChart$yAxis(title = list(text = d$y), categories = unique(as.character(data$y)), replace = T)
+    } else {
+        rChart$yAxis(title = list(text = d$y), replace = T)
+    }
+    
+    ## title
     rChart$title(text = title, replace = T)
+    
+    ## subtitle
     rChart$subtitle(text = subtitle, replace = T)
-
+    
     return(rChart$copy())
 }
