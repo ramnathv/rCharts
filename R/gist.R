@@ -64,7 +64,7 @@ get_token <- function(username, pwd){
   return(fromJSON(response[1])$token)
 }
 
-post_gist <- function(gist, viewer = getOption('GIST_VIEWER', 'http://pagist.github.io')){
+post_gist <- function(gist, viewer = 'http://rcharts.github.io/viewer/?'){
   require(httr)
   if (is.null(getOption('github.username'))){
     username <- readline("Please enter your github username: ")
@@ -88,5 +88,5 @@ post_gist <- function(gist, viewer = getOption('GIST_VIEWER', 'http://pagist.git
   )
   html_url = content(response)$html_url
   message('Your gist has been published')
-  message('View chart at ', paste(viewer, basename(html_url), sep = "/"))
+  message('View chart at ', paste(viewer, basename(html_url), sep = ""))
 }
