@@ -80,4 +80,13 @@
     };
     legend.addTo(map); 
    {{/addons.legend}}
+   
+   {{#addons.fullscreen}}
+   
+     L.control.fullscreen({
+       position: 'topleft',
+       title: 'Show me the fullscreen !'
+    }).addTo(map);
+   
+   {{/addons.fullscreen}}
 </script>

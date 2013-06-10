@@ -7,6 +7,9 @@ Leaflet = setRefClass('Leaflet', contains = 'rCharts', methods = list(
   enablePopover = function(e = TRUE){
     params$addons$enablePopover <<- e
   },
+  fullScreen = function(e = TRUE){
+    params$addons$fullscreen <<- e
+  },
   setView = function(center, zoom = 10, ...){
     params <<- c(params, list(center = center, zoom = zoom))
   },
