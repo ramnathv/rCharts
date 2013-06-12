@@ -78,14 +78,14 @@ Leaflet = setRefClass('Leaflet', contains = 'rCharts', methods = list(
     geoJson = toJSON2(params$geoJson)
     marker = paste(lapply(params$marker, toChain, obj =  'L'), collapse = '\n')
     # circle = paste(lapply(params$circle, toChain, obj =  'L'), collapse = '\n')
-    # circle = toChain(params$circle, obj = 'L')
+    circle = toChain(params$circle, obj = 'L')
     chartParams = toJSON(params[!(names(params) %in% skip)])
     list(
       chartParams = chartParams, 
       chartId = chartId, 
       lib = basename(lib),
       marker = marker,
-      # circle = circle,
+      circle = circle,
       addons = params$addons,
       geoJson = geoJson
     )
