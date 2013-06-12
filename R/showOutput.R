@@ -7,17 +7,20 @@
 #' @params lib name of js library used
 #' @params package name where js library resides
 #' @export
-chartOutput <- showOutput <- function(outputId, lib = NULL, package = 'rCharts'){
+chartOutput <- showOutput <- function(outputId, lib = NULL, package = 'rCharts', 
+    add_lib = TRUE){
   if (!is.null(lib)){
     LIB <- get_lib(lib)
   } else if (exists(".rChart_object")) {
     LIB <- .rChart_object$LIB
   }
-  suppressMessages(singleton(addResourcePath(LIB$name, LIB$url)))
+  if (add_lib){
+    suppressMessages(singleton(addResourcePath(LIB$name, LIB$url)))
+  }
   div(
     id = outputId, 
     class=paste('shiny-html-output', basename(LIB$name)),
-    tagList(get_assets_shiny(LIB))
+    ifelse(add_lib, tagList(get_assets_shiny(LIB)), "")
   )
 }
 
