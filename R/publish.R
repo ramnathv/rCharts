@@ -1,13 +1,17 @@
-publish_ <- function(files, ...){
+publish_ <- function(files, description, id, ...){
   UseMethod('publish_')
 }
 
-publish_.gist <- function(files, description, ...){
+publish_.gist <- function(files, description, id, ...){
   gist = create_gist(files, description = description, ...)
-  post_gist(gist)
+  if (is.null(id)){
+    post_gist(gist)
+  } else {
+    update_gist(gist, id)
+  }
 }
 
-publish_.rpubs <- function(files, description, ...){
+publish_.rpubs <- function(files, description, id, ...){
   htmlFile = grep('.html$', files, value = T)
   url = markdown::rpubsUpload(title = description, htmlFile, ...)
   return(url)

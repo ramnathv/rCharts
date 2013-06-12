@@ -66,14 +66,7 @@ get_token <- function(username, pwd){
 
 post_gist <- function(gist, viewer = 'http://rcharts.github.io/viewer/?'){
   require(httr)
-  if (is.null(getOption('github.username'))){
-    username <- readline("Please enter your github username: ")
-    options(github.username = username)
-  }
-  if (is.null(getOption('github.password'))){
-    password <- readline("Please enter your github password: ")
-    options(github.password = password)
-  }
+  credentials = get_credentials()
   response = POST(
     url = 'https://api.github.com/gists',
     body = gist,
@@ -89,4 +82,36 @@ post_gist <- function(gist, viewer = 'http://rcharts.github.io/viewer/?'){
   html_url = content(response)$html_url
   message('Your gist has been published')
   message('View chart at ', paste(viewer, basename(html_url), sep = ""))
+}
+
+# REFACTOR: Refactor to consolidate update_gist and post_gist
+update_gist <- function(gist, id, viewer = 'http://rcharts.github.io/viewer/?'){
+  require(httr)
+  credentials = get_credentials()
+  response = PATCH(
+    url = sprintf('https://api.github.com/gists/%s', id),
+    body = gist,
+    config = c(
+      authenticate(
+        getOption('github.username'), 
+        getOption('github.password'), 
+        type = 'basic'
+      ),
+      add_headers("User-Agent" = "Dummy")
+    )
+  )
+  html_url = content(response)$html_url
+  message('Your gist has been updated')
+  message('View chart at ', paste(viewer, basename(html_url), sep = ""))
+}
+
+get_credentials = function(){
+  if (is.null(getOption('github.username'))){
+    username <- readline("Please enter your github username: ")
+    options(github.username = username)
+  }
+  if (is.null(getOption('github.password'))){
+    password <- readline("Please enter your github password: ")
+    options(github.password = password)
+  }
 }

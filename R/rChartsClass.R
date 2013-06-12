@@ -69,7 +69,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', LIB = 
       shiny::runApp(file.path(system.file(package = "rCharts"), "shiny"))
     }
   },
-  publish = function(description = "", ..., host = 'gist'){
+  publish = function(description = "", id = NULL, ..., host = 'gist'){
     htmlFile = file.path(tempdir(), 'index.html'); on.exit(unlink(htmlFile))
     .self$save(destfile = htmlFile, cdn = T)
     if (!is.null(.self$srccode)){
@@ -80,7 +80,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', LIB = 
       files = htmlFile
     }
     class(files) = host
-    publish_(files = files, description = description, ...)
+    publish_(files = files, description = description, id = id, ...)
   }
 ))
 
