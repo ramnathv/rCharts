@@ -82,6 +82,7 @@ post_gist <- function(gist, viewer = 'http://rcharts.github.io/viewer/?'){
   html_url = content(response)$html_url
   message('Your gist has been published')
   message('View chart at ', paste(viewer, basename(html_url), sep = ""))
+  invisible(basename(html_url))
 }
 
 # REFACTOR: Refactor to consolidate update_gist and post_gist
@@ -103,6 +104,7 @@ update_gist <- function(gist, id, viewer = 'http://rcharts.github.io/viewer/?'){
   html_url = content(response)$html_url
   message('Your gist has been updated')
   message('View chart at ', paste(viewer, basename(html_url), sep = ""))
+  invisible(basename(html_url))
 }
 
 get_credentials = function(){
