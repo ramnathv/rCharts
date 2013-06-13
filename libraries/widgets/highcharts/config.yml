@@ -1,0 +1,10 @@
+highcharts:
+  jshead:
+    - js/jquery-1.9.1.min.js
+    - js/highcharts.js
+    - js/highcharts-more.js
+  cdn:
+    jshead:
+      - "http://code.jquery.com/jquery-1.9.1.min.js"
+      - "http://code.highcharts.com/highcharts.js"
+      - "http://code.highcharts.com/highcharts-more.js"

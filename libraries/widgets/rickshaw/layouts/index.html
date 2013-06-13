@@ -1,0 +1,23 @@
+<!doctype html> 
+<head>
+  <script src="http://code.shutterstock.com/rickshaw/vendor/d3.v2.js"></script>  
+  <script src="http://code.shutterstock.com/rickshaw/rickshaw.min.js"></script> 
+  <style>
+    #chart {
+      width: 400px;
+    }
+  </style>
+</head>
+<body>
+  <div id="chart"></div> 
+</body>
+  <script type='text/javascript'> 
+  chartParams = {"series":[{"data":[{"x":4,"y":3},{"x":6,"y":4},{"x":8,"y":12}],"color":"#DEEBF7"},{"data":[{"x":4,"y":8},{"x":6,"y":3},{"x":8,"y":2}],"color":"#9ECAE1"}],"renderer":"bar","dom":"chart","id":"chart"};
+  chartParams.element = document.querySelector('#chart')
+  
+  var graphchart = new Rickshaw.Graph({"series":[{"data":[{"x":4,"y":3},{"x":6,"y":4},{"x":8,"y":12}],"color":"#DEEBF7"},{"data":[{"x":4,"y":8},{"x":6,"y":3},{"x":8,"y":2}],"color":"#9ECAE1"}],"renderer":"bar","dom":"chart","id":"chart"});
+  graphchart.render();
+
+</script>
+  
+</html>
