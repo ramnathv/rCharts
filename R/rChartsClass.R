@@ -1,5 +1,6 @@
 rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', LIB = 'list',
-    srccode = 'ANY', tObj = 'list', container = 'character', html_id = 'character'), 
+    srccode = 'ANY', tObj = 'list', container = 'character', html_id = 'character', 
+    templates = 'list'), 
       methods = list(
   initialize = function(){
     srccode <<- NULL     # source code to create the chart
@@ -13,6 +14,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', LIB = 
       width = getOption('RCHART_WIDTH', 800),  # width of the container
       height = getOption('RCHART_HEIGHT', 400) # height of the container
     )
+    templates <<- list(page = 'rChart.html', chartDiv = NULL)
   },
   addParams = function(...){
     params <<- modifyList(params, list(...))
@@ -38,13 +40,17 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', LIB = 
   print = function(chartId = NULL, include_assets = F, ...){
     params$dom <<- chartId %||% params$dom
     assetHTML <- ifelse(include_assets, add_lib_assets(lib, ...), "")
-    chartDiv = sprintf("<%s id='%s' class='rChart %s'></%s>", 
-      container, params$dom, LIB$name, container)
+    if (is.null(templates$chartDiv)){
+      chartDiv =  sprintf("<%s id='%s' class='rChart %s'></%s>", 
+        container, params$dom, LIB$name, container)
+    } else {
+      chartDiv = render_template(templates$chartDiv, list(chartId = params$dom))
+    }
     writeLines(c(assetHTML, chartDiv, .self$html(params$dom)))
   },
   render = function(chartId = NULL, cdn = F){
     params$dom <<- chartId %||% params$dom
-    template = read_template(getOption('RCHART_TEMPLATE', 'rChart.html'))
+    template = read_template(getOption('RCHART_TEMPLATE', templates$page))
     html = render_template(template, list(
       params = params,
       assets = get_assets(LIB, static = T, cdn = cdn),
