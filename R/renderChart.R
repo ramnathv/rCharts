@@ -24,7 +24,9 @@ renderMap = function(expr, env = parent.frame(), quoted = FALSE){
   func <- shiny::exprToFunction(expr, env, quoted)
   function() {
     rChart_ <- func()
+    map_style <- sprintf("<style>.leaflet {width: %spx; height: %spx} </style>",
+      rChart_$params$width, rChart_$params$height)
     map_div = sprintf('<div id="%s" class="rChart leaflet"></div>', rChart_$params$dom)
-    HTML(paste(c(map_div, rChart_$html()), collapse = '\n'))
+    HTML(paste(c(map_style, map_div, rChart_$html()), collapse = '\n'))
   }
 }
