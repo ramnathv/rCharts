@@ -5659,8 +5659,12 @@ L
 
 ```r
 usp = reshape2::melt(USPersonalExpenditure)
+# get the decades into a date Rickshaw likes
+usp$Var2 <- as.numeric(as.POSIXct(paste0(usp$Var2, "-01-01")))
 p4 <- Rickshaw$new()
 p4$layer(value ~ Var2, group = "Var1", data = usp, type = "area", width = 560)
+# add a helpful slider this easily; other features TRUE as a default
+p4$set(slider = TRUE)
 p4$print("chart6")
 ```
 
@@ -5683,47 +5687,47 @@ p4$print("chart6")
  {
  "data": [
  {
- "x": 1940,
+ "x":     -946749600,
 "y":           22.2 
 },
 {
- "x": 1945,
+ "x":     -788900400,
 "y":           44.5 
 },
 {
- "x": 1950,
+ "x":     -631130400,
 "y":           59.6 
 },
 {
- "x": 1955,
+ "x":     -473364000,
 "y":           73.2 
 },
 {
- "x": 1960,
+ "x":     -315597600,
 "y":           86.8 
 } 
 ],
 "name": "Food and Tobacco",
 "info": {
- "1940": {
+ "-946749600": {
  "Var1": "Food and Tobacco",
-"Var2": 1940 
+"Var2":     -946749600 
 },
-"1945": {
+"-788900400": {
  "Var1": "Food and Tobacco",
-"Var2": 1945 
+"Var2":     -788900400 
 },
-"1950": {
+"-631130400": {
  "Var1": "Food and Tobacco",
-"Var2": 1950 
+"Var2":     -631130400 
 },
-"1955": {
+"-473364000": {
  "Var1": "Food and Tobacco",
-"Var2": 1955 
+"Var2":     -473364000 
 },
-"1960": {
+"-315597600": {
  "Var1": "Food and Tobacco",
-"Var2": 1960 
+"Var2":     -315597600 
 } 
 },
 "color":  palette.color()  
@@ -5731,47 +5735,47 @@ p4$print("chart6")
 {
  "data": [
  {
- "x": 1940,
+ "x":     -946749600,
 "y":           10.5 
 },
 {
- "x": 1945,
+ "x":     -788900400,
 "y":           15.5 
 },
 {
- "x": 1950,
+ "x":     -631130400,
 "y":             29 
 },
 {
- "x": 1955,
+ "x":     -473364000,
 "y":           36.5 
 },
 {
- "x": 1960,
+ "x":     -315597600,
 "y":           46.2 
 } 
 ],
 "name": "Household Operation",
 "info": {
- "1940": {
+ "-946749600": {
  "Var1": "Household Operation",
-"Var2": 1940 
+"Var2":     -946749600 
 },
-"1945": {
+"-788900400": {
  "Var1": "Household Operation",
-"Var2": 1945 
+"Var2":     -788900400 
 },
-"1950": {
+"-631130400": {
  "Var1": "Household Operation",
-"Var2": 1950 
+"Var2":     -631130400 
 },
-"1955": {
+"-473364000": {
  "Var1": "Household Operation",
-"Var2": 1955 
+"Var2":     -473364000 
 },
-"1960": {
+"-315597600": {
  "Var1": "Household Operation",
-"Var2": 1960 
+"Var2":     -315597600 
 } 
 },
 "color":  palette.color()  
@@ -5779,47 +5783,47 @@ p4$print("chart6")
 {
  "data": [
  {
- "x": 1940,
+ "x":     -946749600,
 "y":           3.53 
 },
 {
- "x": 1945,
+ "x":     -788900400,
 "y":           5.76 
 },
 {
- "x": 1950,
+ "x":     -631130400,
 "y":           9.71 
 },
 {
- "x": 1955,
+ "x":     -473364000,
 "y":             14 
 },
 {
- "x": 1960,
+ "x":     -315597600,
 "y":           21.1 
 } 
 ],
 "name": "Medical and Health",
 "info": {
- "1940": {
+ "-946749600": {
  "Var1": "Medical and Health",
-"Var2": 1940 
+"Var2":     -946749600 
 },
-"1945": {
+"-788900400": {
  "Var1": "Medical and Health",
-"Var2": 1945 
+"Var2":     -788900400 
 },
-"1950": {
+"-631130400": {
  "Var1": "Medical and Health",
-"Var2": 1950 
+"Var2":     -631130400 
 },
-"1955": {
+"-473364000": {
  "Var1": "Medical and Health",
-"Var2": 1955 
+"Var2":     -473364000 
 },
-"1960": {
+"-315597600": {
  "Var1": "Medical and Health",
-"Var2": 1960 
+"Var2":     -315597600 
 } 
 },
 "color":  palette.color()  
@@ -5827,47 +5831,47 @@ p4$print("chart6")
 {
  "data": [
  {
- "x": 1940,
+ "x":     -946749600,
 "y":           1.04 
 },
 {
- "x": 1945,
+ "x":     -788900400,
 "y":           1.98 
 },
 {
- "x": 1950,
+ "x":     -631130400,
 "y":           2.45 
 },
 {
- "x": 1955,
+ "x":     -473364000,
 "y":            3.4 
 },
 {
- "x": 1960,
+ "x":     -315597600,
 "y":            5.4 
 } 
 ],
 "name": "Personal Care",
 "info": {
- "1940": {
+ "-946749600": {
  "Var1": "Personal Care",
-"Var2": 1940 
+"Var2":     -946749600 
 },
-"1945": {
+"-788900400": {
  "Var1": "Personal Care",
-"Var2": 1945 
+"Var2":     -788900400 
 },
-"1950": {
+"-631130400": {
  "Var1": "Personal Care",
-"Var2": 1950 
+"Var2":     -631130400 
 },
-"1955": {
+"-473364000": {
  "Var1": "Personal Care",
-"Var2": 1955 
+"Var2":     -473364000 
 },
-"1960": {
+"-315597600": {
  "Var1": "Personal Care",
-"Var2": 1960 
+"Var2":     -315597600 
 } 
 },
 "color":  palette.color()  
@@ -5875,47 +5879,47 @@ p4$print("chart6")
 {
  "data": [
  {
- "x": 1940,
+ "x":     -946749600,
 "y":          0.341 
 },
 {
- "x": 1945,
+ "x":     -788900400,
 "y":          0.974 
 },
 {
- "x": 1950,
+ "x":     -631130400,
 "y":            1.8 
 },
 {
- "x": 1955,
+ "x":     -473364000,
 "y":            2.6 
 },
 {
- "x": 1960,
+ "x":     -315597600,
 "y":           3.64 
 } 
 ],
 "name": "Private Education",
 "info": {
- "1940": {
+ "-946749600": {
  "Var1": "Private Education",
-"Var2": 1940 
+"Var2":     -946749600 
 },
-"1945": {
+"-788900400": {
  "Var1": "Private Education",
-"Var2": 1945 
+"Var2":     -788900400 
 },
-"1950": {
+"-631130400": {
  "Var1": "Private Education",
-"Var2": 1950 
+"Var2":     -631130400 
 },
-"1955": {
+"-473364000": {
  "Var1": "Private Education",
-"Var2": 1955 
+"Var2":     -473364000 
 },
-"1960": {
+"-315597600": {
  "Var1": "Private Education",
-"Var2": 1960 
+"Var2":     -315597600 
 } 
 },
 "color":  palette.color()  
@@ -5955,7 +5959,10 @@ var highlightchart6 = new Rickshaw.Graph.Behavior.Series.Highlight({
  "graph":  graphchart6 ,
 "legend":  legendchart6  
 })
-
+var sliderchart6 = new Rickshaw.Graph.RangeSlider({
+ "graph":  graphchart6 ,
+"element":  document.getElementById('sliderchart6')  
+})
   
   graphchart6.render();
   

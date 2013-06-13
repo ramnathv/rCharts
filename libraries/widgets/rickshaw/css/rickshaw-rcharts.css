@@ -1,8 +1,7 @@
 .chart_container {
   position: relative;
  display: inline-block;
-  font-family: Arial, Helvetica, sans-serif; height: 400px; width: 600px
-} div
+  font-family: Arial, Helvetica, sans-serif;} div
 .rickshaw_graph.rChart {
   display: inline-block;
   margin-left: 40px; position:relative;
