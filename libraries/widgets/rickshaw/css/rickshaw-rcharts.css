@@ -16,7 +16,15 @@
   top: 0;
   right: -160px;
   vertical-align: top;
-} 
+}
+.rickshaw_legend .label {color: white;}
+.rickshaw_legend {
+position: absolute;
+top: 0;
+right: 350px;
+vertical-align: top;
+}
+
 .slider {
   margin-left: 40px;
   margin-top: 12px;
