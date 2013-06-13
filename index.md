@@ -5649,6 +5649,7 @@ L
 </script>
 
 
+
 - - -
 
 ---
@@ -5659,17 +5660,23 @@ L
 ```r
 usp = reshape2::melt(USPersonalExpenditure)
 p4 <- Rickshaw$new()
-p4$layer(value ~ Var2, group = "Var1", data = usp, type = "area")
+p4$layer(value ~ Var2, group = "Var1", data = usp, type = "area", width = 560)
 p4$print("chart6")
 ```
 
 
-<div id='chart6' class='rChart rickshaw'></div>
+<div class='chart_container'>
+ <div id='chart6' class='rChart rickshaw'></div>
+  <div id='yAxischart6' class='yAxis'></div>
+  <!-- <div id='xAxischart6' class='xAxis'></div> -->
+  <div id='legendchart6' class='legend'></div>
+  <div id='sliderchart6' class='slider'></div>
+</div>
 <script type='text/javascript'> 
   var palette = new Rickshaw.Color.Palette({ scheme: "colorwheel" });
   var chartParams = {
  "dom": "chart6",
-"width":            600,
+"width":            560,
 "height":            400,
 "scheme": "colorwheel",
 "series": [
@@ -5924,8 +5931,7 @@ p4$print("chart6")
   graphchart6.render();
   
   var xAxischart6 = new Rickshaw.Graph.Axis.Time({
- "graph":  graphchart6 ,
-"element":  document.getElementById('xAxischart6')  
+ "graph":  graphchart6  
 })
 var yAxischart6 = new Rickshaw.Graph.Axis.Y({
  "graph":  graphchart6 ,
@@ -5954,6 +5960,7 @@ var highlightchart6 = new Rickshaw.Graph.Behavior.Series.Highlight({
   graphchart6.render();
   
 </script> 
+
 
 
 - - -

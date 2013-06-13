@@ -12,6 +12,7 @@
     <![endif]-->
         <link rel=stylesheet href="libraries/widgets/rickshaw/css/rickshaw.min.css"></link>
 <link rel=stylesheet href="libraries/widgets/rickshaw/css/jquery-ui.css"></link>
+<link rel=stylesheet href="libraries/widgets/rickshaw/css/rickshaw-rcharts.css"></link>
 <link rel=stylesheet href="libraries/widgets/nvd3/css/nv.d3.css"></link>
 <link rel=stylesheet href="libraries/widgets/leaflet/external/leaflet.css"></link>
 <link rel=stylesheet href="libraries/widgets/leaflet/external/leaflet-rCharts.css"></link>
@@ -5676,17 +5677,23 @@ L
 <h4><a href="https://github.com/shutterstock/rickshaw">Rickshaw</a></h4>
 <pre><code class="r">usp = reshape2::melt(USPersonalExpenditure)
 p4 &lt;- Rickshaw$new()
-p4$layer(value ~ Var2, group = &quot;Var1&quot;, data = usp, type = &quot;area&quot;)
+p4$layer(value ~ Var2, group = &quot;Var1&quot;, data = usp, type = &quot;area&quot;, width = 560)
 p4$print(&quot;chart6&quot;)
 </code></pre>
 
-<div id='chart6' class='rChart rickshaw'></div>
+<div class='chart_container'>
+ <div id='chart6' class='rChart rickshaw'></div>
+  <div id='yAxischart6' class='yAxis'></div>
+  <!-- <div id='xAxischart6' class='xAxis'></div> -->
+  <div id='legendchart6' class='legend'></div>
+  <div id='sliderchart6' class='slider'></div>
+</div>
 
 <script type='text/javascript'> 
   var palette = new Rickshaw.Color.Palette({ scheme: "colorwheel" });
   var chartParams = {
  "dom": "chart6",
-"width":            600,
+"width":            560,
 "height":            400,
 "scheme": "colorwheel",
 "series": [
@@ -5941,8 +5948,7 @@ p4$print(&quot;chart6&quot;)
   graphchart6.render();
   
   var xAxischart6 = new Rickshaw.Graph.Axis.Time({
- "graph":  graphchart6 ,
-"element":  document.getElementById('xAxischart6')  
+ "graph":  graphchart6  
 })
 var yAxischart6 = new Rickshaw.Graph.Axis.Y({
  "graph":  graphchart6 ,

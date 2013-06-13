@@ -164,6 +164,7 @@ map3$marker(c(51.495, -0.083), bindPopup = "<p> Hi. I am another popup </p>")
 map3$print('chart7')
 ```
 
+
 - - -
 
 ---
@@ -173,9 +174,10 @@ map3$print('chart7')
 ```{r chart6}
 usp = reshape2::melt(USPersonalExpenditure)
 p4 <- Rickshaw$new()
-p4$layer(value ~ Var2, group = 'Var1', data = usp, type = 'area')
+p4$layer(value ~ Var2, group = 'Var1', data = usp, type = 'area', width = 560)
 p4$print('chart6')
 ```
+
 
 - - -
 
