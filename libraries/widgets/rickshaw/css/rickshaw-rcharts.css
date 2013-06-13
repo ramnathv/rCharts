@@ -1,0 +1,31 @@
+.chart_container {
+  position: relative;
+ display: inline-block;
+  font-family: Arial, Helvetica, sans-serif;} div
+.rickshaw_graph.rChart {
+  display: inline-block;
+  margin-left: 40px; position:relative;
+} .rickshaw_graph svg{height: auto; width:auto ; } 
+.yAxis {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40px;}
+ .yAxis svg {height:auto;} .legend {
+  position: absolute;
+  top: 0;
+  right: -160px;
+  vertical-align: top;
+}
+.rickshaw_legend .label {color: white;}
+.rickshaw_legend {
+position: absolute;
+top: 0;
+right: 350px;
+vertical-align: top;
+}
+
+.slider {
+  margin-left: 40px;
+  margin-top: 12px;
+}

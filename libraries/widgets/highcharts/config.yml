@@ -1,0 +1,8 @@
+highcharts:
+  jshead:
+    - js/highcharts.js
+    - js/highcharts-more.js
+  cdn:
+    jshead:
+      - "http://code.highcharts.com/highcharts.js"
+      - "http://code.highcharts.com/highcharts-more.js"

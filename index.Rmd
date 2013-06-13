@@ -1,75 +1,219 @@
 ---
 title: rCharts
-subtitle: Interactive Charts from R using Polycharts
+subtitle: Interactive Charts from R using rCharts
 author: Ramnath Vaidyanathan
 github: {user: ramnathv, repo: rCharts, branch: "gh-pages"}
 framework: minimal
 mode: selfcontained
-widgets: polycharts
+ext_widgets: {rCharts: ["libraries/rickshaw", "libraries/nvd3", "libraries/polycharts", "libraries/highcharts","libraries/leaflet","libraries/morris","libraries/xcharts"]}
 hitheme: solarized_light
+logo: libraries/frameworks/minimal/images/rCharts.png
 ---
 
-## Interactive Charts from R using [PolyCharts](https://github.com/Polychart/polychart2)
+<style>
+.rChart {
+  height: 400px
+}
+</style>
 
-This R package helps users create interactive visualizations using [polychart.js](https://github.com/Polychart/polychart2), using a plotting interface similar to the [lattice](http://cran.r-project.org/web/packages/lattice/index.html) package.
 
-### Installation
+# rCharts
+
+rCharts is an R package to create, customize and publish interactive javascript visualizations from R using a familiar lattice style plotting interface.
+
+## Installation
 
 You can install `rCharts` from `github` using the `devtools` package
 
-```
+```coffee
 require(devtools)
 install_github('rCharts', 'ramnathv')
 ```
 
-### Usage
+## Features
 
-`rCharts` uses a plotting interface similar to that of the `lattice` package. Here are a few examples you can try out in your R console.
+The design philosophy behind rCharts is to make the process of creating, customizing and sharing interactive visualizations easy. 
 
-### Example 1: Faceted Scatterplot
-
-<div id='chart1' class='rChart'></div>
-
-```{r results = 'asis', comment = NA, message = F}
+```{r echo = F, message = F, cache = F}
 require(rCharts)
+options(RCHART_WIDTH = 600, RCHART_HEIGHT = 400)
+knitr::opts_chunk$set(comment = NA, results = 'asis', tidy = T, message = F, warning = F)
+```
+
+### Create
+
+`rCharts` uses a formula interface to specify plots, just like the `lattice` package. Here are a few examples you can try out in your R console.
+
+```coffee
+## Example 1 Facetted Scatterplot
 names(iris) = gsub("\\.", "", names(iris))
-p1 <- rPlot(SepalLength ~ SepalWidth | Species, data = iris, color = 'Species', 
-  type = 'point')
-p1$addParams(width = 550)
-p1$printChart('chart1') # use p1$show() from your R console 
+rPlot(SepalLength ~ SepalWidth | Species, data = iris, color = 'Species', type = 'point')
+
+## Example 2 Facetted Barplot
+hair_eye = as.data.frame(HairEyeColor)
+rPlot(Freq ~ Hair | Eye, color = 'Eye', data = hair_eye, type = 'bar')
 ```
 
-### Example 2: Faceted Barplot
+### Customize
 
-<div id='chart2' class='rChart'></div>
+rCharts supports multiple javascript charting libraries, each with its own strengths. Each of these libraries has multiple customization options, most of which are supported within rCharts. More documentation is underway on how to use rCharts with each of these libraries.
 
-```{r results = 'asis', comment = NA, message = F, tidy = F}
-hair_eye = subset(as.data.frame(HairEyeColor), Sex == "Female")
-p2 <- rPlot(Freq ~ Hair, color = 'Eye', data = hair_eye, type = 'bar', 
- position = 'dodge')
-p2$addParams(width = 550)
-p2$printChart('chart2')  # use p2$show() from your R console
+#### [Polychart](https://github.com/Polychart/polychart2).
+
+We will create our first chart using Polychart, a javascript charting library based on the grammar of graphics, and inspired by ggplot2.
+
+```{r}
+r1 <- rPlot(mpg ~ wt | am + vs, data = mtcars, type = 'point', color = 'gear')
+r1$print('chart1')
 ```
 
-### Example 3: Faceted Grid
+There, we have our first embedded chart with nice tooltips! Let me add some interactivity to this chart now using javascript.  See it in action by clicking on one of the points in the scatterplot above.
 
-<div id='chart3' class='rChart'></div>
+```js
+graph_chart1.addHandler(function(type, e){
+  var data = e.evtData;
+  if (type === 'click'){
+    return alert("You clicked on car with mpg: " + data.mpg.in[0]);
+  }
+})
+```
+<script>
+graph_chart1.addHandler(function(type, e){
+  var data = e.evtData;
+  if (type === 'click'){
+    return alert("You clicked on car with mpg: " + data.mpg.in[0]);
+  }
+})
+</script>
+---
 
-```{r results = 'asis', comment = NA, message = F, tidy = F}
-p3 <- rPlot(mpg ~ wt | vs + am, data = mtcars, type = 'point', color = 'gear')
-p3$addParams(width = 550)
-p3$printChart('chart3')
-# qplot(wt, mpg, data = mtcars, facets = vs ~ am, color = gear, geom = 'point')
+#### [Morris](https://github.com/oesmith/morris.js)
+
+The next library we will be exploring is MorrisJS.
+
+```{r chart2}
+data(economics, package = 'ggplot2')
+econ <- transform(economics, date = as.character(date))
+m1 <- mPlot(x = 'date', y = c('psavert', 'uempmed'), type = 'Line',
+  data = econ)
+m1$set(pointSize = 0, lineWidth = 1)
+m1$print('chart2')
+```
+
+Hurray! There we have our second chart!
+
+- - -
+
+---
+
+#### [NVD3](http://nvd3.org)
+
+Next, I will demonstrate my all time favorite d3js library, NVD3, which produces amazing interactive visualizations with little customization.
+
+```{r chart3}
+hair_eye_male <- subset(as.data.frame(HairEyeColor), Sex == "Male")
+n1 <- nPlot(Freq ~ Hair, group = "Eye", data = hair_eye_male, 
+  type = 'multiBarChart')
+n1$print('chart3')
+```
+
+See the interactivity that comes at zero cost! 
+
+- - -
+
+---
+
+#### [xCharts](https://github.com/tenXer/xcharts/)
+
+xCharts is a slick looking charting library using d3js, made by TenXer. Let's see it.
+
+```{r chart4}
+require(reshape2)
+uspexp <- melt(USPersonalExpenditure)
+names(uspexp)[1:2] = c('category', 'year')
+x1 <- xPlot(value ~ year, group = 'category', data = uspexp, 
+  type = 'line-dotted')
+x1$print('chart4')
+```
+
+There is your xChart.
+
+- - -
+
+---
+
+#### [HighCharts](http://www.highcharts.com/)
+
+```{r chart5}
+h1 <- hPlot(x = "Wr.Hnd", y = "NW.Hnd", data = MASS::survey, 
+  type = c("line", "bubble", "scatter"), group = "Clap", size = "Age")
+h1$print('chart5')
 ```
 
 
-`rCharts` is merely a wrapper around Polycharts.js. More documentation and examples are underway.
+- - - 
 
-### Using with Shiny
+---
 
-rCharts is compatible with Shiny. Here is a link to the [rCharts Shiny App](http://glimmer.rstudio.com/ramnathv/rChartApp/).
+#### [Leaflet](http://leafletjs.com/)
 
-```r
+```{r}
+map3 <- Leaflet$new()
+map3$setView(c(51.505, -0.09), zoom = 13)
+map3$marker(c(51.5, -0.09), bindPopup = "<p> Hi. I am a popup </p>")
+map3$marker(c(51.495, -0.083), bindPopup = "<p> Hi. I am another popup </p>")
+map3$print('chart7')
+```
+
+
+- - -
+
+---
+
+#### [Rickshaw](https://github.com/shutterstock/rickshaw)
+
+```{r chart6}
+usp = reshape2::melt(USPersonalExpenditure)
+#get the decades into a date Rickshaw likes
+usp$Var2 <- as.numeric(
+  as.POSIXct(
+    paste0( usp$Var2, "-01-01" )
+  )
+)
+p4 <- Rickshaw$new()
+p4$layer(value ~ Var2, group = 'Var1', data = usp, type = 'area', width = 560)
+#add a helpful slider this easily; other features TRUE as a default
+p4$set( slider = TRUE )
+p4$print('chart6')
+```
+
+
+- - -
+
+---
+
+### Share
+
+rCharts allows you to share your visualization in multiple ways, as a standalone page, embedded in a shiny application, or in a tutorial/blog post.
+
+#### Standalone
+
+You can publish your visualization as a standalone html page using the `publish` method. Here is an example. Currently, you can publish your chart as a `gist` or to `rpubs`.
+
+```coffee
+## 
+names(iris) = gsub("\\.", "", names(iris))
+r1 <- rPlot(SepalLength ~ SepalWidth | Species, data = iris, 
+  color = 'Species', type = 'point')
+r1$publish('Scatterplot', host = 'gist')
+r1$publish('Scatterplot', host = 'rpubs')
+```
+
+#### Shiny Application
+
+rCharts is easy to embed into a Shiny application using the utility functions `renderChart` and `showOutput`. Here is an example of an [rCharts Shiny App](http://glimmer.rstudio.com/ramnathv/rChartApp/).
+
+```coffee
 ## server.r
 require(rCharts)
 shinyServer(function(input, output) {
@@ -103,6 +247,15 @@ shinyUI(pageWithSidebar(
 ))
 ```
 
+#### Blog Post
+
+rCharts can also be embedded into an Rmd document using `knit2html` or in a blog post using `slidify`. Here are a few examples of tutorials written using `rCharts` and `slidify`.
+
+1. [Parallel Coordinate Plots](http://ramnathv.github.io/rChartsParCoords/)
+2. [NY Times Graphics Tutorial](http://ramnathv.github.io/rChartsNYT/)
+
+## More
+
 ### Credits
 
 Most of the implementation in `rCharts` is inspired by [rHighcharts](https://github.com/metagraf/rHighcharts) and [rVega](https://github.com/metagraf/rVega). I have reused some code from these packages verbatim, and would like to acknowledge the efforts of its author [Thomas Reinholdsson](https://github.com/reinholdsson).
@@ -111,5 +264,10 @@ Most of the implementation in `rCharts` is inspired by [rHighcharts](https://git
 
 `rCharts` is licensed under the MIT License. However, the Polycharts JavaScript library that is included in this package is not free for commercial use, and is licensed under Creative Commons 3.0 Attribution & Non-commercial. Read more about its license at http://polychart.com/js/license.
 
+### See Also
 
+There has been a lot of interest recently in creating packages that allow R users to make use of Javascript charting libraries. 
 
+- [gg2v](https://github.com/hadley/gg2v) by [Hadley Wickham](https://github.com/hadley)
+- [clickme](https://github.com/nachocab/clickme) by [Nacho Caballero](https://github.com/nachocab)
+- [rVega](https://github.com/metagraf/rVega) by [Thomas Reinholdsson](https://github.com/reinholdsson)
