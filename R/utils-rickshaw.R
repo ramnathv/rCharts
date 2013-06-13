@@ -25,7 +25,7 @@ rickshaw_defaults = function(chartId){
   }
   xAxis = list(
     graph = graph,
-    element = element('xAxis'),
+    # element = element('xAxis'),
     extension = 'Axis.Time'
   )
   yAxis = list(
