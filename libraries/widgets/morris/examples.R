@@ -1,20 +1,32 @@
+require(rCharts)
 haireye = as.data.frame(HairEyeColor)
 
-## Example 1
+## {title: Simple Bar Chart}
 dat = subset(haireye, Sex == "Female" & Eye == "Blue")
-p1 <- mPlot(x = 'Hair', y = list('Freq'), data = dat, type = 'Bar', labels = list('Count'))
-p1$show(T)
+p1 <- mPlot(x = 'Hair', y = list('Freq'), data = dat, type = 'Bar', labels = list("Count"))
+p1
 
-## Example 2
+### {title: Simple Bar Chart, tag: "No Hover"}
+p1$set(hideHover = "auto")
+p1
 
+## {title: Multi Bar Chart}
 dat = subset(haireye, Sex == "Female")
-p2 <- mPlot(Freq ~ Eye, group = "Hair", data = dat, type = 'Bar', labels = levels(dat$Hair))
-p2$addParams(barColors = c('black', 'brown', 'red', '#F2DA91'))
+p2 <- mPlot(Freq ~ Eye, group = "Hair", data = dat, type = "Bar", labels = 1:4)
+p2
 
-## Example 3
+## {title: Line Chart}
 data(economics, package = 'ggplot2')
 dat = transform(economics, date = as.character(date))
 p3 <- mPlot(x = "date", y = list("psavert", "uempmed"), data = dat, type = 'Line',
-  labels = list('Savings Rate', 'Median Duration of Unemployment'), pointSize = 0)
-p3$show(T)
+ pointSize = 0, lineWidth = 1)
+p3$set(xLabelFormat = "#! function (x) { 
+  return x.toString(); } 
+!#")
+p3
+
+
+## {title: Area Chart}
+p3$set(type = 'Area')
+p3
 

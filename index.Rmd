@@ -5,7 +5,7 @@ author: Ramnath Vaidyanathan
 github: {user: ramnathv, repo: rCharts, branch: "gh-pages"}
 framework: minimal
 mode: selfcontained
-ext_widgets: {rCharts: ["libraries/rickshaw", "libraries/nvd3", "libraries/polycharts", "libraries/highcharts","libraries/leaflet","libraries/morris","libraries/xcharts"]}
+ext_widgets: {rCharts: ["libraries/morris","libraries/nvd3", "libraries/polycharts", "libraries/highcharts","libraries/xcharts", "libraries/leaflet", "libraries/rickshaw"]}
 hitheme: solarized_light
 logo: libraries/frameworks/minimal/images/rCharts.png
 ---
