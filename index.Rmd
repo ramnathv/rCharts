@@ -7,7 +7,7 @@ framework: minimal
 mode: selfcontained
 ext_widgets: {rCharts: ["libraries/rickshaw", "libraries/nvd3", "libraries/polycharts", "libraries/highcharts","libraries/leaflet","libraries/morris","libraries/xcharts"]}
 hitheme: solarized_light
-logo: libraries/frameworks/minimal/images/rcharts.png
+logo: libraries/frameworks/minimal/images/rCharts.png
 ---
 
 <style>
