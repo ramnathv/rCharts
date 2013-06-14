@@ -25,7 +25,7 @@ renderMap = function(expr, env = parent.frame(), quoted = FALSE){
   function() {
     rChart_ <- func()
     map_style <- sprintf("<style>.leaflet {width: %spx; height: %spx} </style>",
-      rChart_$params$width, rChart_$params$height)
+                         rChart_$params$width, rChart_$params$height)
     map_div = sprintf('<div id="%s" class="rChart leaflet"></div>', rChart_$params$dom)
     HTML(paste(c(map_style, map_div, rChart_$html()), collapse = '\n'))
   }
