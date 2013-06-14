@@ -32,6 +32,14 @@ p6
 ## {title: Line with Focus Chart }
 ecm <- reshape2::melt(economics[,c('date', 'uempmed', 'psavert')], id = 'date')
 p7 <- nPlot(value ~ date, group = 'variable', data = ecm, type = 'lineWithFocusChart')
+#test format dates on the xAxis
+#also good test of javascript functions as parameters
+#dates from R to JSON will come over as number of days since 1970-01-01
+#so convert to milliseconds 86400000 in a day and then format with d3
+p7$xAxis( tickFormat="#!function(d) {return d3.time.format('%Y')(new Date( d * 86400000 ));}!#" )
+#test format dates on the x2Axis
+#lineWithFocus gives two x axes and we need to format both
+p7$x2Axis( tickFormat="#!function(d) {return d3.time.format('%Y')(new Date( d * 86400000 ));}!#" )
 p7
 
 ## {title: Stacked Area Chart}
