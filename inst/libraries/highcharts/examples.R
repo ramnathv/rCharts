@@ -59,6 +59,7 @@ a$series(data = list(
     list(y = 20, drilldown = list(data = c(1, 2, 3)))), name = "test")
 a$xAxis(categories = c("Brand A", "Brand B"))
 a$plotOptions(column = list(cursor = 'pointer', point = list(events = list(click = drill_function))))
+a
 
 ## Example 10
 a <- hPlot(freq ~ Exer, data = plyr::count(MASS::survey, c('Sex', 'Exer')), type = 'bar', group = 'Sex', group.na = 'NA\'s')
