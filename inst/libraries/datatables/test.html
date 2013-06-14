@@ -1,0 +1,42 @@
+<!doctype HTML>
+<html>
+  <head>
+    <link rel='stylesheet' href='/Users/ramnathv/Documents/Projects/dev/rCharts/inst/libraries/datatables/css/demo_table.css'>
+    
+    <script src='/Users/ramnathv/Documents/Projects/dev/rCharts/inst/libraries/datatables/js/jquery.js' type='text/javascript'></script>
+    <script src='/Users/ramnathv/Documents/Projects/dev/rCharts/inst/libraries/datatables/js/jquery.dataTables.js' type='text/javascript'></script>
+    
+    <style>
+    .rChart {
+      display: block;
+      margin-left: auto; 
+      margin-right: auto;
+      width: 900px;
+      height: 500px;
+    }  
+    </style>
+    
+  </head>
+  <body>
+   <div class='rChart'>
+    <!-- html table generated in R 2.15.2 by xtable 1.7-1 package -->
+<!-- Thu May 16 09:53:43 2013 -->
+<TABLE id='example'>
+<THEAD><TR> <TH>  </TH> <TH> SepalLength </TH> <TH> SepalWidth </TH>  </THEAD>
+</TR>
+<TBODY>
+  <TR> <TD align="right"> 1 </TD> <TD align="right"> 5.10 </TD> <TD align="right"> 3.50 </TD> </TR>
+  <TR> <TD align="right"> 2 </TD> <TD align="right"> 4.90 </TD> <TD align="right"> 3.00 </TD> </TR>
+   </TBODY>
+</TABLE>
+
+</div>
+    
+    <script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+		$('#example').dataTable();
+	});
+</script>
+    
+  </body>
+</html>
