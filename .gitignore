@@ -8,6 +8,13 @@ inst/apps/oecd
 inst/apps/notebook0
 inst/apps/notebook2
 inst/apps/strikeouts
+inst/apps/nvd3app/
+inst/rChart3.html
+inst/apps/notebook/www/ex
+inst/test-d3timeline.html
+inst/apps/notebook/www/example2.*
+TODOs.md
+inst/shinymaptab
 inst/x512paths
 inst/gh-pages
 inst/livecoding
