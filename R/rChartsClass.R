@@ -14,7 +14,8 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', LIB = 
       width = getOption('RCHART_WIDTH', 800),  # width of the container
       height = getOption('RCHART_HEIGHT', 400) # height of the container
     )
-    templates <<- list(page = 'rChart.html', chartDiv = NULL)
+    templates <<- list(page = 'rChart.html', chartDiv = NULL, script =  file.path(LIB$url, 'layouts', 'chart.html')
+)
   },
   addParams = function(...){
     params <<- modifyList(params, list(...))
@@ -33,7 +34,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', LIB = 
   html = function(chartId = NULL){
     params$dom <<- chartId %||% params$dom
     params$id <<- params$dom
-    template = read_file(file.path(LIB$url, 'layouts', 'chart.html'))
+    template = read_file(templates$script)
     html = render_template(template, getPayload(params$dom))
     return(html)
   },
