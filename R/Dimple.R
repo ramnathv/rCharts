@@ -25,9 +25,11 @@ Dimple <- setRefClass('Dimple', contains = 'rCharts', methods = list(
   },
   getPayload = function(chartId){
     data = toJSONArray(params$data)
+    #can I eliminate this or should I leave?
     chart = toChain(params$chart, 'chart')
-    xAxis = toChain(params$xAxis, 'chart.xAxis')
-    yAxis = toChain(params$yAxis, 'chart.yAxis')
+    #cannot eliminate so changed toChain to toJSO
+    xAxis = toJSON(params$xAxis) #toChain(params$xAxis, 'chart.xAxis')
+    yAxis = toJSON(params$yAxis) #toChain(params$yAxis, 'chart.yAxis')
     opts = toJSON(params[!(names(params) %in% c('data', 'chart', 'xAxis', 'yAxis'))])
     list(opts = opts, xAxis = xAxis, yAxis = yAxis, data = data, 
          chart = chart, chartId = chartId)

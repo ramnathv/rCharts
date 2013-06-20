@@ -1,15 +1,20 @@
 <script type="text/javascript">
   var opts = {{{ opts }}},
-    data = {{{ data }}};
+    data = {{{ data }}},
+    xAxis = {{{ xAxis }}},
+    yAxis = {{{ yAxis }}};
   var svg = dimple.newSvg("#" + opts.id, opts.width, opts.height);
 
   data = dimple.filterData(data, "Owner", ["Aperture", "Black Mesa"])
   var myChart = new dimple.chart(svg, data);
   //myChart.setBounds(80, 30, 480, 330);
-  var x = myChart.addCategoryAxis("x", opts.x);
+  var x = myChart[xAxis.type]("x", opts.x);
   x.addOrderRule("Date");
-  myChart.addMeasureAxis("y", opts.y);
-  var s = myChart.addSeries(null, eval(opts.type));   //know eval is evil but don't know a way around it in this case
+  myChart[yAxis.type]("y", opts.y);
+  //here need think I need to evaluate group and if missing do null
+  //as the first argument
+  //if provided need to use groups from opts
+  var s = myChart.addSeries(!opts.hasOwnProperty("groups") ? null : opts.groups, eval(opts.type));   //know eval is evil but don't know a way around it in this case
   myChart.draw();
 
 </script>
