@@ -11,6 +11,35 @@ data <- read.delim(
 #eliminate . to avoid confusion in javascript
 colnames(data) <- gsub("[.]","",colnames(data))
 
+#example 1 vt bar
+d1 <- dPlot(
+  x ="Month" ,
+  y = "UnitSales",
+  data = data,
+  type = "dimple.plot.bar"
+)
+d1
+
+#example 1 vt bar
+d1 <- dPlot(
+  x ="Month" ,
+  y = "UnitSales",
+  groups = "Channel",
+  data = data,
+  type = "dimple.plot.bar"
+)
+d1$set(
+  legend = list(
+    x = 60,
+    y = 10,
+    width = 510,
+    height = 20,
+    horizontalAlign = "right"
+  )
+)
+d1
+
+
 d1 <- dPlot(
   UnitSales ~ Month,
   groups = "Channel",
@@ -21,5 +50,14 @@ d1$xAxis(type = "addCategoryAxis")
 d1$yAxis(type = "addMeasureAxis")
 d1
 #now test adding legend
-d1$set(legend = list(x=60, y=50, width=500, height=20, horizontalAlign="right"))
+d1$set(
+  legend = list(
+    x=60,
+    y=50,
+    width=500,
+    height=20,
+    horizontalAlign="right"
+  )
+)
+
 d1
