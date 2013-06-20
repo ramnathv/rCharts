@@ -2,10 +2,11 @@
   var opts = {{{ opts }}},
     data = {{{ data }}},
     xAxis = {{{ xAxis }}},
-    yAxis = {{{ yAxis }}};
+    yAxis = {{{ yAxis }}},
+    legend = {{{ legend }}};
   var svg = dimple.newSvg("#" + opts.id, opts.width, opts.height);
 
-  data = dimple.filterData(data, "Owner", ["Aperture", "Black Mesa"])
+  //data = dimple.filterData(data, "Owner", ["Aperture", "Black Mesa"])
   var myChart = new dimple.chart(svg, data);
   //myChart.setBounds(80, 30, 480, 330);
   var x = myChart[xAxis.type]("x", opts.x);
@@ -15,6 +16,13 @@
   //as the first argument
   //if provided need to use groups from opts
   var s = myChart.addSeries(!opts.hasOwnProperty("groups") ? null : opts.groups, eval(opts.type));   //know eval is evil but don't know a way around it in this case
+  //unsure if this is best but if legend is provided (not empty) then evaluate
+  if(d3.keys(legend).length > 0) {
+    var l =myChart.addLegend();
+    d3.keys(legend).forEach(function(d){
+      l[d] = legend[d];
+    });
+  }
   myChart.draw();
 
 </script>

@@ -8,7 +8,7 @@ Dimple <- setRefClass('Dimple', contains = 'rCharts', methods = list(
   initialize = function(){
     callSuper(); 
     params <<- c(params, list(
-      chart = list(), xAxis = list(), yAxis = list()
+      chart = list(), xAxis = list(), yAxis = list(), legend = list()
     ))
   },
   chart = function(..., replace = F){
@@ -25,13 +25,18 @@ Dimple <- setRefClass('Dimple', contains = 'rCharts', methods = list(
   },
   getPayload = function(chartId){
     data = toJSONArray(params$data)
-    #can I eliminate this or should I leave?
-    chart = toChain(params$chart, 'chart')
-    #cannot eliminate so changed toChain to toJSO
+    #there is potential to  chain the entire thing
+    #making much cleaner
+    #need to explore this
+    #as of now thought chart is not being used
+    chart = toChain(params$chart, 'myChart')
+    #cannot eliminate so changed toChain to toJSON
+    #but need to revert back to toChain for the axes
     xAxis = toJSON(params$xAxis) #toChain(params$xAxis, 'chart.xAxis')
     yAxis = toJSON(params$yAxis) #toChain(params$yAxis, 'chart.yAxis')
-    opts = toJSON(params[!(names(params) %in% c('data', 'chart', 'xAxis', 'yAxis'))])
-    list(opts = opts, xAxis = xAxis, yAxis = yAxis, data = data, 
+    legend = toJSON(params$legend)
+    opts = toJSON(params[!(names(params) %in% c('data', 'chart', 'xAxis', 'yAxis', 'legend'))])
+    list(opts = opts, xAxis = xAxis, yAxis = yAxis, legend = legend, data = data, 
          chart = chart, chartId = chartId)
   }
 ))
