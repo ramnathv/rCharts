@@ -19,7 +19,12 @@
   };
   if(!(xAxis.type === "addPctAxis")) x.showPercent = xAxis.showPercent;
   if (xAxis.orderRule) x.addOrderRule(xAxis.orderRule);
-  var y = myChart[yAxis.type]("y", opts.y);
+  var y;
+  if(yAxis.measure) {
+    y = myChart[yAxis.type]("y",opts.y,yAxis.measure);
+  } else {
+    y = myChart[yAxis.type]("y", opts.y);
+  };
   if(!(yAxis.type === "addPctAxis")) y.showPercent = yAxis.showPercent;
   if (yAxis.orderRule) y.addOrderRule(yAxis.orderRule)
   //here need think I need to evaluate group and if missing do null
