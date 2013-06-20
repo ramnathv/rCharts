@@ -130,7 +130,7 @@ d1
 
 #example 10 horizontal stacked bar
 d1 <- dPlot(
-  x = "Month", 
+  x = "UnitSales", 
   y = c("PriceTier","Channel"),
   groups = "Channel",
   data = data,
@@ -138,7 +138,7 @@ d1 <- dPlot(
 )
 d1$xAxis(type = "addMeasureAxis")
 #good test of orderRule on y instead of x
-d1$yAxis(type = "addCategoryAxis", orderRule = "Date")
+d1$yAxis(type = "addCategoryAxis")
 d1$set(
   legend = list(
     x = 200,
@@ -151,8 +151,43 @@ d1$set(
 d1
 
 
+#example 11 horizontal stacked grouped bar
+d1 <- dPlot(
+  x = "UnitSales", 
+  y = c("PriceTier","Channel"),
+  groups = "Owner",
+  data = data,
+  type = "dimple.plot.bar"
+)
+d1$xAxis(type = "addMeasureAxis")
+#good test of orderRule on y instead of x
+d1$yAxis(type = "addCategoryAxis")
+d1$set(
+  legend = list(
+    x = 200,
+    y = 10,
+    width = 400,
+    height = 20,
+    horizontalAlign = "right"
+  )
+)
+d1
+
+#example 12 horizontal 100% grouped bar
+d1$xAxis(type = "addPctAxis")
+d1
 
 
+#example 13 vertical marimekko
+d1 <- dPlot(
+  UnitSales ~ Channel,
+  groups = "Owner",
+  data = data,
+  type = "dimple.plot.bar"
+)
+d1$xAxis(type = "addAxis", measure = "UnitSales", showPercent = TRUE)
+d1$yAxis(type = "addPctAxis")
+d1
 
 
 d1 <- dPlot(
