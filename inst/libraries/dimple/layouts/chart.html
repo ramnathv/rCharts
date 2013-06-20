@@ -1,0 +1,60 @@
+<div id="chartContainer">
+  <script type="text/javascript">
+    var svg = dimple.newSvg("#chartContainer", 590, 400);
+    d3.tsv("/data/example_data.tsv", function (data) {
+      data = dimple.filterData(data, "Owner", ["Aperture", "Black Mesa"])
+      var myChart = new dimple.chart(svg, data);
+      myChart.setBounds(80, 30, 480, 330);
+      myChart.addMeasureAxis("x", "Unit Sales");
+      var y = myChart.addCategoryAxis("y", "Month");
+      y.addOrderRule("Date");
+      var s = myChart.addSeries(null, dimple.plot.line);
+      myChart.draw();
+    });
+  </script>
+</div>
+
+
+
+
+
+<script type='text/javascript'>
+ $(document).ready(function(){
+      draw{{chartId}}()
+    });
+    function draw{{chartId}}(){  
+      var opts = {{{ opts }}},
+        data = {{{ data }}}
+  
+      var data = d3.nest()
+        .key(function(d){
+          return opts.group === undefined ? 'main' : d[opts.group]
+        })
+        .entries(data)
+      
+      nv.addGraph(function() {
+        var chart = nv.models[opts.type]()
+          .x(function(d) { return d[opts.x] })
+          .y(function(d) { return d[opts.y] })
+          .width(opts.width)
+          .height(opts.height)
+         
+        {{{ chart }}}
+          
+        {{{ xAxis }}}
+
+        {{{ x2Axis }}}
+        
+        {{{ yAxis }}}
+      
+       d3.select("#" + opts.id)
+        .append('svg')
+        .datum(data)
+        .transition().duration(500)
+        .call(chart);
+
+       nv.utils.windowResize(chart.update);
+       return chart;
+      });
+    };
+</script>
