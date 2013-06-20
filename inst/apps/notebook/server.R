@@ -2,6 +2,7 @@ library(shiny)
 options(device.ask.default = FALSE)
 allow_knit = TRUE
 
+
 shinyServer(function(input, output) {
   output$nbOut2 = reactive({
     src = input$nbSrc
@@ -30,6 +31,13 @@ shinyServer(function(input, output) {
   
   output$nbOut = reactive({
     src = input$nbSrc
+    if (input$modevariable == "R"){
+      src = paste0(c(
+        "```{r echo = F, results = 'asis', message = F, warning = F, comment = NA}", 
+          input$nbSrc, 
+        "\n```", collapse = "\n")
+      )
+    }
     if (allow_knit == TRUE){
       library(knitr)
       figdir = tempdir(); on.exit(unlink(figdir))

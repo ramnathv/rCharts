@@ -70,6 +70,13 @@ $(function(){
       changeTheme(e)
       return false
     })
+    
+  $('#example-list')
+    .find('li > a')
+    .bind('click', function(e){
+      loadExample(e)
+      return false
+    })
   
   $("body").keydown( function(event) {
     if (application.enableShortcut){ 
@@ -359,3 +366,13 @@ function changeTheme(e){
   $(e.target).blur()
   application.editor.setTheme(newTheme)       
 }  
+
+function loadExample(e){
+  console.log('Enter Load Example')
+  var $target = $(e.target), $example = $('#example-list');
+  $example.find('li > a.selected').removeClass('selected')
+  $target.addClass('selected')
+  var newExample = $target.attr('data-value')
+  readFile(newExample)
+  console.log('Exit Load Example')
+}

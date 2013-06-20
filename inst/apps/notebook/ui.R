@@ -1,4 +1,5 @@
-library(shiny)
+require(shiny)
+require(rCharts)
 # addResourcePath('assets', system.file('shiny', 'assets', package = 'knitr'))
 
 

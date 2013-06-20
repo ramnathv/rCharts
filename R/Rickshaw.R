@@ -5,6 +5,11 @@ Rickshaw = setRefClass('Rickshaw', contains = 'rCharts', methods = list(
       scheme = 'colorwheel', shelving = TRUE, hoverDetail = TRUE, 
       highlight = TRUE, slider = FALSE)
     )
+    templates$page <<- 'Rickshaw.html'
+    templates$chartDiv <<- paste(readLines(
+      system.file('libraries', 'rickshaw', 'layouts', 'rickshaw-chartDiv.html', 
+        package = 'rCharts')), collapse = '\n'
+    )
   },
   layer = function(...){
     params_ = toSeries(getLayer(...))

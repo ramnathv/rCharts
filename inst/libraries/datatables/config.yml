@@ -1,0 +1,6 @@
+datatables:
+  css: 
+   - css/jquery.dataTables.css
+   - css/jquery.dataTables_themeroller.css
+   - css/demo_table.css
+  jshead: [js/jquery.js, js/jquery.dataTables.js]
