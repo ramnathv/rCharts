@@ -199,6 +199,49 @@ d1$set(
 d1
 
 
+#example 14 horizontal marimekko
+d1 <- dPlot(
+  Channel ~ UnitSales,
+  groups = "Owner",
+  data = data,
+  type = "dimple.plot.bar"
+)
+d1$yAxis(type = "addAxis", measure = "UnitSales", showPercent = TRUE)
+d1$xAxis(type = "addPctAxis")
+d1$set(
+  legend = list(
+    x = 200,
+    y = 10,
+    width = 400,
+    height = 20,
+    horizontalAlign = "right"
+  )
+)
+d1
+
+
+#example 15 block matrix
+d1 <- dPlot(
+  x = c("Channel","PriceTier"),
+  y = "Owner",
+  groups = "PriceTier",
+  data = data,
+  type = "dimple.plot.bar"
+)
+d1$yAxis(type = "addCategoryAxis")
+d1$xAxis(type = "addCategoryAxis")
+d1$set(
+  legend = list(
+    x = 200,
+    y = 10,
+    width = 400,
+    height = 20,
+    horizontalAlign = "right"
+  )
+)
+d1
+
+
 d1 <- dPlot(
   UnitSales ~ Month,
   groups = "Channel",
