@@ -187,6 +187,15 @@ d1 <- dPlot(
 )
 d1$xAxis(type = "addAxis", measure = "UnitSales", showPercent = TRUE)
 d1$yAxis(type = "addPctAxis")
+d1$set(
+  legend = list(
+    x = 200,
+    y = 10,
+    width = 400,
+    height = 20,
+    horizontalAlign = "right"
+  )
+)
 d1
 
 
