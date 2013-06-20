@@ -1,15 +1,15 @@
-<div id="chartContainer">
-  <script type="text/javascript">
-    var svg = dimple.newSvg("#" + opts.id, 590, 400);
-    //d3.tsv("/data/example_data.tsv", function (data) {
-      data = dimple.filterData(data, "Owner", ["Aperture", "Black Mesa"])
-      var myChart = new dimple.chart(svg, data);
-      myChart.setBounds(80, 30, 480, 330);
-      myChart.addMeasureAxis("x", opts.x);
-      var y = myChart.addCategoryAxis("y", opts.y);
-      y.addOrderRule("Date");
-      var s = myChart.addSeries(null, opts.type);
-      myChart.draw();
-    //});
-  </script>
-</div>
+<script type="text/javascript">
+  var opts = {{{ opts }}},
+    data = {{{ data }}};
+  var svg = dimple.newSvg("#" + opts.id, opts.width, opts.height);
+
+  data = dimple.filterData(data, "Owner", ["Aperture", "Black Mesa"])
+  var myChart = new dimple.chart(svg, data);
+  //myChart.setBounds(80, 30, 480, 330);
+  var x = myChart.addCategoryAxis("x", opts.x);
+  x.addOrderRule("Date");
+  myChart.addMeasureAxis("y", opts.y);
+  var s = myChart.addSeries(null, eval(opts.type));   //know eval is evil but don't know a way around it in this case
+  myChart.draw();
+
+</script>
