@@ -10,8 +10,9 @@
   var myChart = new dimple.chart(svg, data);
   //myChart.setBounds(80, 30, 480, 330);
   var x = myChart[xAxis.type]("x", opts.x);
-  x.addOrderRule("Date");
-  myChart[yAxis.type]("y", opts.y);
+  if (xAxis.orderRule) x.addOrderRule(xAxis.orderRule);
+  var y = myChart[yAxis.type]("y", opts.y);
+  if (yAxis.orderRule) y.addOrderRule(yAxis.orderRule)
   //here need think I need to evaluate group and if missing do null
   //as the first argument
   //if provided need to use groups from opts

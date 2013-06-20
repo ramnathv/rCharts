@@ -8,7 +8,8 @@ Dimple <- setRefClass('Dimple', contains = 'rCharts', methods = list(
   initialize = function(){
     callSuper(); 
     params <<- c(params, list(
-      chart = list(), xAxis = list(type="addCategoryAxis"), yAxis = list(type="addMeasureAxis"), legend = list()
+      chart = list(), xAxis = list(type="addCategoryAxis"),
+      yAxis = list(type="addMeasureAxis"), legend = list()
     ))
   },
   chart = function(..., replace = F){
