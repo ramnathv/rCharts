@@ -19,5 +19,7 @@ d1 <- dPlot(
 )
 d1$xAxis(type = "addCategoryAxis")
 d1$yAxis(type = "addMeasureAxis")
+d1
+#now test adding legend
 d1$set(legend = list(x=60, y=100, width=500, height=20, horizontalAlign="right"))
 d1
