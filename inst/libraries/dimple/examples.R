@@ -123,6 +123,37 @@ d1$set(
 )
 d1
 
+#example 9 horizontal 100% bar
+d1$xAxis(type = "addPctAxis")
+d1
+
+
+#example 10 horizontal stacked bar
+d1 <- dPlot(
+  x = "Month", 
+  y = c("PriceTier","Channel"),
+  groups = "Channel",
+  data = data,
+  type = "dimple.plot.bar"
+)
+d1$xAxis(type = "addMeasureAxis")
+#good test of orderRule on y instead of x
+d1$yAxis(type = "addCategoryAxis", orderRule = "Date")
+d1$set(
+  legend = list(
+    x = 200,
+    y = 10,
+    width = 400,
+    height = 20,
+    horizontalAlign = "right"
+  )
+)
+d1
+
+
+
+
+
 
 d1 <- dPlot(
   UnitSales ~ Month,
