@@ -9,7 +9,6 @@ You can install `rCharts` from `github` using the `devtools` package
 ```coffee
 require(devtools)
 install_github('rCharts', 'ramnathv')
-require(rCharts)
 ```
 
 ## Features
@@ -21,6 +20,8 @@ The design philosophy behind rCharts is to make the process of creating, customi
 `rCharts` uses a formula interface to specify plots, just like the `lattice` package. Here are a few examples you can try out in your R console.
 
 ```coffee
+require(rCharts)
+
 ## Example 1 Facetted Scatterplot
 names(iris) = gsub("\\.", "", names(iris))
 rPlot(SepalLength ~ SepalWidth | Species, data = iris, color = 'Species', type = 'point')
