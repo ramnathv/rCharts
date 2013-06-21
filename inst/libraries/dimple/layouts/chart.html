@@ -38,6 +38,10 @@
       l[d] = legend[d];
     });
   }
+  //quick way to get this going but need to make this cleaner
+  if(opts.storyboard) {
+    myChart.setStoryboard(opts.storyboard);
+  };
   myChart.draw();
 
 </script>

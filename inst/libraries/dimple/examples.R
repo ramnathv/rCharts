@@ -197,7 +197,9 @@ d1$set(
   )
 )
 d1
-
+#test with storyboard
+d1$set(storyboard = "Date")
+d1
 
 #example 14 horizontal marimekko
 d1 <- dPlot(
