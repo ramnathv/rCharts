@@ -221,7 +221,7 @@ Most of the implementation in `rCharts` is inspired by [rHighcharts](https://git
 
 ### License
 
-rCharts is licensed under the MIT License. However, the JavaScript charting libraries that are included with this package are licensed under their own terms. All of them are free for non-commercial use, but some of them are not free for commercial use. So please make sure to check the licensing terms of the charting library you are working with, before using them commercially.  Each of the charting libraries contains a `License.md` file detailing the terms of their license.
+rCharts is licensed under the MIT License. However, the JavaScript charting libraries that are included with this package are licensed under their own terms. All of them are free for non-commercial and commercial use, with the exception of __Polychart__ and __Highcharts__, both of which require paid licenses for commercial use. For more details on the licensing terms, you can consult the `License.md` file in each of the charting libraries.
 
 ### See Also
 
