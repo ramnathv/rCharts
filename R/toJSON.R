@@ -85,6 +85,24 @@ toChain2 <- function(x, obj){
   paste(c(obj, config), collapse = '\n')
 }
 
+#' Convert a list to a GeoJSON compatible list.
+toGeoJSON = function(list_, lat = 'latitude', lon = 'longitude'){
+  x = lapply(list_, function(l){
+    if (is.null(l[[lat]]) || is.null(l[[lon]])){
+      return(NULL)
+    }
+    list(
+      type = 'Feature',
+      geometry = list(
+        type = 'Point',
+        coordinates = as.numeric(c(l[[lon]], l[[lat]]))
+      ),
+      properties = l[!(names(l) %in% c(lat, lon))]
+    )
+  })
+  setNames(Filter(function(x) !is.null(x), x), NULL)
+}
+
 # toObj <- function(x){
 #   gsub('#!(.*)!#', "\\1", x)
 # }

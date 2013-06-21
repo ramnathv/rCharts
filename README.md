@@ -20,6 +20,8 @@ The design philosophy behind rCharts is to make the process of creating, customi
 `rCharts` uses a formula interface to specify plots, just like the `lattice` package. Here are a few examples you can try out in your R console.
 
 ```coffee
+require(rCharts)
+
 ## Example 1 Facetted Scatterplot
 names(iris) = gsub("\\.", "", names(iris))
 rPlot(SepalLength ~ SepalWidth | Species, data = iris, color = 'Species', type = 'point')
@@ -219,7 +221,7 @@ Most of the implementation in `rCharts` is inspired by [rHighcharts](https://git
 
 ### License
 
-`rCharts` is licensed under the MIT License. However, the Polycharts JavaScript library that is included in this package is not free for commercial use, and is licensed under Creative Commons 3.0 Attribution & Non-commercial. Read more about its license at http://polychart.com/js/license.
+rCharts is licensed under the MIT License. However, the JavaScript charting libraries that are included with this package are licensed under their own terms. All of them are free for non-commercial and commercial use, with the exception of __Polychart__ and __Highcharts__, both of which require paid licenses for commercial use. For more details on the licensing terms, you can consult the `License.md` file in each of the charting libraries.
 
 ### See Also
 

@@ -25,7 +25,7 @@ publish_.rpubs <- function(files, description, id, ...){
 #    repo = 'rCharts_polycharts_standalone', 
 #   filename = 'bar_athletes.R'
 # )
-viewExample <- runExample <- function(repo, username, ref = 'master', filename){
+viewExample <- function(repo, username, ref = 'master', filename){
   require(downloader)
   tf <- tempfile(pattern = '.R')
   url <- sprintf('https://raw.github.com/%s/%s/%s/%s',

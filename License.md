@@ -1,0 +1,3 @@
+## License
+
+rCharts is licensed under the MIT License. However, the JavaScript charting libraries that are included with this package are licensed under their own terms. All of them are free for non-commercial use, but some of them are not free for commercial use. So please make sure to check the licensing terms of the charting library you are working with, before using them commercially.  Each of the charting libraries contains a License.md file detailing the terms of their license.
