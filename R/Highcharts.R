@@ -61,10 +61,13 @@ Highcharts <- setRefClass("Highcharts", contains = "rCharts", methods = list(
     series = function(..., replace = F) {
         args <- list(...)
         if (length(args) == 1 && is.list(args[[1]]) && is.null(names(args))) {
-            params$series <<- args[[1]]
+            s <- args[[1]]
+        } else s <- list(list(...))
+        
+        if (replace) {
+            params$series <<- s
         } else {
-            params$series <<- if (replace) list(list(...))
-            else c(params$series, list(list(...)))
+            params$series <<- c(params$series, s)
         }
     },
     subtitle = function(..., replace = T){
