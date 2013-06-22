@@ -114,7 +114,7 @@ There is your xChart
 
 ---
 
-#### [HighCharts](http://www.highcharts.com/)
+#### [Highcharts](http://www.highcharts.com/)
 
 ```coffee
 h1 <- Highcharts$new()
