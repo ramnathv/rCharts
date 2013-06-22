@@ -22,11 +22,10 @@ Highcharts <- setRefClass("Highcharts", contains = "rCharts", methods = list(
     },
     colors = function(..., replace = T) {
         args <- list(...)
-        if (length(args) == 1 && is.list(args[[1]]) && is.null(names(args))) {
+        if (length(args) == 1 && (is.list(args[[1]]) || is.vector(args[[1]]))) {
             params$colors <<- args[[1]]
         } else {
-            params$colors <<- if (replace) list(list(...))
-            else c(params$colors, list(list(...)))
+            params$colors <<- setSpec(params$colors, ..., replace = replace)
         }
     },
     credits = function(..., replace = T){
