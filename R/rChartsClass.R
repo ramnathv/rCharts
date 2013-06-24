@@ -1,7 +1,6 @@
-rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', LIB = 'list',
-    srccode = 'ANY', tObj = 'list', container = 'character', html_id = 'character', 
-    templates = 'list'), 
-      methods = list(
+rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', 
+    LIB = 'list', srccode = 'ANY', tObj = 'list', container = 'character', 
+    html_id = 'character', templates = 'list'), methods = list(
   initialize = function(){
     srccode <<- NULL     # source code to create the chart
     html_id <<- ""       # no id initially
