@@ -26,3 +26,14 @@ make_example_page <- function(rFile, sidebar, htmlDir){
   htmlFile = sprintf('%s/%s.html', htmlDir, filename)
   myexample$save(destfile = htmlFile, cdn = T)
 }
+
+#' Creates an rChart, given a file with source code
+#'
+#' 
+create_chart <- function(rFile){
+  rCode = paste(readLines(rFile, warn = F), collapse = '\n')
+  chart = source(rFile, local = TRUE)$value
+  chart$field('srccode', rCode)
+  chart$field('templates', list(page = 'rChart2.html', chartDiv = NULL))
+  return(chart)
+}
