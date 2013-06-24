@@ -244,6 +244,163 @@ d1$set(
 d1
 
 
+#example 16 Scatter
+d1 <- dPlot(
+  OperatingProfit~UnitSales,
+  groups = c("SKU","Channel"),
+  data = subset(data, Date == "01/12/2012"),
+  type = "dimple.plot.bubble"
+)
+d1$xAxis( type = "addMeasureAxis" )
+d1$yAxis( type = "addMeasureAxis" )
+d1$set(
+  legend = list(
+    x = 200,
+    y = 10,
+    width = 500,
+    height = 20,
+    horizontalAlign = "right"
+  )
+)
+d1
+
+
+#example 17 Vertical Lollipop
+d1 <- dPlot(
+  UnitSales ~ Month,
+  groups = "Channel",
+  data = data,
+  type = "dimple.plot.bubble"
+)
+#defaults to yAxis (Measure) and xAxis (Category)
+d1$xAxis( orderRule = "Date")
+d1$set(
+  legend = list(
+    x = 200,
+    y = 10,
+    width = 500,
+    height = 20,
+    horizontalAlign = "right"
+  )
+)
+d1
+
+
+#example 18 Vertical Grouped Lollipop
+d1 <- dPlot(
+  y = "UnitSales",
+  x = c("PriceTier","Channel"),
+  groups = "Channel",
+  data = data,
+  type = "dimple.plot.bubble"
+)
+#defaults to yAxis (Measure) and xAxis (Category)
+d1$set(
+  legend = list(
+    x = 200,
+    y = 10,
+    width = 500,
+    height = 20,
+    horizontalAlign = "right"
+  )
+)
+d1
+
+
+#example 19 Horizontal Lollipop
+d1 <- dPlot(
+  x = "UnitSales",
+  y = "Month",
+  groups = "Channel",
+  data = data,
+  type = "dimple.plot.bubble"
+)
+d1$xAxis( type = "addMeasureAxis" )
+d1$yAxis( type = "addCategoryAxis", orderRule = "Date")
+d1$set(
+  legend = list(
+    x = 200,
+    y = 10,
+    width = 500,
+    height = 20,
+    horizontalAlign = "right"
+  )
+)
+d1
+
+
+#example 20 Horizontal Grouped Lollipop
+d1 <- dPlot(
+  x = "UnitSales",
+  y = c("PriceTier","Channel"),
+  groups = "Channel",
+  data = data,
+  type = "dimple.plot.bubble"
+)
+d1$xAxis( type = "addMeasureAxis" )
+d1$yAxis( type = "addCategoryAxis")
+d1$set(
+  legend = list(
+    x = 200,
+    y = 10,
+    width = 500,
+    height = 20,
+    horizontalAlign = "right"
+  )
+)
+d1
+
+
+
+#example 21 Dot Matrix
+d1 <- dPlot(
+  y = "Owner",
+  x = c("Channel","PriceTier"),
+  groups = "PriceTier",
+  data = data,
+  type = "dimple.plot.bubble"
+)
+d1$xAxis( type = "addCategoryAxis" )
+d1$yAxis( type = "addCategoryAxis")
+d1$set(
+  legend = list(
+    x = 200,
+    y = 10,
+    width = 500,
+    height = 20,
+    horizontalAlign = "right"
+  )
+)
+d1
+
+
+#example 22 Bubble
+d1 <- dPlot(
+  x = "UnitSalesMonthlyChange",
+  y = "PriceMonthlyChange",
+  z = "OperatingProfit",
+  groups = c("SKU","Channel"),
+  data = subset(data, Date == "01/12/2012"),
+  type = "dimple.plot.bubble"
+)
+d1$xAxis( type = "addMeasureAxis" )
+d1$yAxis( type = "addMeasureAxis" )
+d1$zAxis( type = "addMeasureAxis" )
+d1$set(
+  legend = list(
+    x = 200,
+    y = 10,
+    width = 500,
+    height = 20,
+    horizontalAlign = "right"
+  )
+)
+d1
+
+
+
+
+
 d1 <- dPlot(
   UnitSales ~ Month,
   groups = "Channel",

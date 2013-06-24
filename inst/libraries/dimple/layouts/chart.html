@@ -3,6 +3,7 @@
     data = {{{ data }}},
     xAxis = {{{ xAxis }}},
     yAxis = {{{ yAxis }}},
+    zAxis = {{{ zAxis }}},
     legend = {{{ legend }}};
   var svg = dimple.newSvg("#" + opts.id, opts.width, opts.height);
 
@@ -11,6 +12,7 @@
   //myChart.setBounds(80, 30, 480, 330);
   //for markimekko and addAxis also have third parameter measure
   //so need to evaluate if measure provided
+  //x axis
   var x;
   if(xAxis.measure) {
     x = myChart[xAxis.type]("x",opts.x,xAxis.measure);
@@ -19,6 +21,7 @@
   };
   if(!(xAxis.type === "addPctAxis")) x.showPercent = xAxis.showPercent;
   if (xAxis.orderRule) x.addOrderRule(xAxis.orderRule);
+  //y axis
   var y;
   if(yAxis.measure) {
     y = myChart[yAxis.type]("y",opts.y,yAxis.measure);
@@ -27,6 +30,17 @@
   };
   if(!(yAxis.type === "addPctAxis")) y.showPercent = yAxis.showPercent;
   if (yAxis.orderRule) y.addOrderRule(yAxis.orderRule)
+  //z for bubbles
+    var z;
+  if (!(typeof(zAxis) === 'undefined')){
+    if(zAxis.measure) {
+      z = myChart[zAxis.type]("z",opts.z,zAxis.measure);
+    } else {
+      z = myChart[zAxis.type]("z", opts.z);
+    };
+    if(!(zAxis.type === "addPctAxis")) z.showPercent = zAxis.showPercent;
+    if (zAxis.orderRule) z.addOrderRule(zAxis.orderRule);
+  }
   //here need think I need to evaluate group and if missing do null
   //as the first argument
   //if provided need to use groups from opts
