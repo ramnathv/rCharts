@@ -559,25 +559,12 @@ d1$set(
 d1
 
 
-
+#example 28 Area
 d1 <- dPlot(
   UnitSales ~ Month,
-  groups = "Channel",
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
   type = "dimple.plot.area"
 )
-d1$xAxis(type = "addCategoryAxis")
+d1$xAxis(type = "addCategoryAxis", orderRule = "Date")
 d1$yAxis(type = "addMeasureAxis")
-d1
-#now test adding legend
-d1$set(
-  legend = list(
-    x=60,
-    y=50,
-    width=500,
-    height=20,
-    horizontalAlign="right"
-  )
-)
-
 d1

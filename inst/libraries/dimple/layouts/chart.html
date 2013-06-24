@@ -36,7 +36,7 @@
   if (yAxis.overrideMax) y.overrideMax = yAxis.overrideMax;
   //z for bubbles
     var z;
-  if (!(typeof(zAxis) === 'undefined')){
+  if (!(typeof(zAxis) === 'undefined') && zAxis.length > 0){
     if(zAxis.measure) {
       z = myChart[zAxis.type]("z",opts.z,zAxis.measure);
     } else {
@@ -57,7 +57,7 @@
     if (!(typeof(opts.aggregate) === 'undefined')) {
       s.aggregate = eval(opts.aggregate);
     }
-  }
+  } else var s = myChart.addSeries( null, eval(opts.type) );
   //unsure if this is best but if legend is provided (not empty) then evaluate
   if(d3.keys(legend).length > 0) {
     var l =myChart.addLegend();
