@@ -21,6 +21,8 @@
   };
   if(!(xAxis.type === "addPctAxis")) x.showPercent = xAxis.showPercent;
   if (xAxis.orderRule) x.addOrderRule(xAxis.orderRule);
+  if (xAxis.overrideMin) x.overrideMin = xAxis.overrideMin;
+  if (xAxis.overrideMax) x.overrideMax = xAxis.overrideMax;
   //y axis
   var y;
   if(yAxis.measure) {
@@ -30,6 +32,8 @@
   };
   if(!(yAxis.type === "addPctAxis")) y.showPercent = yAxis.showPercent;
   if (yAxis.orderRule) y.addOrderRule(yAxis.orderRule)
+  if (yAxis.overrideMin) y.overrideMin = yAxis.overrideMin;
+  if (yAxis.overrideMax) y.overrideMax = yAxis.overrideMax;
   //z for bubbles
     var z;
   if (!(typeof(zAxis) === 'undefined')){
@@ -40,11 +44,20 @@
     };
     if(!(zAxis.type === "addPctAxis")) z.showPercent = zAxis.showPercent;
     if (zAxis.orderRule) z.addOrderRule(zAxis.orderRule);
+    if (zAxis.overrideMin) z.overrideMin = zAxis.overrideMin;
+    if (zAxis.overrideMax) z.overrideMax = zAxis.overrideMax;
   }
   //here need think I need to evaluate group and if missing do null
   //as the first argument
   //if provided need to use groups from opts
-  var s = myChart.addSeries(!opts.hasOwnProperty("groups") ? null : opts.groups, eval(opts.type));   //know eval is evil but don't know a way around it in this case
+  if(opts.hasOwnProperty("groups")) {
+    var s = myChart.addSeries( opts.groups, eval(opts.type) );   //know eval is evil but don't know a way around it in this case
+    //series offers an aggregate method that we will also need to check if available
+    //options available are avg, count, max, min, sum
+    if (!(typeof(opts.aggregate) === 'undefined')) {
+      s.aggregate = eval(opts.aggregate);
+    }
+  }
   //unsure if this is best but if legend is provided (not empty) then evaluate
   if(d3.keys(legend).length > 0) {
     var l =myChart.addLegend();
