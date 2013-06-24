@@ -65,17 +65,6 @@ add_lib_assets <- function(lib, cdn = F){
   if (is.null(x)) y else x
 }
 
-#' Creates an rChart, given a file with source code
-#'
-#' 
-create_chart <- function(rFile){
-  rCode = paste(readLines(rFile, warn = F), collapse = '\n')
-  chart = source(rFile, local = TRUE)$value
-  chart$field('srccode', rCode)
-  options(RCHART_TEMPLATE = 'rChart2.html')
-  return(chart)
-}
-
 
 merge_list <- function (x, y, ...){
   if (length(x) == 0) 
