@@ -12,6 +12,8 @@
   if (opts.bounds) {
     myChart.setBounds(x = opts.bounds.x, y = opts.bounds.y, height = opts.bounds.height, width = opts.bounds.width);//myChart.setBounds(80, 30, 480, 330);
   }
+  //dimple allows use of custom CSS with noFormats
+  if(opts.noFormats) { myChart.noFormats = opts.noFormats; };
   //for markimekko and addAxis also have third parameter measure
   //so need to evaluate if measure provided
   //x axis
