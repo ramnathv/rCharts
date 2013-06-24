@@ -23,6 +23,7 @@
   };
   if(!(xAxis.type === "addPctAxis")) x.showPercent = xAxis.showPercent;
   if (xAxis.orderRule) x.addOrderRule(xAxis.orderRule);
+  if (xAxis.grouporderRule) x.addGroupOrderRule(xAxis.grouporderRule);  
   if (xAxis.overrideMin) x.overrideMin = xAxis.overrideMin;
   if (xAxis.overrideMax) x.overrideMax = xAxis.overrideMax;
   //y axis
@@ -33,7 +34,8 @@
     y = myChart[yAxis.type]("y", opts.y);
   };
   if(!(yAxis.type === "addPctAxis")) y.showPercent = yAxis.showPercent;
-  if (yAxis.orderRule) y.addOrderRule(yAxis.orderRule)
+  if (yAxis.orderRule) y.addOrderRule(yAxis.orderRule);
+  if (yAxis.grouporderRule) y.addGroupOrderRule(yAxis.grouporderRule);
   if (yAxis.overrideMin) y.overrideMin = yAxis.overrideMin;
   if (yAxis.overrideMax) y.overrideMax = yAxis.overrideMax;
   //z for bubbles

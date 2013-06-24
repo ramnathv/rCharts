@@ -646,3 +646,281 @@ d1$set(
   )
 )
 d1
+
+
+#example 33 Grouped 100% Area
+d1$yAxis( type = "addPctAxis" )
+d1
+
+
+#example 34 Vertical Area
+d1 <- dPlot(
+  x = "UnitSales",
+  y = "Month",
+  data = subset(data, Owner %in% c("Aperture","Black Mesa")),
+  type = "dimple.plot.area",
+  bounds = list(x=80,y=30,height=480,width=330),
+  height = 400,
+  width = 590
+)
+d1$xAxis(type = "addMeasureAxis")
+d1$yAxis(type = "addCategoryAxis", orderRule = "Date")
+d1
+
+
+
+#example 35 Vertical Stacked Area
+d1 <- dPlot(
+  x = "UnitSales",
+  y = "Month",
+  groups = "Channel",
+  data = subset(data, Owner %in% c("Aperture","Black Mesa")),
+  type = "dimple.plot.area",
+  bounds = list(x=80,y=30,height=480,width=330),
+  height = 400,
+  width = 590
+)
+d1$xAxis(type = "addMeasureAxis")
+d1$yAxis(type = "addCategoryAxis", orderRule = "Date")
+d1$set(
+  legend = list(
+    x = 60,
+    y = 10,
+    width = 500,
+    height = 20,
+    horizontalAlign = "right"
+  )
+)
+d1
+
+
+#example 36 Vertical 100% Stacked Area
+d1$xAxis(type = "addPctAxis")
+d1
+
+
+#example 37 Vertical Grouped Area
+d1 <- dPlot(
+  x = "UnitSales",
+  y = c("Owner","Month"),
+  groups = "Owner",
+  data = subset(data, Owner %in% c("Aperture","Black Mesa")),
+  type = "dimple.plot.area",
+  bounds = list(x=90,y=30,height=470,width=330),
+  lineWeight = 1,
+  barGap = 0.05,
+  height = 400,
+  width = 590
+)
+d1$xAxis(type = "addMeasureAxis")
+d1$yAxis(type = "addCategoryAxis", orderRule = "Date")
+d1
+
+#example 38 Vertical Grouped Stacked Area
+d1 <- dPlot(
+  x = "UnitSales",
+  y = c("Owner","Month"),
+  groups = "SKU",
+  data = subset(data, Owner %in% c("Aperture","Black Mesa")),
+  type = "dimple.plot.area",
+  bounds = list(x=90,y=30,height=320,width=330),
+  lineWeight = 1,
+  barGap = 0.05,
+  height = 400,
+  width = 590
+)
+d1$xAxis(type = "addMeasureAxis")
+d1$yAxis(type = "addCategoryAxis", orderRule = "Date")
+d1$set(
+  legend = list(
+    x = 430,
+    y = 20,
+    width = 100,
+    height = 300,
+    horizontalAlign = "left"
+  )
+)
+d1
+
+
+
+#example 39 Vertical Group 100% Area
+d1$xAxis( type = "addPctAxis" )
+d1
+
+
+
+
+
+#example 40 Line
+d1 <- dPlot(
+  UnitSales ~ Month,
+  data = subset(data, Owner %in% c("Aperture","Black Mesa")),
+  type = "dimple.plot.line"
+)
+d1$xAxis(type = "addCategoryAxis", orderRule = "Date")
+d1$yAxis(type = "addMeasureAxis")
+d1
+
+
+#example 41 Multiple Line
+d1 <- dPlot(
+  UnitSales ~ Month,
+  groups = "Channel",
+  data = subset(data, Owner %in% c("Aperture","Black Mesa")),
+  type = "dimple.plot.line"
+)
+d1$xAxis(type = "addCategoryAxis", orderRule = "Date")
+d1$yAxis(type = "addMeasureAxis")
+d1$set(
+  legend = list(
+    x = 200,
+    y = 10,
+    width = 500,
+    height = 20,
+    horizontalAlign = "right"
+  )
+)
+d1
+
+#example 42 Grouped Single Line
+d1 <- dPlot(
+  y = "UnitSales",
+  x = c("Owner","Month"),
+  groups = "Owner",
+  data = subset(data, Owner %in% c("Aperture","Black Mesa")),
+  type = "dimple.plot.line",
+  barGap = 0.05
+)
+d1$xAxis(type = "addCategoryAxis", grouporderRule = "Date")
+d1$yAxis(type = "addMeasureAxis")
+d1
+
+
+
+#example 32 Grouped Stacked Area
+d1 <- dPlot(
+  y = "UnitSales",
+  x = c("Owner","Month"),
+  groups = "SKU",
+  data = subset(data, Owner %in% c("Aperture","Black Mesa")),
+  type = "dimple.plot.line",
+  bounds = list(x=70,y=30,height=340,width=330),
+  barGap = 0.05,
+  lineWeight = 1,
+  height = 400,
+  width = 590
+)
+d1$xAxis(type = "addCategoryAxis", orderRule = "Date")
+d1$yAxis(type = "addMeasureAxis")
+d1$set(
+  legend = list(
+    x = 430,
+    y = 20,
+    width = 100,
+    height = 300,
+    horizontalAlign = "left"
+  )
+)
+d1
+
+
+#example 33 Grouped 100% Area
+d1$yAxis( type = "addPctAxis" )
+d1
+
+
+#example 34 Vertical Area
+d1 <- dPlot(
+  x = "UnitSales",
+  y = "Month",
+  data = subset(data, Owner %in% c("Aperture","Black Mesa")),
+  type = "dimple.plot.line",
+  bounds = list(x=80,y=30,height=480,width=330),
+  height = 400,
+  width = 590
+)
+d1$xAxis(type = "addMeasureAxis")
+d1$yAxis(type = "addCategoryAxis", orderRule = "Date")
+d1
+
+
+
+#example 35 Vertical Stacked Area
+d1 <- dPlot(
+  x = "UnitSales",
+  y = "Month",
+  groups = "Channel",
+  data = subset(data, Owner %in% c("Aperture","Black Mesa")),
+  type = "dimple.plot.line",
+  bounds = list(x=80,y=30,height=480,width=330),
+  height = 400,
+  width = 590
+)
+d1$xAxis(type = "addMeasureAxis")
+d1$yAxis(type = "addCategoryAxis", orderRule = "Date")
+d1$set(
+  legend = list(
+    x = 60,
+    y = 10,
+    width = 500,
+    height = 20,
+    horizontalAlign = "right"
+  )
+)
+d1
+
+
+#example 36 Vertical 100% Stacked Area
+d1$xAxis(type = "addPctAxis")
+d1
+
+
+#example 37 Vertical Grouped Area
+d1 <- dPlot(
+  x = "UnitSales",
+  y = c("Owner","Month"),
+  groups = "Owner",
+  data = subset(data, Owner %in% c("Aperture","Black Mesa")),
+  type = "dimple.plot.line",
+  bounds = list(x=90,y=30,height=470,width=330),
+  lineWeight = 1,
+  barGap = 0.05,
+  height = 400,
+  width = 590
+)
+d1$xAxis(type = "addMeasureAxis")
+d1$yAxis(type = "addCategoryAxis", orderRule = "Date")
+d1
+
+#example 38 Vertical Grouped Stacked Area
+d1 <- dPlot(
+  x = "UnitSales",
+  y = c("Owner","Month"),
+  groups = "SKU",
+  data = subset(data, Owner %in% c("Aperture","Black Mesa")),
+  type = "dimple.plot.line",
+  bounds = list(x=90,y=30,height=320,width=330),
+  lineWeight = 1,
+  barGap = 0.05,
+  height = 400,
+  width = 590
+)
+d1$xAxis(type = "addMeasureAxis")
+d1$yAxis(type = "addCategoryAxis", orderRule = "Date")
+d1$set(
+  legend = list(
+    x = 430,
+    y = 20,
+    width = 100,
+    height = 300,
+    horizontalAlign = "left"
+  )
+)
+d1
+
+
+
+#example 39 Vertical Group 100% Area
+d1$xAxis( type = "addPctAxis" )
+d1
