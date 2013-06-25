@@ -35,8 +35,7 @@ create_chart <- function(rFile){
   chart = source(rFile, local = TRUE)$value
   chart$field('srccode', rCode)
   chart$field('templates', list(
-    page = 'rChart2.h
-    tml', 
+    page = 'rChart2.html', 
     chartDiv = NULL, script =  chart$templates$script)
   )
   return(chart)
