@@ -1,9 +1,3 @@
-require(devtools)
-setwd("c:/users/kent.tleavell_nt/dropbox/development/r/rCharts")
-load_all()
-
-
-
 #get data used by dimple for all of its examples as a first test
 data <- read.delim(
   "http://pmsi-alignalytics.github.io/dimple/data/example_data.tsv"
