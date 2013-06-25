@@ -26,7 +26,7 @@ Dimple <- setRefClass('Dimple', contains = 'rCharts', methods = list(
     params$zAxis <<- setSpec(params$zAxis, ..., replace = replace)
   },
   legend <- function(...){
-    do.call(.self$set, list(....))
+    do.call(.self$set, list(...))
   },
   getChartParams = function(...){
     params <<- modifyList(params, getLayer(...))
