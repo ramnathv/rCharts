@@ -35,7 +35,6 @@ Collate:
     'Highcharts.R'
     'Vega.R'
     'Leaflet.R'
-<<<<<<< HEAD
     'makeExamples.R'
     
 =======
