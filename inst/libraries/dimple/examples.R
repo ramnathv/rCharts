@@ -1,6 +1,7 @@
 require(devtools)
 setwd("c:/users/kent.tleavell_nt/dropbox/development/r/rCharts")
 load_all()
+install('.')
 
 
 #get data used by dimple for all of its examples as a first test
@@ -16,7 +17,7 @@ d1 <- dPlot(
   x ="Month" ,
   y = "UnitSales",
   data = data,
-  type = "dimple.plot.bar"
+  type = "bar"
 )
 d1$xAxis(orderRule = "Date")
 d1
