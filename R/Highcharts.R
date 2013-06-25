@@ -20,8 +20,14 @@ Highcharts <- setRefClass("Highcharts", contains = "rCharts", methods = list(
     chart = function(..., replace = T){
         params$chart <<- setSpec(params$chart, ..., replace = replace)
     },
-    colors = function(..., replace = T){
-        params$colors <<- setSpec(params$colors, ..., replace = replace)
+    colors = function(..., replace = T) {
+        args <- unlist(list(...))
+        
+        if (replace) {
+            params$colors <<- args
+        } else {
+            params$colors <<- c(params$colors, args)
+        }
     },
     credits = function(..., replace = T){
         params$credits <<- setSpec(params$credits, ..., replace = replace)
@@ -54,8 +60,19 @@ Highcharts <- setRefClass("Highcharts", contains = "rCharts", methods = list(
         params$plotOptions <<- setSpec(params$plotOptions, ..., replace = replace)
     },
     series = function(..., replace = F) {
-        params$series <<- if (replace) list(list(...))
-        else c(params$series, list(list(...)))
+        args <- list(...)
+        
+        if (length(args) == 1 && is.list(args[[1]]) && is.null(names(args))) {
+            args <- args[[1]]
+        } else {
+            args <- list(args)
+        }
+        
+        if (replace) {
+            params$series <<- args
+        } else {
+            params$series <<- c(params$series, args)
+        }
     },
     subtitle = function(..., replace = T){
         params$subtitle <<- setSpec(params$subtitle, ..., replace = replace)
