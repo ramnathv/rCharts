@@ -485,14 +485,12 @@ d1 <- dPlot(
 d1$yAxis( type = "addCategoryAxis" )
 d1$xAxis( type = "addMeasureAxis" )
 d1$zAxis( type = "addMeasureAxis" )
-d1$set(
-  legend = list(
-    x = 200,
-    y = 10,
-    width = 500,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1$legend(
+  x = 200,
+  y = 10,
+  width = 500,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 
@@ -510,14 +508,12 @@ d1 <- dPlot(
 d1$xAxis( type = "addCategoryAxis" )
 d1$yAxis( type = "addCategoryAxis" )
 d1$zAxis( type = "addMeasureAxis", overrideMax = 200 )
-d1$set(
-  legend = list(
-    x = 200,
-    y = 10,
-    width = 500,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1$legend(
+  x = 200,
+  y = 10,
+  width = 500,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 
@@ -542,14 +538,12 @@ d1 <- dPlot(
 )
 d1$xAxis(type = "addCategoryAxis", orderRule = "Date")
 d1$yAxis(type = "addMeasureAxis")
-d1$set(
-  legend = list(
-    x = 200,
-    y = 10,
-    width = 500,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1$legend(
+  x = 200,
+  y = 10,
+  width = 500,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 
@@ -571,14 +565,12 @@ d1 <- dPlot(
 )
 d1$xAxis(type = "addCategoryAxis", grouporderRule = "Date")
 d1$yAxis(type = "addMeasureAxis")
-d1$set(
-  legend = list(
-    x = 200,
-    y = 10,
-    width = 500,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1$legend(
+  x = 200,
+  y = 10,
+  width = 500,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 
@@ -599,14 +591,12 @@ d1 <- dPlot(
 )
 d1$xAxis(type = "addCategoryAxis", grouporderRule = "Date")
 d1$yAxis(type = "addMeasureAxis")
-d1$set(
-  legend = list(
-    x = 430,
-    y = 20,
-    width = 100,
-    height = 300,
-    horizontalAlign = "left"
-  )
+d1$legend(
+  x = 430,
+  y = 20,
+  width = 100,
+  height = 300,
+  horizontalAlign = "left"
 )
 d1
 
@@ -645,14 +635,12 @@ d1 <- dPlot(
 )
 d1$xAxis(type = "addMeasureAxis")
 d1$yAxis(type = "addCategoryAxis", grouporderRule = "Date")
-d1$set(
-  legend = list(
-    x = 60,
-    y = 10,
-    width = 500,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1$legend(
+  x = 60,
+  y = 10,
+  width = 500,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 
@@ -694,14 +682,12 @@ d1 <- dPlot(
 )
 d1$xAxis(type = "addMeasureAxis")
 d1$yAxis(type = "addCategoryAxis", grouporderRule = "Date")
-d1$set(
-  legend = list(
-    x = 430,
-    y = 20,
-    width = 100,
-    height = 300,
-    horizontalAlign = "left"
-  )
+d1$legend(
+  x = 430,
+  y = 20,
+  width = 100,
+  height = 300,
+  horizontalAlign = "left"
 )
 d1
 
@@ -735,14 +721,12 @@ d1 <- dPlot(
 )
 d1$xAxis(type = "addCategoryAxis", orderRule = "Date")
 d1$yAxis(type = "addMeasureAxis")
-d1$set(
-  legend = list(
-    x = 200,
-    y = 10,
-    width = 500,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1$legend(
+  x = 200,
+  y = 10,
+  width = 500,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 
@@ -775,14 +759,12 @@ d1 <- dPlot(
 )
 d1$xAxis(type = "addCategoryAxis", grouporderRule = "Date")
 d1$yAxis(type = "addMeasureAxis")
-d1$set(
-  legend = list(
-    x = 510,
-    y = 20,
-    width = 100,
-    height = 300,
-    horizontalAlign = "left"
-  )
+d1$legend(
+  x = 510,
+  y = 20,
+  width = 100,
+  height = 300,
+  horizontalAlign = "left"
 )
 d1
 
@@ -817,14 +799,12 @@ d1 <- dPlot(
 )
 d1$xAxis(type = "addMeasureAxis")
 d1$yAxis(type = "addCategoryAxis", orderRule = "Date")
-d1$set(
-  legend = list(
-    x = 60,
-    y = 10,
-    width = 500,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1$legend(
+  x = 60,
+  y = 10,
+  width = 500,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 
@@ -862,14 +842,12 @@ d1 <- dPlot(
 )
 d1$xAxis(type = "addMeasureAxis")
 d1$yAxis(type = "addCategoryAxis", grouporderRule = "Date")
-d1$set(
-  legend = list(
-    x = 430,
-    y = 20,
-    width = 100,
-    height = 300,
-    horizontalAlign = "left"
-  )
+d1$legend(
+  x = 430,
+  y = 20,
+  width = 100,
+  height = 300,
+  horizontalAlign = "left"
 )
 d1
 
