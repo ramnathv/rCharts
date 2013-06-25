@@ -20,6 +20,7 @@ Collate:
     'utils-rickshaw.R'
     'rChartsClass.R'
     'Datatables.R'
+    'Dimple.R'
     'Polycharts.R'
     'Morris.R'
     'Nvd3.R'
@@ -35,4 +36,3 @@ Collate:
     'Vega.R'
     'Leaflet.R'
     'makeExamples.R'
-    
