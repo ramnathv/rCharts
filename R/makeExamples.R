@@ -34,10 +34,10 @@ create_chart <- function(rFile){
   rCode = paste(readLines(rFile, warn = F), collapse = '\n')
   chart = source(rFile, local = TRUE)$value
   chart$field('srccode', rCode)
-<<<<<<< HEAD
-  chart$field('templates', list(page = 'rChart2.html', chartDiv = NULL))
-=======
-  chart$field('templates', list(page = 'rChart2.html', chartDiv = NULL, script =  chart$templates$script))
->>>>>>> a46a4853507280ac7acafeef41b9d415dd98123c
+  chart$field('templates', list(
+    page = 'rChart2.h
+    tml', 
+    chartDiv = NULL, script =  chart$templates$script)
+  )
   return(chart)
 }
