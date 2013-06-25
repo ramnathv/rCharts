@@ -20,6 +20,7 @@ Collate:
     'utils-rickshaw.R'
     'rChartsClass.R'
     'Datatables.R'
+    'Dimple.R'
     'Polycharts.R'
     'Morris.R'
     'Nvd3.R'
@@ -34,5 +35,9 @@ Collate:
     'Highcharts.R'
     'Vega.R'
     'Leaflet.R'
+<<<<<<< HEAD
     'makeExamples.R'
     
+=======
+    
+>>>>>>> origin/test-dimple
