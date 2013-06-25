@@ -850,9 +850,3 @@ d1$legend(
   horizontalAlign = "left"
 )
 d1
-
-
-
-#example 39 Vertical Group 100% Area
-d1$xAxis( type = "addPctAxis" )
-d1
