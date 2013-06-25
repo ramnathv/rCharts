@@ -1,7 +1,7 @@
 require(devtools)
 setwd("c:/users/kent.tleavell_nt/dropbox/development/r/rCharts")
 load_all()
-install('.')
+
 
 
 #get data used by dimple for all of its examples as a first test
@@ -28,17 +28,15 @@ d1 <- dPlot(
   y = "UnitSales",
   groups = "Channel",
   data = data,
-  type = "dimple.plot.bar"
+  type = "bar"
 )
 d1$xAxis(orderRule = "Date")
-d1$set(
-  legend = list(
-    x = 60,
-    y = 10,
-    width = 700,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1$legend(
+  x = 60,
+  y = 10,
+  width = 700,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 
@@ -53,16 +51,14 @@ d1 <- dPlot(
   y = "UnitSales",
   groups = "Channel",
   data = data,
-  type = "dimple.plot.bar"
+  type = "bar"
 )
-d1$set(
-  legend = list(
-    x = 60,
-    y = 10,
-    width = 700,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1$legend(
+  x = 60,
+  y = 10,
+  width = 700,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 
@@ -72,16 +68,14 @@ d1 <- dPlot(
   y = "UnitSales",
   groups = "Owner",
   data = data,
-  type = "dimple.plot.bar"
+  type = "bar"
 )
-d1$set(
-  legend = list(
-    x = 200,
-    y = 10,
-    width = 400,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1$legend(
+  x = 200,
+  y = 10,
+  width = 400,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 
@@ -95,7 +89,7 @@ d1
 d1 <- dPlot(
   Month ~ UnitSales,
   data = data,
-  type = "dimple.plot.bar"
+  type = "bar"
 )
 d1$xAxis(type = "addMeasureAxis")
 #good test of orderRule on y instead of x
@@ -108,19 +102,17 @@ d1 <- dPlot(
   Month ~ UnitSales,
   groups = "Channel",
   data = data,
-  type = "dimple.plot.bar"
+  type = "bar"
 )
 d1$xAxis(type = "addMeasureAxis")
 #good test of orderRule on y instead of x
 d1$yAxis(type = "addCategoryAxis", orderRule = "Date")
-d1$set(
-  legend = list(
-    x = 200,
-    y = 10,
-    width = 400,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1$legend(
+  x = 200,
+  y = 10,
+  width = 400,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 
@@ -135,19 +127,17 @@ d1 <- dPlot(
   y = c("PriceTier","Channel"),
   groups = "Channel",
   data = data,
-  type = "dimple.plot.bar"
+  type = "bar"
 )
 d1$xAxis(type = "addMeasureAxis")
 #good test of orderRule on y instead of x
 d1$yAxis(type = "addCategoryAxis")
-d1$set(
-  legend = list(
-    x = 200,
-    y = 10,
-    width = 400,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1$legend(
+  x = 200,
+  y = 10,
+  width = 400,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 
@@ -158,19 +148,17 @@ d1 <- dPlot(
   y = c("PriceTier","Channel"),
   groups = "Owner",
   data = data,
-  type = "dimple.plot.bar"
+  type = "bar"
 )
 d1$xAxis(type = "addMeasureAxis")
 #good test of orderRule on y instead of x
 d1$yAxis(type = "addCategoryAxis")
-d1$set(
-  legend = list(
-    x = 200,
-    y = 10,
-    width = 400,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1$legend(
+  x = 200,
+  y = 10,
+  width = 400,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 
@@ -184,18 +172,16 @@ d1 <- dPlot(
   UnitSales ~ Channel,
   groups = "Owner",
   data = data,
-  type = "dimple.plot.bar"
+  type = "bar"
 )
 d1$xAxis(type = "addAxis", measure = "UnitSales", showPercent = TRUE)
 d1$yAxis(type = "addPctAxis")
-d1$set(
-  legend = list(
-    x = 200,
-    y = 10,
-    width = 400,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1d1$legend(
+  x = 200,
+  y = 10,
+  width = 400,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 #test with storyboard
@@ -207,18 +193,16 @@ d1 <- dPlot(
   Channel ~ UnitSales,
   groups = "Owner",
   data = data,
-  type = "dimple.plot.bar"
+  type = "bar"
 )
 d1$yAxis(type = "addAxis", measure = "UnitSales", showPercent = TRUE)
 d1$xAxis(type = "addPctAxis")
-d1$set(
-  legend = list(
-    x = 200,
-    y = 10,
-    width = 400,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1$legend(
+  x = 200,
+  y = 10,
+  width = 400,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 
@@ -229,18 +213,16 @@ d1 <- dPlot(
   y = "Owner",
   groups = "PriceTier",
   data = data,
-  type = "dimple.plot.bar"
+  type = "bar"
 )
 d1$yAxis(type = "addCategoryAxis")
 d1$xAxis(type = "addCategoryAxis")
-d1$set(
-  legend = list(
-    x = 200,
-    y = 10,
-    width = 400,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1$legend(
+  x = 200,
+  y = 10,
+  width = 400,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 
@@ -250,18 +232,16 @@ d1 <- dPlot(
   OperatingProfit~UnitSales,
   groups = c("SKU","Channel"),
   data = subset(data, Date == "01/12/2012"),
-  type = "dimple.plot.bubble"
+  type = "bubble"
 )
 d1$xAxis( type = "addMeasureAxis" )
 d1$yAxis( type = "addMeasureAxis" )
-d1$set(
-  legend = list(
-    x = 200,
-    y = 10,
-    width = 500,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1$legend(
+  x = 200,
+  y = 10,
+  width = 500,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 
@@ -271,18 +251,16 @@ d1 <- dPlot(
   UnitSales ~ Month,
   groups = "Channel",
   data = data,
-  type = "dimple.plot.bubble"
+  type = "bubble"
 )
 #defaults to yAxis (Measure) and xAxis (Category)
 d1$xAxis( orderRule = "Date")
-d1$set(
-  legend = list(
-    x = 200,
-    y = 10,
-    width = 500,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1$legend(
+  x = 200,
+  y = 10,
+  width = 500,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 
@@ -293,17 +271,15 @@ d1 <- dPlot(
   x = c("PriceTier","Channel"),
   groups = "Channel",
   data = data,
-  type = "dimple.plot.bubble"
+  type = "bubble"
 )
 #defaults to yAxis (Measure) and xAxis (Category)
-d1$set(
-  legend = list(
-    x = 200,
-    y = 10,
-    width = 500,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1$legend(
+  x = 200,
+  y = 10,
+  width = 500,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 
@@ -314,18 +290,16 @@ d1 <- dPlot(
   y = "Month",
   groups = "Channel",
   data = data,
-  type = "dimple.plot.bubble"
+  type = "bubble"
 )
 d1$xAxis( type = "addMeasureAxis" )
 d1$yAxis( type = "addCategoryAxis", orderRule = "Date")
-d1$set(
-  legend = list(
-    x = 200,
-    y = 10,
-    width = 500,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1$legend(
+  x = 200,
+  y = 10,
+  width = 500,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 
@@ -336,18 +310,16 @@ d1 <- dPlot(
   y = c("PriceTier","Channel"),
   groups = "Channel",
   data = data,
-  type = "dimple.plot.bubble"
+  type = "bubble"
 )
 d1$xAxis( type = "addMeasureAxis" )
 d1$yAxis( type = "addCategoryAxis")
-d1$set(
-  legend = list(
-    x = 200,
-    y = 10,
-    width = 500,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1$legend(
+  x = 200,
+  y = 10,
+  width = 500,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 
@@ -359,18 +331,16 @@ d1 <- dPlot(
   x = c("Channel","PriceTier"),
   groups = "PriceTier",
   data = data,
-  type = "dimple.plot.bubble"
+  type = "bubble"
 )
 d1$xAxis( type = "addCategoryAxis" )
 d1$yAxis( type = "addCategoryAxis")
-d1$set(
-  legend = list(
-    x = 200,
-    y = 10,
-    width = 500,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1$legend(
+  x = 200,
+  y = 10,
+  width = 500,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 
@@ -382,19 +352,17 @@ d1 <- dPlot(
   z = "OperatingProfit",
   groups = c("SKU","Channel"),
   data = subset(data, Date == "01/12/2012"),
-  type = "dimple.plot.bubble"
+  type = "bubble"
 )
 d1$xAxis( type = "addMeasureAxis" )
 d1$yAxis( type = "addMeasureAxis" )
 d1$zAxis( type = "addMeasureAxis" )
-d1$set(
-  legend = list(
-    x = 200,
-    y = 10,
-    width = 500,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1$legend(
+  x = 200,
+  y = 10,
+  width = 500,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 
@@ -416,19 +384,17 @@ d1 <- dPlot(
       "01/12/2012"
     )
   ),
-  type = "dimple.plot.bubble"
+  type = "bubble"
 )
 d1$xAxis( type = "addCategoryAxis", orderRule = "Date" )
 d1$yAxis( type = "addMeasureAxis" )
 d1$zAxis( type = "addMeasureAxis" )
-d1$set(
-  legend = list(
-    x = 200,
-    y = 10,
-    width = 500,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1$legend(
+  x = 200,
+  y = 10,
+  width = 500,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 
@@ -450,19 +416,17 @@ d1 <- dPlot(
       "01/12/2012"
     )
   ),
-  type = "dimple.plot.bubble"
+  type = "bubble"
 )
 d1$xAxis( type = "addCategoryAxis" )
 d1$yAxis( type = "addMeasureAxis" )
 d1$zAxis( type = "addMeasureAxis" )
-d1$set(
-  legend = list(
-    x = 200,
-    y = 10,
-    width = 500,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1$legend(
+  x = 200,
+  y = 10,
+  width = 500,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 
@@ -484,19 +448,17 @@ d1 <- dPlot(
       "01/12/2012"
     )
   ),
-  type = "dimple.plot.bubble"
+  type = "bubble"
 )
 d1$yAxis( type = "addCategoryAxis", orderRule = "Date" )
 d1$xAxis( type = "addMeasureAxis" )
 d1$zAxis( type = "addMeasureAxis" )
-d1$set(
-  legend = list(
-    x = 200,
-    y = 10,
-    width = 500,
-    height = 20,
-    horizontalAlign = "right"
-  )
+d1$legend(
+  x = 200,
+  y = 10,
+  width = 500,
+  height = 20,
+  horizontalAlign = "right"
 )
 d1
 
@@ -518,7 +480,7 @@ d1 <- dPlot(
       "01/12/2012"
     )
   ),
-  type = "dimple.plot.bubble"
+  type = "bubble"
 )
 d1$yAxis( type = "addCategoryAxis" )
 d1$xAxis( type = "addMeasureAxis" )
@@ -542,7 +504,7 @@ d1 <- dPlot(
   z = "Distribution",
   groups = "PriceTier",
   data = data,
-  type = "dimple.plot.bubble",
+  type = "bubble",
   aggregate = "dimple.aggregateMethod.max"
 )
 d1$xAxis( type = "addCategoryAxis" )
@@ -564,7 +526,7 @@ d1
 d1 <- dPlot(
   UnitSales ~ Month,
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
-  type = "dimple.plot.area"
+  type = "area"
 )
 d1$xAxis(type = "addCategoryAxis", orderRule = "Date")
 d1$yAxis(type = "addMeasureAxis")
@@ -576,7 +538,7 @@ d1 <- dPlot(
   UnitSales ~ Month,
   groups = "Channel",
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
-  type = "dimple.plot.area"
+  type = "area"
 )
 d1$xAxis(type = "addCategoryAxis", orderRule = "Date")
 d1$yAxis(type = "addMeasureAxis")
@@ -605,7 +567,7 @@ d1 <- dPlot(
   x = c("Owner","Month"),
   groups = "Owner",
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
-  type = "dimple.plot.area"
+  type = "area"
 )
 d1$xAxis(type = "addCategoryAxis", grouporderRule = "Date")
 d1$yAxis(type = "addMeasureAxis")
@@ -628,7 +590,7 @@ d1 <- dPlot(
   x = c("Owner","Month"),
   groups = "SKU",
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
-  type = "dimple.plot.area",
+  type = "area",
   bounds = list(x=70,y=30,height=340,width=330),
   barGap = 0.05,
   lineWeight = 1,
@@ -659,7 +621,7 @@ d1 <- dPlot(
   x = "UnitSales",
   y = "Month",
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
-  type = "dimple.plot.area",
+  type = "area",
   bounds = list(x=80,y=30,height=480,width=330),
   height = 400,
   width = 590
@@ -676,7 +638,7 @@ d1 <- dPlot(
   y = "Month",
   groups = "Channel",
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
-  type = "dimple.plot.area",
+  type = "area",
   bounds = list(x=80,y=30,height=480,width=330),
   height = 400,
   width = 590
@@ -706,7 +668,7 @@ d1 <- dPlot(
   y = c("Owner","Month"),
   groups = "Owner",
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
-  type = "dimple.plot.area",
+  type = "area",
   bounds = list(x=90,y=30,height=470,width=330),
   lineWeight = 1,
   barGap = 0.05,
@@ -723,7 +685,7 @@ d1 <- dPlot(
   y = c("Owner","Month"),
   groups = "SKU",
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
-  type = "dimple.plot.area",
+  type = "area",
   bounds = list(x=90,y=30,height=320,width=330),
   lineWeight = 1,
   barGap = 0.05,
@@ -757,7 +719,7 @@ d1
 d1 <- dPlot(
   UnitSales ~ Month,
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
-  type = "dimple.plot.line"
+  type = "line"
 )
 d1$xAxis(type = "addCategoryAxis", orderRule = "Date")
 d1$yAxis(type = "addMeasureAxis")
@@ -769,7 +731,7 @@ d1 <- dPlot(
   UnitSales ~ Month,
   groups = "Channel",
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
-  type = "dimple.plot.line"
+  type = "line"
 )
 d1$xAxis(type = "addCategoryAxis", orderRule = "Date")
 d1$yAxis(type = "addMeasureAxis")
@@ -790,7 +752,7 @@ d1 <- dPlot(
   x = c("Owner","Month"),
   groups = "Owner",
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
-  type = "dimple.plot.line",
+  type = "line",
   barGap = 0.05
 )
 d1$xAxis(type = "addCategoryAxis", grouporderRule = "Date")
@@ -805,7 +767,7 @@ d1 <- dPlot(
   x = c("Owner","Month"),
   groups = "Brand",
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
-  type = "dimple.plot.line",
+  type = "line",
   bounds = list(x=70,y=30,height=420,width=330),
   barGap = 0.05,
   height = 400,
@@ -831,7 +793,7 @@ d1 <- dPlot(
   x = "UnitSales",
   y = "Month",
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
-  type = "dimple.plot.line",
+  type = "line",
   bounds = list(x=80,y=30,height=480,width=330),
   height = 400,
   width = 590
@@ -848,7 +810,7 @@ d1 <- dPlot(
   y = "Month",
   groups = "Channel",
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
-  type = "dimple.plot.line",
+  type = "line",
   bounds = list(x=80,y=30,height=480,width=330),
   height = 400,
   width = 590
@@ -874,7 +836,7 @@ d1 <- dPlot(
   y = c("Owner","Month"),
   groups = "Owner",
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
-  type = "dimple.plot.line",
+  type = "line",
   bounds = list(x=90,y=30,height=470,width=330),
   barGap = 0.05,
   height = 400,
@@ -892,7 +854,7 @@ d1 <- dPlot(
   y = c("Owner","Month"),
   groups = "Brand",
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
-  type = "dimple.plot.line",
+  type = "line",
   bounds = list(x=90,y=30,height=320,width=330),
   barGap = 0.05,
   height = 400,
