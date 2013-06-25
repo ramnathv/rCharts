@@ -42,7 +42,7 @@
   if (yAxis.overrideMax) y.overrideMax = yAxis.overrideMax;
   //z for bubbles
     var z;
-  if (!(typeof(zAxis) === 'undefined') && zAxis.length > 0){
+  if (!(typeof(zAxis) === 'undefined') && zAxis.type){
     if(zAxis.measure) {
       z = myChart[zAxis.type]("z",opts.z,zAxis.measure);
     } else {
