@@ -57,7 +57,7 @@
   //as the first argument
   //if provided need to use groups from opts
   if(opts.hasOwnProperty("groups")) {
-    var s = myChart.addSeries( opts.groups, eval(opts.type) );   //know eval is evil but don't know a way around it in this case
+    var s = myChart.addSeries( opts.groups, dimple.plot[opts.type] );
     //series offers an aggregate method that we will also need to check if available
     //options available are avg, count, max, min, sum
     if (!(typeof(opts.aggregate) === 'undefined')) {
