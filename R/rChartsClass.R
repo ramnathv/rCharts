@@ -19,6 +19,13 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
   addParams = function(...){
     params <<- modifyList(params, list(...))
   },
+  setTemplate = function(...){
+    templates <<- modifyList(templates, lists(...))
+  },
+  setLib = function(lib){
+    lib <<- lib
+    LIB <<- get_lib(lib)
+  },
   set = function(...){
     # this is a hack, currently for external libraries
     # idea is to initialize LIB, since the set method will always be used.
