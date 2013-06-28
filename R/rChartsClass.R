@@ -20,7 +20,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
     params <<- modifyList(params, list(...))
   },
   setTemplate = function(...){
-    templates <<- modifyList(templates, lists(...))
+    templates <<- modifyList(templates, list(...))
   },
   setLib = function(lib){
     lib <<- lib
