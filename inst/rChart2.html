@@ -5,6 +5,7 @@
     <link rel='stylesheet' href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/cosmo/bootstrap.min.css">
      <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" >
     <link rel='stylesheet' href="http://twitter.github.io/bootstrap/assets/js/google-code-prettify/prettify.css">
+    <link rel='stylesheet' href="http://aozora.github.io/bootplus/assets/css/docs.css">
     {{# assets.css }}
     <link rel='stylesheet' href='{{{ . }}}'>
     {{/ assets.css }}
@@ -17,12 +18,14 @@
     .rChart {
       display: block
       margin: auto auto;
-      width: 800px;
+      width: 100%;
       height: 400px;
     }
+    /*
     body {
       margin-top: 60px;
     }
+    */
     </style>
     
   </head>
@@ -44,13 +47,15 @@
           </div>
         </div>
         {{/ tObj }}
-        <div class='span9'>
-          <div id='{{chartId}}' class='rChart nvd3Plot {{ lib}}'></div>
+        <div class='span8'>
+          <div class="bs-docs-example">
+            <div id='{{chartId}}' class='rChart nvd3Plot {{ lib}}'></div>
           <br/>
 {{# CODE }}
 <pre><code class='r'>{{CODE}}
 </code></pre>
 {{/ CODE }}
+</div>
         </div>
       </div>
     </div>
