@@ -114,13 +114,13 @@ setListSpec <- function(obj, ..., replace) {
     args <- list(args)
   }
   
-  # Raise error if invalid data (e.g. issue 138)
-  errorCheck <- function(args) {
-    if (!is.null(args$data) && !is.list(args$data)){ 
-      stop("The data argument requires a list. If your argument is a numeric vector, try to convert it with as.list() first.")
+  # Convert data values to a list (fixes issue 138)
+  args <- lapply(args, function(x) {
+    if (!is.null(x$data) && !is.list(x$data)){ 
+      x$data <- as.list(x$data)
     }
-  }
-  sapply(args, errorCheck)
+    return(x)
+  })
   
   if (replace) {
     obj <<- args
