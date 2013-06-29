@@ -117,7 +117,7 @@ setListSpec <- function(obj, ..., replace) {
   # Raise error if invalid data (e.g. issue 138)
   errorCheck <- function(args) {
     if (!is.null(args$data) && !is.list(args$data)){ 
-      stop("data argument requires a list")
+      stop("The data argument requires a list. If your argument is a numeric vector, try to convert it with as.list() first.")
     }
   }
   sapply(args, errorCheck)
