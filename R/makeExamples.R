@@ -46,14 +46,14 @@ create_chart <- function(rFile){
 #'
 #' @param path to R file containing code to create an rChart
 #' @param imgname name of the plot to save to
-take_screenshot <- function(rFile, imgname = 'plot1', upload = F){
+take_screenshot <- function(rFile, imgname = 'plot1', delay = 10000, upload = F){
   rCode = paste(readLines(rFile, warn = F), collapse = "\n")
   script = system.file('utils', 'screenshot.js', package = 'rCharts')
   chart = source(rFile, local = TRUE)$value
   chart$set(width = 600, height = 325)
   tf <- tempfile(fileext = ".html"); on.exit(unlink(tf))
   chart$save(tf)
-  cmd1 <- sprintf('casperjs %s %s %s', script, tf, imgname)
+  cmd1 <- sprintf('casperjs %s %s %s %s', script, tf, imgname, delay)
   system(cmd1)
   # system(sprintf("convert %s.png  -resize 288x172", imgname))
   if (upload){
