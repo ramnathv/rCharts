@@ -74,7 +74,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
     writeLines(.self$render(...), destfile)
   },
   show = function(static = T, ...){
-    if (getOption("knitr.in.progress")){
+    if (!is.null(getOption("knitr.in.progress")) && getOption("knitr.in.progress")){
       return(.self$print())
     }
     if (static){
