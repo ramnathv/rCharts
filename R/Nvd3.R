@@ -7,7 +7,7 @@ nPlot <- nvd3Plot <- function(x, data, ...){
 Nvd3 <- setRefClass('Nvd3', contains = 'rCharts', methods = list(
   initialize = function(){
     callSuper(); 
-    params <<- c(params, list(
+    params <<- c(params, list(controls = list(),
       chart = list(), xAxis = list(), x2Axis = list(), yAxis = list()
     ))
   },
@@ -31,14 +31,28 @@ Nvd3 <- setRefClass('Nvd3', contains = 'rCharts', methods = list(
   getChartParams = function(...){
     params <<- modifyList(params, getLayer(...))
   },
+  addControls = function(nm, value, values, label = paste("Select ", nm, ":")){
+    .self$setTemplate(
+      page = 'rChartControls.html',
+      script = system.file('libraries', 'nvd3', 'controls', 
+        'script.html', package = 'rCharts')
+    )
+    .self$set(width = 700)
+    control = list(name = nm, value = value, values = values, label = label)
+    params$controls[[nm]] <<- control
+  },
   getPayload = function(chartId){
     data = toJSONArray(params$data)
     chart = toChain(params$chart, 'chart')
     xAxis = toChain(params$xAxis, 'chart.xAxis')
     x2Axis = toChain(params$x2Axis, 'chart.x2Axis')    
     yAxis = toChain(params$yAxis, 'chart.yAxis')
-    opts = toJSON(params[!(names(params) %in% c('data', 'chart', 'xAxis', 'x2Axis', 'yAxis'))])
+    controls_json = toJSON(params$controls)
+    controls = setNames(params$controls, NULL)
+    opts = toJSON(params[!(names(params) %in% c('data', 'chart', 'xAxis', 'x2Axis', 'yAxis', 'controls'))])
     list(opts = opts, xAxis = xAxis, x2Axis = x2Axis, yAxis = yAxis, data = data, 
-         chart = chart, chartId = chartId)
+         chart = chart, chartId = chartId, controls = controls, 
+         controls_json = controls_json
+    )
   }
 ))
