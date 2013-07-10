@@ -19,6 +19,16 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
   addParams = function(...){
     params <<- modifyList(params, list(...))
   },
+  addControls = function(nm, value, values, label = paste("Select ", nm, ":")){
+    .self$setTemplate(
+      page = 'rChartControls.html',
+      script = system.file('libraries', lib, 'controls', 
+        'script.html', package = 'rCharts')
+    )
+    .self$set(width = 700)
+    control = list(name = nm, value = value, values = values, label = label)
+    params$controls[[nm]] <<- control
+  },
   setTemplate = function(...){
     templates <<- modifyList(templates, list(...))
   },

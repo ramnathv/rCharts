@@ -31,16 +31,6 @@ Nvd3 <- setRefClass('Nvd3', contains = 'rCharts', methods = list(
   getChartParams = function(...){
     params <<- modifyList(params, getLayer(...))
   },
-  addControls = function(nm, value, values, label = paste("Select ", nm, ":")){
-    .self$setTemplate(
-      page = 'rChartControls.html',
-      script = system.file('libraries', 'nvd3', 'controls', 
-        'script.html', package = 'rCharts')
-    )
-    .self$set(width = 700)
-    control = list(name = nm, value = value, values = values, label = label)
-    params$controls[[nm]] <<- control
-  },
   getPayload = function(chartId){
     data = toJSONArray(params$data)
     chart = toChain(params$chart, 'chart')
