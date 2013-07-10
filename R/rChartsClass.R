@@ -92,6 +92,8 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
   publish = function(description = "", id = NULL, ..., host = 'gist'){
     htmlFile = file.path(tempdir(), 'index.html'); on.exit(unlink(htmlFile))
     .self$save(destfile = htmlFile, cdn = T)
+    # imgFile = file.path(tempdir(), 'thumbnail.png'); on.exit(unlink(imgFile))
+    # take_screenshot(htmlFile, tools::file_path_sans_ext(imgFile))
     if (!is.null(.self$srccode)){
       codeFile = file.path(tempdir(), 'code.R'); on.exit(unlink(codeFile))
       writeLines(.self$srccode, con = codeFile)
