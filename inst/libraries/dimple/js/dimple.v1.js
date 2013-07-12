@@ -17,16 +17,20 @@ var dimple = {
     // License: "https://github.com/PMSI-AlignAlytics/dimple/blob/master/MIT-LICENSE.txt"
     // Source: /src/objects/axis/begin.js
     // Help: http://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.axis
-    dimple.axis = function (chart, position, categoryFields, measure) {
+    dimple.axis = function (chart, position, categoryFields, measure, timeField) {
 
         // Help: http://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.axis#wiki-chart
         this.chart = chart;
         // Help: http://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.axis#wiki-position
         this.position = position;
         // Help: http://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.axis#wiki-categoryFields
-        this.categoryFields = categoryFields;
+        this.categoryFields = (timeField === null || timeField === undefined ? categoryFields : [].concat(timeField));
         // Help: http://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.axis#wiki-measure
         this.measure = measure;
+        // Help: http://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.axis#wiki-timeField
+        this.timeField = timeField;
+        // Help: http://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.axis#wiki-floatingBarWidth
+        this.floatingBarWidth = 5;
         // Help: http://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.axis#wiki-hidden
         this.hidden = false;
         // Help: http://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.axis#wiki-showPercent
@@ -45,6 +49,14 @@ var dimple = {
         this.gridlineShapes = null;
         // Help: http://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.axis#wiki-titleShape
         this.titleShape = null;
+        // Help: http://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.axis#wiki-dateParseFormat
+        this.dateParseFormat = null;
+        // Help: http://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.axis#wiki-tickFormat
+        this.tickFormat = null;
+        // Help: http://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.axis#wiki-timePeriod
+        this.timePeriod = null;
+        // Help: http://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.axis#wiki-timeInterval
+        this.timeInterval = 1;
 
         // The scale determined by the update method
         this._scale = null;
@@ -78,7 +90,13 @@ var dimple = {
                 chunks,
                 suffix,
                 dp;
-            if (this.showPercent) {
+            if (this.tickFormat !== null && this.tickFormat !== undefined) {
+                if (this._hasTimeField()) {
+                    returnFormat = d3.time.format(this.tickFormat);
+                } else {
+                    returnFormat = d3.format(this.tickFormat);
+                }
+            } else if (this.showPercent) {
                 returnFormat = d3.format("%");
             } else if (this.measure !== null) {
                 max = Math.floor(Math.abs(this._max), 0).toString();
@@ -87,18 +105,51 @@ var dimple = {
                 if (len > 3) {
                     chunks = Math.min(Math.floor((len - 1) / 3), 4);
                     suffix = "kmBT".substring(chunks - 1, chunks);
-                    dp = (len - chunks * 3 <= 2 ? 1 : 0);
+                    dp = (len - chunks * 3 <= 1 ? 1 : 0);
                     returnFormat = function (n) {
                         return (n === 0 ? 0 : d3.format(",." + dp + "f")(n / Math.pow(1000, chunks)) + suffix);
                     };
                 } else {
-                    dp = (len <= 2 ? 1 : 0);
+                    dp = (len <= 1 ? 1 : 0);
                     returnFormat = d3.format(",." + dp + "f");
                 }
             } else {
                 returnFormat = function (n) { return n; };
             }
             return returnFormat;
+        };
+
+
+        // Copyright: 2013 PMSI-AlignAlytics
+        // License: "https://github.com/PMSI-AlignAlytics/dimple/blob/master/MIT-LICENSE.txt"
+        // Source: /src/objects/axis/methods/_getTimePeriod.js
+        this._getTimePeriod = function () {
+            // A javascript date object
+            var outPeriod = this.timePeriod,
+                maxPeriods = 30,
+                diff = this._max - this._min;
+            if (this._hasTimeField && (this.timePeriod === null || this.timePeriod === undefined)) {
+                // Calculate using millisecond values for speed.  Using the date range requires creating an array
+                // which in the case of seconds kills the browser.  All constants are straight sums of milliseconds
+                // except months taken as (86400000 * 365.25) / 12 = 2629800000
+                if (diff / 1000 <= maxPeriods) {
+                    outPeriod = d3.time.seconds;
+                } else if (diff / 60000 <= maxPeriods) {
+                    outPeriod = d3.time.minutes;
+                } else if (diff / 3600000 <= maxPeriods) {
+                    outPeriod = d3.time.hours;
+                } else if (diff / 86400000 <= maxPeriods) {
+                    outPeriod = d3.time.days;
+                } else if (diff / 604800000 <= maxPeriods) {
+                    outPeriod = d3.time.weeks;
+                } else if (diff / 2629800000 <= maxPeriods) {
+                    outPeriod = d3.time.months;
+                } else {
+                    outPeriod = d3.time.years;
+                }
+            }
+            // Return the date
+            return outPeriod;
         };
 
 
@@ -115,6 +166,32 @@ var dimple = {
         // Source: /src/objects/axis/methods/_hasMeasure.js
         this._hasMeasure = function () {
             return (this.measure !== null && this.measure !== undefined);
+        };
+
+
+        // Copyright: 2013 PMSI-AlignAlytics
+        // License: "https://github.com/PMSI-AlignAlytics/dimple/blob/master/MIT-LICENSE.txt"
+        // Source: /src/objects/axis/methods/_hasTimeField.js
+        this._hasTimeField = function () {
+            return (this.timeField !== null && this.timeField !== undefined);
+        };
+
+
+        // Copyright: 2013 PMSI-AlignAlytics
+        // License: "https://github.com/PMSI-AlignAlytics/dimple/blob/master/MIT-LICENSE.txt"
+        // Source: /src/objects/axis/methods/_parseDate.js
+        this._parseDate = function (inDate) {
+            // A javascript date object
+            var outDate;
+            if (this.dateParseFormat === null || this.dateParseFormat === undefined) {
+                // If nothing has been explicity defined you are in the hands of the browser gods
+                // may they smile upon you...
+                outDate = Date.parse(inDate);
+            } else {
+                outDate = d3.time.format(this.dateParseFormat).parse(inDate);
+            }
+            // Return the date
+            return outDate;
         };
 
 
@@ -137,7 +214,7 @@ var dimple = {
                         definitions = [];
                     // Check whether this field is a date
                     for (i = 0; i < self.chart.data.length; i += 1) {
-                        if (isNaN(Date.parse(self.chart.data[i][category]))) {
+                        if (isNaN(self._parseDate(self.chart.data[i][category]))) {
                             isDate = false;
                             break;
                         }
@@ -165,8 +242,12 @@ var dimple = {
             this._max = (this.overrideMax !== null ? this.overrideMax : this._max);
 
             // If this is an x axis
-            if (this.position.length > 0 && this.position[0] === "x") {
-                if (this.measure === null || this.measure === undefined) {
+            if (this.position === "x") {
+                if (this._hasTimeField()) {
+                    this._scale = d3.time.scale()
+                        .rangeRound([this.chart.x, this.chart.x + this.chart.width])
+                        .domain([this._min, this._max]);
+                } else if (this.measure === null || this.measure === undefined) {
                     distinctCats = getOrderedCategories(this, "x", "y");
                     this._scale = d3.scale.ordinal()
                         .rangePoints([this.chart.x, this.chart.x + this.chart.width])
@@ -193,9 +274,12 @@ var dimple = {
                         break;
                     }
                 }
-            } else if (this.position.length > 0 && this.position[0] === "y") {
-                // Set the height both logical and physical of the axis
-                if (this.measure === null || this.measure === undefined) {
+            } else if (this.position === "y") {
+                if (this._hasTimeField()) {
+                    this._scale = d3.time.scale()
+                        .rangeRound([this.chart.y + this.chart.height, this.chart.y])
+                        .domain([this._min, this._max]);
+                } else if (this.measure === null || this.measure === undefined) {
                     distinctCats = getOrderedCategories(this, "y", "x");
                     this._scale = d3.scale.ordinal()
                         .rangePoints([this.chart.y + this.chart.height, this.chart.y])
@@ -233,7 +317,7 @@ var dimple = {
                     .domain([this._min, this._max]);
             }
             // Check that the axis ends on a labelled tick
-            if ((refactor === null || refactor === undefined || refactor === false) && this._scale !== null && this._scale.ticks !== null && this._scale.ticks !== undefined && this._scale.ticks(10).length > 0) {
+            if ((refactor === null || refactor === undefined || refactor === false) && this._scale !== null && this._scale.ticks !== null && this._scale.ticks !== undefined && this._scale.ticks(10).length > 0 && (this.position === "x" || this.position === "y")) {
 
                 // Get the ticks determined based on a split of 10
                 ticks = this._scale.ticks(10);
@@ -317,6 +401,10 @@ var dimple = {
 
         // The group within which to put all of this chart's objects
         this._group = svg.append("g");
+        // The group within which to put tooltips.  This is not initialised here because
+        // the group would end up behind other chart contents in a multi chart output.  It will
+        // therefore be added and removed by the mouse enter/leave events
+        this._tooltipGroup = null;
         // Colors assigned to chart contents.  E.g. a series value.
         this._assignedColors = {};
         // The next colour index to use, this value is cycled around for all default colours
@@ -364,10 +452,14 @@ var dimple = {
                         // This is repeated for each axis using a small anon function
                         getField = function (axis, row) {
                             var returnField = [];
-                            if (axis !== null && axis._hasCategories()) {
-                                axis.categoryFields.forEach(function (cat) {
-                                    returnField.push(row[cat]);
-                                }, this);
+                            if (axis !== null) {
+                                if (axis._hasTimeField()) {
+                                    returnField.push(axis._parseDate(row[axis.timeField]));
+                                } else if (axis._hasCategories()) {
+                                    axis.categoryFields.forEach(function (cat) {
+                                        returnField.push(row[cat]);
+                                    }, this);
+                                }
                             }
                             return returnField;
                         },
@@ -530,24 +622,30 @@ var dimple = {
                                     passStoryCheck = (compare === selectStoryValue);
                                 }, this);
                             }
-                            if (axis !== null && axis !== undefined && axis.measure !== null && axis.measure !== undefined) {
+                            if (axis !== null && axis !== undefined) {
                                 if (passStoryCheck) {
                                     retRow = returnData[foundIndex];
-                                    // Keep a distinct list of values to calculate a distinct count in the case of a non-numeric value being found
-                                    if (retRow[axis.position + "ValueList"].indexOf(d[axis.measure]) === -1) {
-                                        retRow[axis.position + "ValueList"].push(d[axis.measure]);
+                                    if (axis._hasMeasure()) {
+                                        // Treat undefined values as zero
+                                        if (d[axis.measure] === undefined) {
+                                            d[axis.measure] = 0;
+                                        }
+                                        // Keep a distinct list of values to calculate a distinct count in the case of a non-numeric value being found
+                                        if (retRow[axis.position + "ValueList"].indexOf(d[axis.measure]) === -1) {
+                                            retRow[axis.position + "ValueList"].push(d[axis.measure]);
+                                        }
+                                        // The code above is outside this check for non-numeric values because we might encounter one far down the list, and
+                                        // want to have a record of all values so far.
+                                        if (isNaN(parseFloat(d[axis.measure]))) {
+                                            useCount[axis.position] = true;
+                                        }
+                                        // Set the value using the aggregate function method
+                                        lhs.value = retRow[axis.position + "Value"];
+                                        lhs.count = retRow[axis.position + "Count"];
+                                        rhs.value = d[axis.measure];
+                                        retRow[axis.position + "Value"] = series.aggregate(lhs, rhs);
+                                        retRow[axis.position + "Count"] += 1;
                                     }
-                                    // The code above is outside this check for non-numeric values because we might encounter one far down the list, and
-                                    // want to have a record of all values so far.
-                                    if (isNaN(parseFloat(d[axis.measure]))) {
-                                        useCount[axis.position] = true;
-                                    }
-                                    // Set the value using the aggregate function method
-                                    lhs.value = retRow[axis.position + "Value"];
-                                    lhs.count = retRow[axis.position + "Count"];
-                                    rhs.value = d[axis.measure];
-                                    retRow[axis.position + "Value"] = series.aggregate(lhs, rhs);
-                                    retRow[axis.position + "Count"] += 1;
                                 }
                             }
                         };
@@ -649,7 +747,12 @@ var dimple = {
                         getAxisData(series.z, "z", "r");
 
                         // If there is a color axis
-                        if (series.c !== null && colorBounds.min !== colorBounds.max) {
+                        if (series.c !== null && colorBounds.min !== null && colorBounds.max !== null) {
+                            // Handle matching min and max
+                            if (colorBounds.min === colorBounds.max) {
+                                colorBounds.min -= 0.5;
+                                colorBounds.max += 0.5;
+                            }
                             // Limit the bounds of the color value to be within the range.  Users may override the axis bounds and this
                             // allows a 2 color scale rather than blending if the min and max are set to 0 and 0.01 for example negative values
                             // and zero value would be 1 color and positive another.
@@ -725,7 +828,7 @@ var dimple = {
         // License: "https://github.com/PMSI-AlignAlytics/dimple/blob/master/MIT-LICENSE.txt"
         // Source: /src/objects/chart/methods/addAxis.js
         // Help: http://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.chart#wiki-addAxis
-        this.addAxis = function (position, categoryFields, measure) {
+        this.addAxis = function (position, categoryFields, measure, timeField) {
             // Convert the passed category fields to an array in case a single string is sent
             if (categoryFields !== null && categoryFields !== undefined) {
                 categoryFields = [].concat(categoryFields);
@@ -735,7 +838,8 @@ var dimple = {
                 this,
                 position,
                 categoryFields,
-                measure
+                measure,
+                timeField
             );
             // Add the axis to the array for the chart
             this.axes.push(axis);
@@ -851,6 +955,18 @@ var dimple = {
 
         // Copyright: 2013 PMSI-AlignAlytics
         // License: "https://github.com/PMSI-AlignAlytics/dimple/blob/master/MIT-LICENSE.txt"
+        // Source: /src/objects/chart/methods/addTimeAxis.js
+        // Help: http://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.chart#wiki-addTimeAxis
+        this.addTimeAxis = function (position, timeField, inputFormat, outputFormat) {
+            var axis = this.addAxis(position, null, null, timeField);
+            axis.tickFormat = outputFormat;
+            axis.dateParseFormat = inputFormat;
+            return axis;
+        };
+
+
+        // Copyright: 2013 PMSI-AlignAlytics
+        // License: "https://github.com/PMSI-AlignAlytics/dimple/blob/master/MIT-LICENSE.txt"
         // Source: /src/objects/chart/methods/assignColor.js
         // Help: http://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.chart#wiki-assignColor
         this.assignColor = function (tag, fill, stroke, opacity) {
@@ -899,7 +1015,7 @@ var dimple = {
                 axis._min = 0;
                 axis._max = 0;
                 // Check that the axis has a measure
-                if (axis.measure !== null && axis.measure !== undefined) {
+                if (axis._hasMeasure()) {
                     // Is this axis linked to a series
                     var linked = false;
                     // Find any linked series
@@ -922,7 +1038,20 @@ var dimple = {
                             if (axis._max < d[axis.measure]) { axis._max = d[axis.measure]; }
                         }, this);
                     }
-                } else {
+                } else if (axis._hasTimeField()) {
+                    // Parse the dates and assign the min and max
+                    axis._min = null;
+                    axis._max = null;
+                    this.data.forEach(function (d) {
+                        var dt = axis._parseDate(d[axis.timeField]);
+                        if (axis._min === null || dt < axis._min) {
+                            axis._min = dt;
+                        }
+                        if (axis._max === null || dt > axis._max) {
+                            axis._max = dt;
+                        }
+                    }, this);
+                } else if (axis._hasCategories()) {
                     // A category axis is just set to show the number of categories
                     axis._min = 0;
                     distinctCats = [];
@@ -933,6 +1062,7 @@ var dimple = {
                     }, this);
                     axis._max = distinctCats.length;
                 }
+
 
                 // Update the axis now we have all information set
                 axis._update();
@@ -1010,7 +1140,13 @@ var dimple = {
                     return returnObj;
                 };
                 if (transform !== null && axis._draw !== null) {
-                    handleTrans(axis.shapes).call(axis._draw.tickFormat(axis._getFormat())).attr("transform", transform);
+
+                    // Add a tick format
+                    if (axis._hasTimeField()) {
+                        handleTrans(axis.shapes).call(axis._draw.ticks(axis._getTimePeriod(), axis.timeInterval).tickFormat(axis._getFormat())).attr("transform", transform);
+                    } else {
+                        handleTrans(axis.shapes).call(axis._draw.tickFormat(axis._getFormat())).attr("transform", transform);
+                    }
                     if (axis.gridlineShapes !== null) {
                         handleTrans(axis.gridlineShapes).call(axis._draw.tickSize(gridSize, 0, 0).tickFormat("")).attr("transform", gridTransform);
                     }
@@ -1058,7 +1194,7 @@ var dimple = {
                             var w = this.getComputedTextLength();
                             widest = (w > widest ? w : widest);
                         });
-                        if (widest > this.width / axis._max) {
+                        if (widest > this.width / axis.shapes.selectAll(".axis text")[0].length) {
                             rotated = true;
                             axis.shapes.selectAll(".axis text")
                                 .style("text-anchor", "start")
@@ -1076,7 +1212,7 @@ var dimple = {
                                 var w = this.getComputedTextLength();
                                 widest = (w > widest ? w : widest);
                             });
-                        if (widest > this.width / axis._max) {
+                        if (widest > this.width / axis.shapes.selectAll(".axis text")[0].length) {
                             axis.shapes.selectAll(".axis text")
                                 .style("text-anchor", "end")
                                 .each(function () {
@@ -1614,9 +1750,17 @@ var dimple = {
             // Get the first x and y first of all
             this.chart.axes.forEach(function (axis) {
                 if (axis.position === "x" && firstOrig.x === null) {
-                    firstOrig.x = axis._origin;
+                    if (axis._hasTimeField()) {
+                        firstOrig.x = this.chart.x;
+                    } else {
+                        firstOrig.x = axis._origin;
+                    }
                 } else if (axis.position === "y" && firstOrig.y === null) {
-                    firstOrig.y = axis._origin;
+                    if (axis._hasTimeField()) {
+                        firstOrig.y = this.chart.y + this.chart.height;
+                    } else {
+                        firstOrig.y = axis._origin;
+                    }
                 }
             }, this);
             // Get the axis position based on the axis index
@@ -1932,10 +2076,10 @@ var dimple = {
                     filter.push(d.aggField[k]);
                 }
                 uniqueValues.forEach(function (e) {
-                    match = match || (e.join("/") === filter.join("/"));
+                    match = match || (e === filter.join("/"));
                 }, this);
                 if (!match) {
-                    uniqueValues.push(filter);
+                    uniqueValues.push(filter.join("/"));
                 }
             }, this);
 
@@ -1963,7 +2107,7 @@ var dimple = {
                 .data(uniqueValues)
                 .transition()
                 .duration(duration)
-                .attr("class", function (d) { return "series area " + d.join("_").replace(" ", ""); })
+                .attr("class", function (d) { return "series area " + d.replace(" ", ""); })
                 .attr("d", function (d) {
                     var seriesData,
                         baseline = [],
@@ -2119,15 +2263,17 @@ var dimple = {
                 h = 0,
                 box,
                 overlap,
-                rows = [],
-                // Create a group for the hover objects
-                g = chart._group.append("g")
-                        .attr("class", "hoverShapes");
+                rows = [];
+
+            if (chart._tooltipGroup !== null && chart._tooltipGroup !== undefined) {
+                chart._tooltipGroup.remove();
+            }
+            chart._tooltipGroup = chart.svg.append("g");
 
             // On hover make the line marker visible immediately
             selectedShape.style("opacity", 1);
             // Add a ring around the data point
-            g.append("circle")
+            chart._tooltipGroup.append("circle")
                 .attr("cx", cx)
                 .attr("cy", cy)
                 .attr("r", r)
@@ -2144,7 +2290,7 @@ var dimple = {
 
             // Add a drop line to the x axis
             if (dropDest.y !== null) {
-                g.append("line")
+                chart._tooltipGroup.append("line")
                     .attr("x1", cx)
                     .attr("y1", (cy < dropDest.y ? cy + r + 4 : cy - r - 4))
                     .attr("x2", cx)
@@ -2163,7 +2309,7 @@ var dimple = {
 
             // Add a drop line to the y axis
             if (dropDest.x !== null) {
-                g.append("line")
+                chart._tooltipGroup.append("line")
                     .attr("x1", (cx < dropDest.x ? cx + r + 4 : cx - r - 4))
                     .attr("y1", cy)
                     .attr("x2", (cx < dropDest.x ? cx + r + 4 : cx - r - 4))
@@ -2181,7 +2327,7 @@ var dimple = {
             }
 
             // Add a group for text
-            t = g.append("g");
+            t = chart._tooltipGroup.append("g");
             // Create a box for the popup in the text group
             box = t.append("rect");
 
@@ -2189,29 +2335,33 @@ var dimple = {
             if (series.categoryFields !== null && series.categoryFields !== undefined && series.categoryFields.length > 0) {
                 series.categoryFields.forEach(function (c, i) {
                     // If the category name and value match don't display the category name
-                    rows.push(c + (e.aggField !== c ? ": " + e.aggField[i] : ""));
+                    rows.push(c + (e.aggField[i] !== c ? ": " + e.aggField[i] : ""));
                 }, this);
             }
 
-            if (series.x._hasCategories()) {
+            if (series.x._hasTimeField()) {
+                rows.push(series.x.timeField + ": " + series.x._getFormat()(e.xField[0]));
+            } else if (series.x._hasCategories()) {
                 // Add the x axis categories
                 series.x.categoryFields.forEach(function (c, i) {
                     // If the category name and value match don't display the category name
-                    rows.push(c + (e.xField !== c ? ": " + e.xField[i] : ""));
+                    rows.push(c + (e.xField[i] !== c ? ": " + e.xField[i] : ""));
                 }, this);
             } else {
                 // Add the axis measure value
                 rows.push(series.x.measure + ": " + series.x._getFormat()(e.cx));
             }
 
-            if (series.y._hasCategories()) {
+            if (series.y._hasTimeField()) {
+                rows.push(series.y.timeField + ": " + series.y._getFormat()(e.yField[0]));
+            } else if (series.y._hasCategories()) {
                 // Add the y axis categories
                 series.y.categoryFields.forEach(function (c, i) {
-                    rows.push(c + (e.yField !== c ? ": " + e.yField[i] : ""));
+                    rows.push(c + (e.yField[i] !== c ? ": " + e.yField[i] : ""));
                 }, this);
             } else {
                 // Add the axis measure value
-                rows.push(series.y.measure + ":" + series.y._getFormat()(e.cy));
+                rows.push(series.y.measure + ": " + series.y._getFormat()(e.cy));
             }
 
             if (series.z !== null && series.z !== undefined) {
@@ -2279,10 +2429,9 @@ var dimple = {
         leaveEventHandler: function (e, shape, chart, series) {
             // Return the opacity of the marker
             d3.select(shape).style("opacity", (series.lineMarkers ? dimple._helpers.opacity(e, chart, series) : 0));
-            // Clear all hover shapes
-            chart._group
-                .selectAll(".hoverShapes")
-                .remove();
+            if (chart._tooltipGroup !== null && chart._tooltipGroup !== undefined) {
+                chart._tooltipGroup.remove();
+            }
         }
     };
 
@@ -2413,14 +2562,16 @@ var dimple = {
                 yRunning = 0,
                 // The maximum bounds of the text elements
                 w = 0,
-                h = 0,
-                // Create a group for the hover objects
-                g = chart._group.append("g")
-                    .attr("class", "hoverShapes");
+                h = 0;
+
+            if (chart._tooltipGroup !== null && chart._tooltipGroup !== undefined) {
+                chart._tooltipGroup.remove();
+            }
+            chart._tooltipGroup = chart.svg.append("g");
 
             // Add a drop line to the x axis
             if (!series.x._hasCategories() && dropDest.y !== null) {
-                g.append("line")
+                chart._tooltipGroup.append("line")
                     .attr("x1", (x < series.x._origin ? x + 1 : x + width - 1))
                     .attr("y1", (y < dropDest.y ? y + height : y))
                     .attr("x2", (x < series.x._origin ? x + 1 : x + width - 1))
@@ -2439,7 +2590,7 @@ var dimple = {
 
             // Add a drop line to the y axis
             if (!series.y._hasCategories() && dropDest.x !== null) {
-                g.append("line")
+                chart._tooltipGroup.append("line")
                     .attr("x1", (x < dropDest.x ? x + width : x))
                     .attr("y1", (y < series.y._origin ? y + 1 : y + height - 1))
                     .attr("x2", (x < dropDest.x ? x + width : x))
@@ -2457,7 +2608,7 @@ var dimple = {
             }
 
             // Add a group for text
-            t = g.append("g");
+            t = chart._tooltipGroup.append("g");
             // Create a box for the popup in the text group
             box = t.append("rect");
 
@@ -2465,29 +2616,33 @@ var dimple = {
             if (series.categoryFields !== null && series.categoryFields !== undefined && series.categoryFields.length > 0) {
                 series.categoryFields.forEach(function (c, i) {
                     // If the category name and value match don't display the category name
-                    rows.push(c + (e.aggField !== c ? ": " + e.aggField[i] : ""));
+                    rows.push(c + (e.aggField[i] !== c ? ": " + e.aggField[i] : ""));
                 }, this);
             }
 
-            if (series.x._hasCategories()) {
+            if (series.x._hasTimeField()) {
+                rows.push(series.x.timeField + ": " + series.x._getFormat()(e.xField[0]));
+            } else if (series.x._hasCategories()) {
                 // Add the x axis categories
                 series.x.categoryFields.forEach(function (c, i) {
                     // If the category name and value match don't display the category name
-                    rows.push(c + (e.xField !== c ? ": " + e.xField[i] : ""));
+                    rows.push(c + (e.xField[i] !== c ? ": " + e.xField[i] : ""));
                 }, this);
             } else {
                 // Add the axis measure value
                 rows.push(series.x.measure + ": " + series.x._getFormat()(e.width));
             }
 
-            if (series.y._hasCategories()) {
+            if (series.y._hasTimeField()) {
+                rows.push(series.y.timeField + ": " + series.y._getFormat()(e.yField[0]));
+            } else if (series.y._hasCategories()) {
                 // Add the y axis categories
                 series.y.categoryFields.forEach(function (c, i) {
-                    rows.push(c + (e.yField !== c ? ": " + e.yField[i] : ""));
+                    rows.push(c + (e.yField[i] !== c ? ": " + e.yField[i] : ""));
                 }, this);
             } else {
                 // Add the axis measure value
-                rows.push(series.y.measure + ":" + series.y._getFormat()(e.height));
+                rows.push(series.y.measure + ": " + series.y._getFormat()(e.height));
             }
 
             if (series.c !== null && series.c !== undefined) {
@@ -2566,10 +2721,9 @@ var dimple = {
 
         // Handle the mouse leave event
         leaveEventHandler: function (chart) {
-            // Clear all hover shapes
-            chart._group
-                .selectAll(".hoverShapes")
-                .remove();
+            if (chart._tooltipGroup !== null && chart._tooltipGroup !== undefined) {
+                chart._tooltipGroup.remove();
+            }
         }
     };
 
@@ -2697,13 +2851,15 @@ var dimple = {
                 // The maximum bounds of the text elements
                 w = 0,
                 h = 0,
-                overlap,
-                // Create a group for the hover objects
-                g = chart._group.append("g")
-                    .attr("class", "hoverShapes");
+                overlap;
+
+            if (chart._tooltipGroup !== null && chart._tooltipGroup !== undefined) {
+                chart._tooltipGroup.remove();
+            }
+            chart._tooltipGroup = chart.svg.append("g");
 
             // Add a ring around the data point
-            g.append("circle")
+            chart._tooltipGroup.append("circle")
                 .attr("cx", cx)
                 .attr("cy", cy)
                 .attr("r", r)
@@ -2720,7 +2876,7 @@ var dimple = {
 
             // Add a drop line to the x axis
             if (dropDest.y !== null) {
-                g.append("line")
+                chart._tooltipGroup.append("line")
                     .attr("x1", cx)
                     .attr("y1", (cy < dropDest.y ? cy + r + 4 : cy - r - 4))
                     .attr("x2", cx)
@@ -2739,7 +2895,7 @@ var dimple = {
 
             // Add a drop line to the y axis
             if (dropDest.x !== null) {
-                g.append("line")
+                chart._tooltipGroup.append("line")
                     .attr("x1", (cx < dropDest.x ? cx + r + 4 : cx - r - 4))
                     .attr("y1", cy)
                     .attr("x2", (cx < dropDest.x ? cx + r + 4 : cx - r - 4))
@@ -2757,7 +2913,7 @@ var dimple = {
             }
 
             // Add a group for text
-            t = g.append("g");
+            t = chart._tooltipGroup.append("g");
             // Create a box for the popup in the text group
             box = t.append("rect");
 
@@ -2765,29 +2921,33 @@ var dimple = {
             if (series.categoryFields !== null && series.categoryFields !== undefined && series.categoryFields.length > 0) {
                 series.categoryFields.forEach(function (c, i) {
                     // If the category name and value match don't display the category name
-                    rows.push(c + (e.aggField !== c ? ": " + e.aggField[i] : ""));
+                    rows.push(c + (e.aggField[i] !== c ? ": " + e.aggField[i] : ""));
                 }, this);
             }
 
-            if (series.x._hasCategories()) {
+            if (series.x._hasTimeField()) {
+                rows.push(series.x.timeField + ": " + series.x._getFormat()(e.xField[0]));
+            } else if (series.x._hasCategories()) {
                 // Add the x axis categories
                 series.x.categoryFields.forEach(function (c, i) {
                     // If the category name and value match don't display the category name
-                    rows.push(c + (e.xField !== c ? ": " + e.xField[i] : ""));
+                    rows.push(c + (e.xField[i] !== c ? ": " + e.xField[i] : ""));
                 }, this);
             } else {
                 // Add the axis measure value
                 rows.push(series.x.measure + ": " + series.x._getFormat()(e.cx));
             }
 
-            if (series.y._hasCategories()) {
+            if (series.y._hasTimeField()) {
+                rows.push(series.y.timeField + ": " + series.y._getFormat()(e.yField[0]));
+            } else if (series.y._hasCategories()) {
                 // Add the y axis categories
                 series.y.categoryFields.forEach(function (c, i) {
-                    rows.push(c + (e.yField !== c ? ": " + e.yField[i] : ""));
+                    rows.push(c + (e.yField[i] !== c ? ": " + e.yField[i] : ""));
                 }, this);
             } else {
                 // Add the axis measure value
-                rows.push(series.y.measure + ":" + series.y._getFormat()(e.cy));
+                rows.push(series.y.measure + ": " + series.y._getFormat()(e.cy));
             }
 
             if (series.z !== null && series.z !== undefined) {
@@ -2853,10 +3013,9 @@ var dimple = {
 
         // Handle the mouse leave event
         leaveEventHandler: function (chart) {
-            // Clear all hover shapes
-            chart._group
-                .selectAll(".hoverShapes")
-                .remove();
+            if (chart._tooltipGroup !== null && chart._tooltipGroup !== undefined) {
+                chart._tooltipGroup.remove();
+            }
         }
     };
 
@@ -3062,16 +3221,18 @@ var dimple = {
                 t,
                 box,
                 rows = [],
-                overlap,
-                // Create a group for the hover objects
-                g = chart._group.append("g")
-                    .attr("class", "hoverShapes");
+                overlap;
+
+            if (chart._tooltipGroup !== null && chart._tooltipGroup !== undefined) {
+                chart._tooltipGroup.remove();
+            }
+            chart._tooltipGroup = chart.svg.append("g");
 
             // On hover make the line marker visible immediately
             selectedShape.style("opacity", 1);
 
             // Add a ring around the data point
-            g.append("circle")
+            chart._tooltipGroup.append("circle")
                 .attr("cx", cx)
                 .attr("cy", cy)
                 .attr("r", r)
@@ -3088,7 +3249,7 @@ var dimple = {
 
             // Add a drop line to the x axis
             if (dropDest.y !== null) {
-                g.append("line")
+                chart._tooltipGroup.append("line")
                     .attr("x1", cx)
                     .attr("y1", (cy < dropDest.y ? cy + r + series.lineWeight + 2 : cy - r - series.lineWeight - 2))
                     .attr("x2", cx)
@@ -3107,7 +3268,7 @@ var dimple = {
 
             // Add a drop line to the y axis
             if (dropDest.x !== null) {
-                g.append("line")
+                chart._tooltipGroup.append("line")
                     .attr("x1", (cx < dropDest.x ? cx + r + series.lineWeight + 2 : cx - r - series.lineWeight - 2))
                     .attr("y1", cy)
                     .attr("x2", (cx < dropDest.x ? cx + r + series.lineWeight + 2 : cx - r - series.lineWeight - 2))
@@ -3125,7 +3286,7 @@ var dimple = {
             }
 
             // Add a group for text
-            t = g.append("g");
+            t = chart._tooltipGroup.append("g");
             // Create a box for the popup in the text group
             box = t.append("rect");
 
@@ -3133,25 +3294,29 @@ var dimple = {
             if (series.categoryFields !== null && series.categoryFields !== undefined && series.categoryFields.length > 0) {
                 series.categoryFields.forEach(function (c, i) {
                     // If the category name and value match don't display the category name
-                    rows.push(c + (e.aggField !== c ? ": " + e.aggField[i] : ""));
+                    rows.push(c + (e.aggField[i] !== c ? ": " + e.aggField[i] : ""));
                 }, this);
             }
 
-            if (series.x._hasCategories()) {
+            if (series.x._hasTimeField()) {
+                rows.push(series.x.timeField + ": " + series.x._getFormat()(e.xField[0]));
+            } else if (series.x._hasCategories()) {
                 // Add the x axis categories
                 series.x.categoryFields.forEach(function (c, i) {
                     // If the category name and value match don't display the category name
-                    rows.push(c + (e.xField !== c ? ": " + e.xField[i] : ""));
+                    rows.push(c + (e.xField[i] !== c ? ": " + e.xField[i] : ""));
                 }, this);
             } else {
                 // Add the axis measure value
                 rows.push(series.x.measure + ": " + series.x._getFormat()(e.cx));
             }
 
-            if (series.y._hasCategories()) {
+            if (series.y._hasTimeField()) {
+                rows.push(series.y.timeField + ": " + series.y._getFormat()(e.yField[0]));
+            } else if (series.y._hasCategories()) {
                 // Add the y axis categories
                 series.y.categoryFields.forEach(function (c, i) {
-                    rows.push(c + (e.yField !== c ? ": " + e.yField[i] : ""));
+                    rows.push(c + (e.yField[i] !== c ? ": " + e.yField[i] : ""));
                 }, this);
             } else {
                 // Add the axis measure value
@@ -3223,10 +3388,9 @@ var dimple = {
         leaveEventHandler: function (e, shape, chart, series) {
             // Return the opacity of the marker
             d3.select(shape).style("opacity", (series.lineMarkers ? dimple._helpers.opacity(e, chart, series) : 0));
-            // Clear all hover shapes
-            chart._group
-                .selectAll(".hoverShapes")
-                .remove();
+            if (chart._tooltipGroup !== null && chart._tooltipGroup !== undefined) {
+                chart._tooltipGroup.remove();
+            }
         }
     };
 
@@ -3434,7 +3598,7 @@ var dimple = {
             var returnCx = 0;
             if (series.x.measure !== null && series.x.measure !== undefined) {
                 returnCx = series.x._scale(d.cx);
-            } else if (series.x.categoryFields !== null && series.x.categoryFields !== undefined && series.x.categoryFields.length >= 2) {
+            } else if (series.x._hasCategories() && series.x.categoryFields.length >= 2) {
                 returnCx = series.x._scale(d.cx) + dimple._helpers.xGap(chart, series) + ((d.xOffset + 0.5) * (((chart.width / series.x._max) - 2 * dimple._helpers.xGap(chart, series)) * d.width));
             } else {
                 returnCx = series.x._scale(d.cx) + ((chart.width / series.x._max) / 2);
@@ -3506,13 +3670,23 @@ var dimple = {
 
         // Calculate the top left x position for bar type charts
         x: function (d, chart, series) {
-            return series.x._scale(d.x) + dimple._helpers.xGap(chart, series) + (d.xOffset * (dimple._helpers.width(d, chart, series) + 2 * dimple._helpers.xClusterGap(d, chart, series))) + dimple._helpers.xClusterGap(d, chart, series);
+            var returnX = 0;
+            if (series.x._hasTimeField()) {
+                returnX = series.x._scale(d.x) - (dimple._helpers.width(d, chart, series) / 2);
+            } else {
+                returnX = series.x._scale(d.x) + dimple._helpers.xGap(chart, series) + (d.xOffset * (dimple._helpers.width(d, chart, series) + 2 * dimple._helpers.xClusterGap(d, chart, series))) + dimple._helpers.xClusterGap(d, chart, series);
+            }
+            return returnX;
         },
 
         // Calculate the top left y position for bar type charts
         y: function (d, chart, series) {
             var returnY = 0;
-            if (series.y.measure !== null && series.y.measure !== undefined) {
+            if (series.y._hasTimeField()) {
+                returnY = series.y._scale(d.y) - (dimple._helpers.height(d, chart, series) / 2);
+            } else if (series.y.measure !== null && series.y.measure !== undefined) {
+                returnY = series.y._scale(d.y);
+            } else if (series.y.measure !== null && series.y.measure !== undefined) {
                 returnY = series.y._scale(d.y);
             } else {
                 returnY = (series.y._scale(d.y) - (chart.height / series.y._max)) + dimple._helpers.yGap(chart, series) + (d.yOffset * (dimple._helpers.height(d, chart, series) + 2 * dimple._helpers.yClusterGap(d, chart, series))) + dimple._helpers.yClusterGap(d, chart, series);
@@ -3525,6 +3699,8 @@ var dimple = {
             var returnWidth = 0;
             if (series.x.measure !== null && series.x.measure !== undefined) {
                 returnWidth = Math.abs(series.x._scale(d.width) - series.x._scale(0));
+            } else if (series.x._hasTimeField()) {
+                returnWidth = series.x.floatingBarWidth;
             } else {
                 returnWidth = d.width * ((chart.width / series.x._max) - (dimple._helpers.xGap(chart, series) * 2)) - (dimple._helpers.xClusterGap(d, chart, series) * 2);
             }
@@ -3534,7 +3710,9 @@ var dimple = {
         // Calculate the height for bar type charts
         height: function (d, chart, series) {
             var returnHeight = 0;
-            if (series.y.measure !== null && series.y.measure !== undefined) {
+            if (series.y._hasTimeField()) {
+                returnHeight = series.y.floatingBarWidth;
+            } else if (series.y.measure !== null && series.y.measure !== undefined) {
                 returnHeight = Math.abs(series.y._scale(0) - series.y._scale(d.height));
             } else {
                 returnHeight = d.height * ((chart.height / series.y._max) - (dimple._helpers.yGap(chart, series) * 2)) - (dimple._helpers.yClusterGap(d, chart, series) * 2);
