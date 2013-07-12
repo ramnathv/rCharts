@@ -15,7 +15,9 @@ renderChart <- function(expr, env = parent.frame(), quoted = FALSE) {
   func <- shiny::exprToFunction(expr, env, quoted)
   function() {
     rChart_ <- func()
-    rChart_$html()
+    cht_style <- sprintf("<style>.rChart {width: %spx; height: %spx} </style>",
+      rChart_$params$width, rChart_$params$height)
+    HTML(paste(c(cht_style, rChart_$html()), collapse = '\n'))
   }
 }
 
