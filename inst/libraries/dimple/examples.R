@@ -863,5 +863,4 @@ type = "addTimeAxis",
 inputFormat = "%Y-%m-%d",
 outputFormat = "%b %Y"
 )
-d1$setTemplate(script = "layouts/chart_timeaxis.html")
 d1
