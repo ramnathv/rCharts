@@ -1,8 +1,9 @@
 #' renderChart (use with Shiny)
 #' 
-#' Use rCharts as Shiny output. First, use \code{renderChart} in \code{server.R} to assign 
-#' the chart object to an Shiny output. Then create an chartOutput with the same name in #'
-#' \code{ui.R}. \code{chartOutput} is currently just an alias for \code{htmlOutput}. 
+#' Use rCharts as Shiny output. First, use \code{renderChart} in \code{server.R}
+#' to assign the chart object to an Shiny output. Then create an chartOutput
+#' with the same name in #' \code{ui.R}. \code{chartOutput} is currently just an
+#' alias for \code{htmlOutput}.
 #' 
 #' @author Thomas Reinholdsson, Ramnath Vaidyanathan
 #' @param expr An expression that returns a chart object
