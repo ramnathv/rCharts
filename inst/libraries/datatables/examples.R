@@ -7,6 +7,7 @@ dTable$addTable(
 )
 dTable
 
+dTable <- Datatables()
 dTable$addTable(
   iris,
   bScrollInfinite = T,
@@ -18,6 +19,7 @@ dTable
 
 #not really a use case but a test to check for errors
 data(Orange)
+dTable <- Datatables()
 dTable$addTable(
   Orange,
   sScrollY = "200px",
