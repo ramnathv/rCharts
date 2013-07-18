@@ -1,9 +1,14 @@
 <script type="text/javascript" charset="utf-8">
   var chartParams = {{{ chartParams }}}
   $('#'+chartParams.id).removeClass("rChart")
+
   $(document).ready(function() {
-		$('#' + chartParams.dom).dataTable(
+		var dTable = $('#' + chartParams.dom).dataTable(
       chartParams.table
     );
+		$('#'+chartParams.id+"_wrapper").css("width",chartParams.width)  //first use rCharts width
+		$('#'+chartParams.id+"_wrapper").css("width",chartParams.table.width) //then if specified change to table width
+		dTable.fnAdjustColumnSizing();
 	});
+		
 </script>

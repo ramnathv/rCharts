@@ -12,7 +12,8 @@ dTable$addTable(
   iris,
   bScrollInfinite = T,
   bScrollCollapse = T,
-  sScrollY = "200px"
+  sScrollY = "200px",
+  width = "500px"
 )
 dTable
 
