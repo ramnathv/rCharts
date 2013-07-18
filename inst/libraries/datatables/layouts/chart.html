@@ -1,5 +1,6 @@
 <script type="text/javascript" charset="utf-8">
   var chartParams = {{{ chartParams }}}
+  $('#'+chartParams.id).removeClass("rChart")
   $(document).ready(function() {
 		$('#' + chartParams.dom).dataTable(
       chartParams.table
