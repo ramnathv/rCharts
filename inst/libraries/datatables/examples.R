@@ -1,26 +1,24 @@
 require(rCharts)
 
-dTable <- Datatables()
-dTable$addTable(
+dt <- dTable(
   iris,
   sPaginationType= "full_numbers"
 )
-dTable
+dt
 
-dTable <- Datatables()
-dTable$addTable(
+dt <- dTable(
   iris,
   bScrollInfinite = T,
   bScrollCollapse = T,
-  sScrollY = "200px"
+  sScrollY = "200px",
+  width = "500px"
 )
-dTable
+dt
 
 
 #not really a use case but a test to check for errors
 data(Orange)
-dTable <- Datatables()
-dTable$addTable(
+dt <- dTable(
   Orange,
   sScrollY = "200px",
   bScrollCollapse = T,
@@ -30,4 +28,4 @@ dTable$addTable(
     sWidth = "5%", aTargets =  list(-1)
   )
 )
-dTable
+dt
