@@ -4,6 +4,7 @@
     xAxis = {{{ xAxis }}},
     yAxis = {{{ yAxis }}},
     zAxis = {{{ zAxis }}},
+    colorAxis = {{{ colorAxis }}},
     legend = {{{ legend }}};
   var svg = dimple.newSvg("#" + opts.id, opts.width, opts.height);
 
@@ -58,6 +59,10 @@
     if (zAxis.overrideMin) z.overrideMin = zAxis.overrideMin;
     if (zAxis.overrideMax) z.overrideMax = zAxis.overrideMax;
   }
+  if(d3.keys(colorAxis).length > 0) {
+    myChart[colorAxis.type](colorAxis.colorSeries,colorAxis.palette) ;
+  }
+  
   //here need think I need to evaluate group and if missing do null
   //as the first argument
   //if provided need to use groups from opts
