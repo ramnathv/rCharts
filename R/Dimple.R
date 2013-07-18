@@ -10,7 +10,7 @@ Dimple <- setRefClass('Dimple', contains = 'rCharts', methods = list(
     params <<- c(params, list(
       chart = list(), xAxis = list(type="addCategoryAxis", showPercent = FALSE),
       yAxis = list(type="addMeasureAxis", showPercent = FALSE),
-      zAxis = list(), legend = list()
+      zAxis = list(), colorAxis = list(), legend = list()
     ))
   },
   chart = function(..., replace = F){
@@ -24,6 +24,9 @@ Dimple <- setRefClass('Dimple', contains = 'rCharts', methods = list(
   },
   zAxis = function(..., replace = F){
     params$zAxis <<- setSpec(params$zAxis, ..., replace = replace)
+  },
+  colorAxis = function(...){
+    .self$set(colorAxis = list(...))
   },
   legend = function(...){
     .self$set(legend = list(...))
@@ -43,9 +46,10 @@ Dimple <- setRefClass('Dimple', contains = 'rCharts', methods = list(
     xAxis = toJSON(params$xAxis) #toChain(params$xAxis, 'chart.xAxis')
     yAxis = toJSON(params$yAxis) #toChain(params$yAxis, 'chart.yAxis')
     zAxis = toJSON(params$zAxis)
+    colorAxis = toJSON(params$colorAxis)
     legend = toJSON(params$legend)
-    opts = toJSON(params[!(names(params) %in% c('data', 'chart', 'xAxis', 'yAxis', 'zAxis', 'legend'))])
-    list(opts = opts, xAxis = xAxis, yAxis = yAxis, zAxis = zAxis, legend = legend, data = data, 
+    opts = toJSON(params[!(names(params) %in% c('data', 'chart', 'xAxis', 'yAxis', 'zAxis', 'colorAxis', 'legend'))])
+    list(opts = opts, xAxis = xAxis, yAxis = yAxis, zAxis = zAxis, colorAxis = colorAxis, legend = legend, data = data, 
          chart = chart, chartId = chartId)
   }
 ))
