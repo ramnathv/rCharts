@@ -33,3 +33,21 @@ renderMap = function(expr, env = parent.frame(), quoted = FALSE){
     HTML(paste(c(map_style, map_div, rChart_$html()), collapse = '\n'))
   }
 }
+
+#' renderChart2 (use with Shiny)
+#' 
+#' renderChart2 is a modified version of renderChart. While renderChart 
+#' creates the chart directly on a shiny input div, renderChart2 uses the
+#' shiny input div as a wrapper and appends a new chart div to it. This
+#' has advantages in being able to keep chart creation workflow the same
+#' across shiny and non-shiny applications
+renderChart2 <- function(expr, env = parent.frame(), quoted = FALSE) {
+  func <- shiny::exprToFunction(expr, env, quoted)
+  function() {
+    rChart_ <- func()
+    cht_style <- sprintf("<style>.rChart {width: %spx; height: %spx} </style>",
+      rChart_$params$width, rChart_$params$height)
+    cht <- paste(capture.output(rChart_$print()), collapse = '\n')
+    HTML(paste(c(cht_style, cht), collapse = '\n'))
+  }
+}
