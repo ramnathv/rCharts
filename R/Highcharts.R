@@ -2,7 +2,8 @@ Highcharts <- setRefClass("Highcharts", contains = "rCharts", methods = list(
     initialize = function() {
       callSuper(); lib <<- 'highcharts'; LIB <<- get_lib(lib)
       params <<- c(params, list(
-        credits = list(href = NULL, text = NULL), 
+        credits = list(href = NULL, text = NULL),
+        exporting = list(enabled = F),
         title = list(text = NULL),
         yAxis = list(title = list(text = NULL))
       ))
