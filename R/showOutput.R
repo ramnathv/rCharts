@@ -19,7 +19,7 @@ chartOutput <- showOutput <- function(outputId, lib = NULL, package = 'rCharts',
   }
   div(
     id = outputId, 
-    class=paste('shiny-html-output', basename(LIB$name)),
+    class=paste('shiny-html-output', 'rChart', basename(LIB$name)),
     ifelse(add_lib, tagList(get_assets_shiny(LIB)), "")
   )
 }

@@ -19,6 +19,16 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
   addParams = function(...){
     params <<- modifyList(params, list(...))
   },
+  addControls = function(nm, value, values, label = paste("Select ", nm, ":")){
+    .self$setTemplate(
+      page = 'rChartControls.html',
+      script = system.file('libraries', lib, 'controls', 
+        'script.html', package = 'rCharts')
+    )
+    .self$set(width = 700)
+    control = list(name = nm, value = value, values = values, label = label)
+    params$controls[[nm]] <<- control
+  },
   setTemplate = function(...){
     templates <<- modifyList(templates, list(...))
   },
@@ -92,6 +102,8 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
   publish = function(description = "", id = NULL, ..., host = 'gist'){
     htmlFile = file.path(tempdir(), 'index.html'); on.exit(unlink(htmlFile))
     .self$save(destfile = htmlFile, cdn = T)
+    # imgFile = file.path(tempdir(), 'thumbnail.png'); on.exit(unlink(imgFile))
+    # take_screenshot(htmlFile, tools::file_path_sans_ext(imgFile))
     if (!is.null(.self$srccode)){
       codeFile = file.path(tempdir(), 'code.R'); on.exit(unlink(codeFile))
       writeLines(.self$srccode, con = codeFile)

@@ -4,3 +4,9 @@ datatables:
    - css/jquery.dataTables_themeroller.css
    - css/demo_table.css
   jshead: [js/jquery.js, js/jquery.dataTables.js]
+  cdn:
+    jshead: 
+      - "http://code.jquery.com/jquery-1.10.2.min.js"
+      - "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"
+    css:
+      - "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css"

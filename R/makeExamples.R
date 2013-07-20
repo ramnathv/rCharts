@@ -47,7 +47,7 @@ create_chart <- function(rFile){
 #' @param path to R file containing code to create an rChart
 #' @param imgname name of the plot to save to
 take_screenshot <- function(src, imgname = 'plot1', delay = 10000, upload = F){
-  if (file.exists(src)){
+  if (tools::file_ext(src) %in% c('r', 'R')){
     rCode = paste(readLines(src, warn = F), collapse = "\n")
     chart = source(src, local = TRUE)$value
     chart$set(width = 600, height = 325)

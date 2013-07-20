@@ -60,19 +60,7 @@ Highcharts <- setRefClass("Highcharts", contains = "rCharts", methods = list(
         params$plotOptions <<- setSpec(params$plotOptions, ..., replace = replace)
     },
     series = function(..., replace = F) {
-        args <- list(...)
-        
-        if (length(args) == 1 && is.list(args[[1]]) && is.null(names(args))) {
-            args <- args[[1]]
-        } else {
-            args <- list(args)
-        }
-        
-        if (replace) {
-            params$series <<- args
-        } else {
-            params$series <<- c(params$series, args)
-        }
+      params$series <<- setListSpec(params$series, ..., replace = replace)
     },
     subtitle = function(..., replace = T){
         params$subtitle <<- setSpec(params$subtitle, ..., replace = replace)
@@ -84,10 +72,10 @@ Highcharts <- setRefClass("Highcharts", contains = "rCharts", methods = list(
         params$tooltip <<- setSpec(params$tooltip, ..., replace = replace)
     },
     xAxis = function(..., replace = T) {
-        params$xAxis <<- setSpec(params$xAxis, ..., replace = replace)
+      params$xAxis <<- setListSpec(params$xAxis, ..., replace = replace)
     },
     yAxis = function(..., replace = T) {
-        params$yAxis <<- setSpec(params$yAxis, ..., replace = replace)
+      params$yAxis <<- setListSpec(params$yAxis, ..., replace = replace)
     },
     
     # Custom add data method
@@ -114,6 +102,32 @@ Highcharts <- setRefClass("Highcharts", contains = "rCharts", methods = list(
 
 # Utils
 is.categorical <- function(x) is.factor(x) || is.character(x)
+
+# Custom setSpec method that also accepts list as an argument
+# - for series, xAxis and yAxis
+setListSpec <- function(obj, ..., replace) {
+  args <- list(...)
+  
+  if (length(args) == 1 && is.list(args[[1]]) && is.null(names(args))) {
+    args <- args[[1]]
+  } else {
+    args <- list(args)
+  }
+  
+  # Convert data values to a list (fixes issue 138)
+  args <- lapply(args, function(x) {
+    if (!is.null(x$data) && !is.list(x$data)){ 
+      x$data <- as.list(x$data)
+    }
+    return(x)
+  })
+  
+  if (replace) {
+    obj <<- args
+  } else {
+    obj <<- c(obj, args)
+  }
+}
 
 #' Highcharts Plot
 #' 
