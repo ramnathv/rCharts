@@ -40,3 +40,31 @@ create_chart <- function(rFile){
   )
   return(chart)
 }
+
+
+#' Automate screenshot of an rChart, optionally upload it to imgur
+#'
+#' @param path to R file containing code to create an rChart
+#' @param imgname name of the plot to save to
+take_screenshot <- function(src, imgname = 'plot1', delay = 10000, upload = F){
+  if (tools::file_ext(src) %in% c('r', 'R')){
+    rCode = paste(readLines(src, warn = F), collapse = "\n")
+    chart = source(src, local = TRUE)$value
+    chart$set(width = 600, height = 325)
+    tf <- tempfile(fileext = ".html"); on.exit(unlink(tf))
+    chart$save(tf)
+  } else {
+    tf <- src
+  }
+  
+  script = system.file('utils', 'screenshot.js', package = 'rCharts')
+  cmd1 <- sprintf('casperjs %s %s %s %s', script, tf, imgname, delay)
+  system(cmd1)
+  # system(sprintf("convert %s.png  -resize 288x172", imgname))
+  if (upload){
+    h = knitr:::imgur_upload(paste0(imgname, '.png'))
+    return(h[1])
+  } else {
+    return(imgname)
+  }
+}

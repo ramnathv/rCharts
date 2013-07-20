@@ -19,6 +19,23 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
   addParams = function(...){
     params <<- modifyList(params, list(...))
   },
+  addControls = function(nm, value, values, label = paste("Select ", nm, ":")){
+    .self$setTemplate(
+      page = 'rChartControls.html',
+      script = system.file('libraries', lib, 'controls', 
+        'script.html', package = 'rCharts')
+    )
+    .self$set(width = 700)
+    control = list(name = nm, value = value, values = values, label = label)
+    params$controls[[nm]] <<- control
+  },
+  setTemplate = function(...){
+    templates <<- modifyList(templates, list(...))
+  },
+  setLib = function(lib){
+    lib <<- lib
+    LIB <<- get_lib(lib)
+  },
   set = function(...){
     # this is a hack, currently for external libraries
     # idea is to initialize LIB, since the set method will always be used.
@@ -67,6 +84,11 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
     writeLines(.self$render(...), destfile)
   },
   show = function(static = T, ...){
+    if (!is.null(getOption("knitr.in.progress")) && 
+        getOption("knitr.in.progress")){
+      add_ext_widgets(lib)
+      return(.self$print())
+    }
     if (static){
       writeLines(.self$render(...), tf <- tempfile(fileext = '.html'))
       browseURL(tf)
@@ -80,6 +102,8 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
   publish = function(description = "", id = NULL, ..., host = 'gist'){
     htmlFile = file.path(tempdir(), 'index.html'); on.exit(unlink(htmlFile))
     .self$save(destfile = htmlFile, cdn = T)
+    # imgFile = file.path(tempdir(), 'thumbnail.png'); on.exit(unlink(imgFile))
+    # take_screenshot(htmlFile, tools::file_path_sans_ext(imgFile))
     if (!is.null(.self$srccode)){
       codeFile = file.path(tempdir(), 'code.R'); on.exit(unlink(codeFile))
       writeLines(.self$srccode, con = codeFile)
@@ -95,4 +119,13 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
   }
 ))
 
+add_ext_widgets <- function(lib){
+  libpath = paste('libraries', lib, sep = "/")
+  if (exists('.SLIDIFY_ENV') && 
+      !(libpath %in% .SLIDIFY_ENV$ext_widgets$rCharts)){
+    rcharts_widgets = .SLIDIFY_ENV$ext_widgets$rCharts
+    len = length(rcharts_widgets)
+    .SLIDIFY_ENV$ext_widgets$rCharts[[len + 1]] <<- libpath
+  }
+}
 

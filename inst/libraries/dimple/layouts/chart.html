@@ -4,13 +4,14 @@
     xAxis = {{{ xAxis }}},
     yAxis = {{{ yAxis }}},
     zAxis = {{{ zAxis }}},
+    colorAxis = {{{ colorAxis }}},
     legend = {{{ legend }}};
   var svg = dimple.newSvg("#" + opts.id, opts.width, opts.height);
 
   //data = dimple.filterData(data, "Owner", ["Aperture", "Black Mesa"])
   var myChart = new dimple.chart(svg, data);
   if (opts.bounds) {
-    myChart.setBounds(x = opts.bounds.x, y = opts.bounds.y, height = opts.bounds.height, width = opts.bounds.width);//myChart.setBounds(80, 30, 480, 330);
+    myChart.setBounds(opts.bounds.x, opts.bounds.y, opts.bounds.width, opts.bounds.height);//myChart.setBounds(80, 30, 480, 330);
   }
   //dimple allows use of custom CSS with noFormats
   if(opts.noFormats) { myChart.noFormats = opts.noFormats; };
@@ -28,6 +29,9 @@
   if (xAxis.grouporderRule) x.addGroupOrderRule(xAxis.grouporderRule);  
   if (xAxis.overrideMin) x.overrideMin = xAxis.overrideMin;
   if (xAxis.overrideMax) x.overrideMax = xAxis.overrideMax;
+  if (xAxis.overrideMax) x.overrideMax = xAxis.overrideMax;
+  if (xAxis.inputFormat) x.dateParseFormat = xAxis.inputFormat;
+  if (xAxis.outputFormat) x.tickFormat = xAxis.outputFormat;
   //y axis
   var y;
   if(yAxis.measure) {
@@ -40,7 +44,9 @@
   if (yAxis.grouporderRule) y.addGroupOrderRule(yAxis.grouporderRule);
   if (yAxis.overrideMin) y.overrideMin = yAxis.overrideMin;
   if (yAxis.overrideMax) y.overrideMax = yAxis.overrideMax;
-  //z for bubbles
+  if (yAxis.inputFormat) y.dateParseFormat = yAxis.inputFormat;
+  if (yAxis.outputFormat) y.tickFormat = yAxis.outputFormat;
+//z for bubbles
     var z;
   if (!(typeof(zAxis) === 'undefined') && zAxis.type){
     if(zAxis.measure) {
@@ -53,6 +59,10 @@
     if (zAxis.overrideMin) z.overrideMin = zAxis.overrideMin;
     if (zAxis.overrideMax) z.overrideMax = zAxis.overrideMax;
   }
+  if(d3.keys(colorAxis).length > 0) {
+    myChart[colorAxis.type](colorAxis.colorSeries,colorAxis.palette) ;
+  }
+  
   //here need think I need to evaluate group and if missing do null
   //as the first argument
   //if provided need to use groups from opts

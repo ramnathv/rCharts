@@ -1,3 +1,9 @@
+dTable <- dataTable <- function(x, ...){
+  myTable <- Datatables$new()
+  myTable$addTable( x, ... )
+  return(myTable$copy())
+}
+
 Datatables = setRefClass('Datatables', contains = 'rCharts', methods = list(
   initialize = function(x){
     callSuper()

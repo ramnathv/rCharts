@@ -15,7 +15,8 @@ publish_.gist <- function(files, description, id, ...){
 publish_.rpubs <- function(files, description, id, ...){
   htmlFile = grep('.html$', files, value = T)
   url = markdown::rpubsUpload(title = description, htmlFile, id = id, ...)
-  return(url)
+  message("Claim your page on RPubs at: ", "\n", url$continueUrl)
+  return(url$id)
 }
 
 #' Run an rCharts example from a github repo
