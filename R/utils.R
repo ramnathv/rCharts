@@ -22,6 +22,9 @@ get_rCharts_assets <- function(lib){
 }
 
 get_lib <- function(lib){
+  if (grepl("^http", lib)){
+    return(list(name = basename(lib), url = lib))
+  }
   if (file.exists(lib)){
     lib_url <- normalizePath(lib)
     lib <- basename(lib_url)
