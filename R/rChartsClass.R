@@ -32,9 +32,13 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
   setTemplate = function(...){
     templates <<- modifyList(templates, list(...))
   },
-  setLib = function(lib){
-    lib <<- lib
-    LIB <<- get_lib(lib)
+  setLib = function(lib, ...){
+    lib <<- lib; LIB <<- get_lib(lib)
+    templates <<- modifyList(list(
+      page = 'rChart.html', 
+      chartDiv = NULL, 
+      script =  file.path(LIB$url, 'layouts', 'chart.html')
+    ), list(...))
   },
   set = function(...){
     # this is a hack, currently for external libraries
@@ -84,6 +88,13 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
     writeLines(.self$render(...), destfile)
   },
   show = function(static = T, ...){
+    if (!is.null(getOption('rcharts.vis.tag')) &&
+          getOption("rcharts.vis.tag") == 'iframe'){
+      file_ = sprintf("assets/img/%s.html", params$dom)
+      .self$save(file_)
+      cat(sprintf("<iframe src=%s></iframe>", file_))
+      return(invisible())
+    }
     if (!is.null(getOption("knitr.in.progress")) && 
         getOption("knitr.in.progress")){
       add_ext_widgets(lib)
