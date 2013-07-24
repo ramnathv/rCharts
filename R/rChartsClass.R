@@ -87,6 +87,31 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
     'Save chart as a standalone html page'
     writeLines(.self$render(...), destfile)
   },
+  display = function(mode_ = NULL, ...){
+    mode_ = getMode(mode_)
+    switch(mode_, 
+      static = {
+        writeLines(.self$render(...), tf <- tempfile(fileext = '.html'))
+        browseURL(tf)
+      },
+      server = {
+        shiny_copy = .self$copy()
+        shiny_copy$params$dom = 'show'
+        assign(".rChart_object", shiny_copy, envir = .GlobalEnv)
+        shiny::runApp(file.path(system.file(package = "rCharts"), "shiny"))
+      },
+      inline = {
+        add_ext_widgets(lib)
+        return(.self$print(...))
+      },
+      iframe = {
+        file_ = sprintf("%s.html", params$dom)
+        .self$save(file_, ...)
+        cat(sprintf("<iframe src=%s seamless></iframe>", file_))
+        return(invisible())
+      }    
+    )
+  },
   show = function(static = T, ...){
     if (!is.null(getOption('rcharts.vis.tag')) &&
           getOption("rcharts.vis.tag") == 'iframe'){
@@ -138,5 +163,19 @@ add_ext_widgets <- function(lib){
     len = length(rcharts_widgets)
     .SLIDIFY_ENV$ext_widgets$rCharts[[len + 1]] <<- libpath
   }
+}
+
+getMode = function(mode_){
+  # return mode_ if set explicitly or using rcharts.mode
+  mode_ = getOption('rcharts.mode', mode_)
+  if(!is.null(mode_)){
+    return(mode_)
+  }
+  if(!is.null(getOption('knitr.in.progress'))){
+    mode_ = 'iframe'
+  } else {
+    mode_ = 'static'
+  }
+  return(mode_)
 }
 
