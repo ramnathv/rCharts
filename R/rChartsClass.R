@@ -13,8 +13,11 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
       width = getOption('RCHART_WIDTH', 800),  # width of the container
       height = getOption('RCHART_HEIGHT', 400) # height of the container
     )
-    templates <<- list(page = 'rChart.html', chartDiv = NULL, script =  file.path(LIB$url, 'layouts', 'chart.html')
-)
+    templates <<- list(page = 'rChart.html', chartDiv = NULL, 
+      script =  file.path(LIB$url, 'layouts', 'chart.html'))
+    templates$chartDiv <<- "
+      <{{container}} id = '{{ chartId }}' class = 'rChart {{ lib }}'>
+      </{{ container}}>"
   },
   addParams = function(...){
     params <<- modifyList(params, list(...))
@@ -54,19 +57,25 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
   html = function(chartId = NULL){
     params$dom <<- chartId %||% params$dom
     params$id <<- params$dom
-    template = read_file(templates$script)
-    html = render_template(template, getPayload(params$dom))
+    # template = read_file(templates$script)
+    html = render_template(templates$script, getPayload(params$dom))
     return(html)
   },
   print = function(chartId = NULL, include_assets = F, ...){
     params$dom <<- chartId %||% params$dom
     assetHTML <- ifelse(include_assets, add_lib_assets(lib, ...), "")
-    if (is.null(templates$chartDiv)){
-      chartDiv =  sprintf("<%s id='%s' class='rChart %s'></%s>", 
-        container, params$dom, LIB$name, container)
-    } else {
-      chartDiv = render_template(templates$chartDiv, list(chartId = params$dom))
-    }
+    # if (is.null(templates$chartDiv)){
+    #   chartDiv =  sprintf("<%s id='%s' class='rChart %s'></%s>", 
+    #     container, params$dom, LIB$name, container)
+    # } else {
+    #   chartDiv = render_template(templates$chartDiv, 
+    #       list(chartId = params$dom))
+    # }
+    chartDiv = render_template(templates$chartDiv, list(
+      chartId = params$dom,
+      lib = LIB$name,
+      container = container
+    ))
     writeLines(c(assetHTML, chartDiv, .self$html(params$dom)))
   },
   render = function(chartId = NULL, cdn = F){
@@ -87,7 +96,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
     'Save chart as a standalone html page'
     writeLines(.self$render(...), destfile)
   },
-  display = function(mode_ = NULL, ...){
+  show = function(mode_ = NULL, ...){
     mode_ = getMode(mode_)
     switch(mode_, 
       static = {
@@ -105,14 +114,19 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
         return(.self$print(...))
       },
       iframe = {
-        file_ = sprintf("%s.html", params$dom)
-        .self$save(file_, ...)
+        chunk_opts_ = opts_current$get() 
+        file_ = knitr:::fig_path('.html', chunk_opts_)
+        if (!file.exists(dirname(file_))){
+          dir.create(dirname(file_))
+        }
+        cdn = !(chunk_opts_$rcharts %?=% 'draft')
+        .self$save(file_, cdn = cdn)
         cat(sprintf("<iframe src=%s seamless></iframe>", file_))
         return(invisible())
       }    
     )
   },
-  show = function(static = T, ...){
+  show2 = function(static = T, ...){
     if (!is.null(getOption('rcharts.vis.tag')) &&
           getOption("rcharts.vis.tag") == 'iframe'){
       file_ = sprintf("assets/img/%s.html", params$dom)
@@ -165,17 +179,31 @@ add_ext_widgets <- function(lib){
   }
 }
 
+# getMode = function(mode_){
+#   # if mode_ is specified as argument, just return it
+#   if(!is.null(mode_)){
+#     return(mode_)
+#   }
+#   # if mode_ is specified as options, just return it
+#   if(!is.null(getOption('rcharts.mode'))){
+#     return(getOption('rcharts.mode'))
+#   }
+#   # if knitr is in progress, return mode = iframe, else static
+#   if(!is.null(getOption('knitr.in.progress'))){
+#     mode_ = 'iframe'
+#   } else {
+#     mode_ = 'static'
+#   }
+#   return(mode_)
+# }
+
 getMode = function(mode_){
-  # return mode_ if set explicitly or using rcharts.mode
-  mode_ = getOption('rcharts.mode', mode_)
-  if(!is.null(mode_)){
-    return(mode_)
-  }
-  if(!is.null(getOption('knitr.in.progress'))){
-    mode_ = 'iframe'
-  } else {
-    mode_ = 'static'
-  }
+  default = ifelse(getOption('knitr.in.progress') %?=% TRUE, 'iframe', 'static')
+  mode_ = mode_ %||% getOption('rcharts.mode') %||% default
   return(mode_)
+}
+
+`%?=%` <- function(x, y){
+  ifelse(!is.null(x), x == y, FALSE)
 }
 
