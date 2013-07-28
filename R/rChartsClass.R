@@ -39,7 +39,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
     lib <<- lib; LIB <<- get_lib(lib)
     templates <<- modifyList(list(
       page = 'rChart.html', 
-      chartDiv = NULL, 
+      chartDiv = "<{{container}} id = '{{ chartId }}' class = 'rChart {{ lib }}'></{{ container}}>", 
       script =  file.path(LIB$url, 'layouts', 'chart.html')
     ), list(...))
   },
