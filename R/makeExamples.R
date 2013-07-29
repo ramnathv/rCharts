@@ -30,14 +30,12 @@ make_example_page <- function(rFile, sidebar, htmlDir){
 #' Creates an rChart, given a file with source code
 #'
 #' 
-create_chart <- function(rFile){
+create_chart <- function(rFile, page = 'rChart2.html', ...){
   rCode = paste(readLines(rFile, warn = F), collapse = '\n')
   chart = source(rFile, local = TRUE)$value
+  chart$set(width = 700)
   chart$field('srccode', rCode)
-  chart$field('templates', list(
-    page = 'rChart2.html', 
-    chartDiv = NULL, script =  chart$templates$script)
-  )
+  chart$setTemplate(page = 'rChart2.html', ...)
   return(chart)
 }
 
@@ -60,6 +58,8 @@ take_screenshot <- function(src, imgname = 'plot1', delay = 10000, upload = F){
   script = system.file('utils', 'screenshot.js', package = 'rCharts')
   cmd1 <- sprintf('casperjs %s %s %s %s', script, tf, imgname, delay)
   system(cmd1)
+  cmd2 <- sprintf('convert -flatten %s.png %s.png', imgname, imgname)
+  system(cmd2)
   # system(sprintf("convert %s.png  -resize 288x172", imgname))
   if (upload){
     h = knitr:::imgur_upload(paste0(imgname, '.png'))

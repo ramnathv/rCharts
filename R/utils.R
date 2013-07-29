@@ -3,6 +3,8 @@ open_notebook <- function(rmdFile = NULL){
     options(NOTEBOOK_TO_OPEN = normalizePath(rmdFile))
     on.exit(options(NOTEBOOK_TO_OPEN = NULL))
   }
+  options(rcharts.mode = 'inline')
+  on.exit(options(rcharts.mode = NULL))
   app <- system.file('apps', 'notebook', package = 'rCharts')
   shiny::runApp(app)
 }
@@ -144,8 +146,16 @@ read_template <- function(..., package = 'rCharts'){
 #' @keywords internal
 #' @import whisker
 #' @noRd
-render_template <- function(..., data = parent.frame(1)){
-  paste(capture.output(cat(whisker.render(...))), collapse = "\n")
+# render_template <- function(..., data = parent.frame(1)){
+#   paste(capture.output(cat(whisker.render(...))), collapse = "\n")
+# }
+render_template = function(template, data = parent.frame(1), ...){
+  if (file.exists(template)) {
+    template <- read_file(template)
+  }
+  paste(capture.output(
+    cat(whisker.render(template, data = data))
+  ), collapse = "\n")
 }
 
 
