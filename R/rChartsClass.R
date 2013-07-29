@@ -15,9 +15,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
     )
     templates <<- list(page = 'rChart.html', chartDiv = NULL, 
       script =  file.path(LIB$url, 'layouts', 'chart.html'))
-    templates$chartDiv <<- "
-      <{{container}} id = '{{ chartId }}' class = 'rChart {{ lib }}'>
-      </{{ container}}>"
+    templates$chartDiv <<- "<{{container}} id = '{{ chartId }}' class = 'rChart {{ lib }}'></{{ container}}>"
   },
   addParams = function(...){
     params <<- modifyList(params, list(...))
