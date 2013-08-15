@@ -150,7 +150,7 @@ read_template <- function(..., package = 'rCharts'){
 #   paste(capture.output(cat(whisker.render(...))), collapse = "\n")
 # }
 render_template = function(template, data = parent.frame(1), ...){
-  if (file.exists(template) || RCurl::url.exists(template)) {
+  if (file.exists(template) || (grepl("^http", template) && RCurl::url.exists(template))) {
     template <- read_file(template)
   }
   paste(capture.output(
