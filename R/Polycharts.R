@@ -30,7 +30,7 @@ Polycharts = setRefClass('Polycharts', contains = 'rCharts', methods = list(
     controls_json = toJSON(params$controls)
     controls = setNames(params$controls, NULL)
     list(
-      chartParams = fixJSON(toJSON(params[names(params) != 'controls'])), 
+      chartParams = toJSON2(params[names(params) != 'controls']), 
       chartId = chartId,
       controls_json = toJSON(params$controls),
       controls = setNames(params$controls, NULL)

@@ -30,12 +30,12 @@ make_example_page <- function(rFile, sidebar, htmlDir){
 #' Creates an rChart, given a file with source code
 #'
 #' 
-create_chart <- function(rFile, page = 'rChart2.html', ...){
+create_chart <- function(rFile, page_ = 'rChart2.html', ...){
   rCode = paste(readLines(rFile, warn = F), collapse = '\n')
   chart = source(rFile, local = TRUE)$value
   chart$set(width = 700)
   chart$field('srccode', rCode)
-  chart$setTemplate(page = 'rChart2.html', ...)
+  chart$setTemplate(page = page_, ...)
   return(chart)
 }
 

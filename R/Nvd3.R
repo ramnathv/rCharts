@@ -42,7 +42,7 @@ Nvd3 <- setRefClass('Nvd3', contains = 'rCharts', methods = list(
     opts = toJSON(params[!(names(params) %in% c('data', 'chart', 'xAxis', 'x2Axis', 'yAxis', 'controls'))])
     list(opts = opts, xAxis = xAxis, x2Axis = x2Axis, yAxis = yAxis, data = data, 
          chart = chart, chartId = chartId, controls = controls, 
-         controls_json = controls_json
+         controls_json = controls_json, CODE = srccode
     )
   }
 ))

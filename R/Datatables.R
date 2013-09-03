@@ -10,7 +10,10 @@ Datatables = setRefClass('Datatables', contains = 'rCharts', methods = list(
     container <<- 'table'
   },
   addTable = function(x, ...){
-    params$table <<- c(make_table2(x), list(...))
+    params$table <<- modifyList(make_table2(x), list(...))
+  },
+  getPayload = function(chartId){
+    list(chartParams = toJSON2(params), chartId = chartId, lib = basename(lib))
   }
 ))
 
