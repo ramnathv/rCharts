@@ -69,13 +69,18 @@ Leaflet = setRefClass('Leaflet', contains = 'rCharts', methods = list(
       params$geoJson <<- FALSE
     }
   },
+  addKML = function(kmlFile){
+    params$addons$kml <<- TRUE
+    params$kml <<- kmlFile
+  },
   legend = function(position, colors, labels){
     params$addons$legend <<- TRUE
     params$legend <<- list(position = position, colors = colors, labels = labels)
   },
   getPayload = function(chartId){
-    skip = c('marker', 'circle', 'addons', 'geoJson')
+    skip = c('marker', 'circle', 'addons', 'geoJson', 'kml')
     geoJson = toJSON2(params$geoJson)
+    kml = toJSON2(params$kml)
     marker = paste(lapply(params$marker, toChain, obj =  'L'), collapse = '\n')
     # circle = paste(lapply(params$circle, toChain, obj =  'L'), collapse = '\n')
     circle = toChain(params$circle, obj = 'L')
@@ -87,7 +92,8 @@ Leaflet = setRefClass('Leaflet', contains = 'rCharts', methods = list(
       marker = marker,
       circle = circle,
       addons = params$addons,
-      geoJson = geoJson
+      geoJson = geoJson,
+      kml = kml
     )
   }
 ))
