@@ -169,16 +169,16 @@ render_template = function(template, data = parent.frame(1), ...){
   ), collapse = "\n")
 }
 
-choropleth <- function(x, data, pal){
+choropleth <- function(x, data, pal, map = 'usa'){
   fml = lattice::latticeParseFormula(x, data = data)
-  data = transform(data, fillKey = fml$right)
-  mypal = RColorBrewer::brewer.pal(length(unique(fml$right)), pal)
+  data = transform(data, fillKey = fml$left)
+  mypal = RColorBrewer::brewer.pal(length(unique(fml$left)), pal)
   d <- rCharts$new()
   d$setLib('datamaps')
   d$set(
-    scope = 'usa',
-    fills = as.list(setNames(mypal, unique(fml$right))),
-    data = dlply(data, .(state))
+    scope = map,
+    fills = as.list(setNames(mypal, unique(fml$left))),
+    data = dlply(data, fml$right.name)
   )
   return(d)
 }
