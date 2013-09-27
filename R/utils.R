@@ -1,3 +1,14 @@
+#' Copy directories
+#' 
+#' @keywords internal
+copy_dir_ <- function (from, to){
+  if (!(file.exists(to))) {
+    dir.create(to, recursive = TRUE)
+    message("Copying files to ", to, "...")
+    file.copy(list.files(from, full.names = T), to, recursive = TRUE)
+  }
+}
+
 open_notebook <- function(rmdFile = NULL){
   if (!is.null(rmdFile)) {
     options(NOTEBOOK_TO_OPEN = normalizePath(rmdFile))
@@ -157,6 +168,21 @@ render_template = function(template, data = parent.frame(1), ...){
     cat(whisker.render(template, data = data))
   ), collapse = "\n")
 }
+
+choropleth <- function(x, data, pal){
+  fml = lattice::latticeParseFormula(x, data = data)
+  data = transform(data, fillKey = fml$right)
+  mypal = RColorBrewer::brewer.pal(length(unique(fml$right)), pal)
+  d <- rCharts$new()
+  d$setLib('datamaps')
+  d$set(
+    scope = 'usa',
+    fills = as.list(setNames(mypal, unique(fml$right))),
+    data = dlply(data, .(state))
+  )
+  return(d)
+}
+
 
 
 # tpl <- '{{# items }} {{{.}}}\n {{/ items}}'
