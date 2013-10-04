@@ -10,3 +10,4 @@ leaflet:
     jshead: 
       - http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js
       - https://rawgithub.com/leaflet-extras/leaflet-providers/gh-pages/leaflet-providers.js
+      - "http://harrywood.co.uk/maps/examples/leaflet/leaflet-plugins/layer/vector/KML.js"
