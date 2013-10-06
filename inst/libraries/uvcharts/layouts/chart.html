@@ -1,0 +1,12 @@
+<script>
+  var chartParams{{chartId}} = {{{ chartParams }}}
+  var graphdef{{chartId}} = chartParams{{chartId}}.graphdef
+  var config{{chartId}} = chartParams{{chartId}}.config
+  
+  config{{chartId}}.meta.position = '#{{chartId}}'
+  
+  var chart{{chartId}} = uv.chart(chartParams{{chartId}}.type, 
+    graphdef{{chartId}},
+    config{{chartId}}
+  );
+</script>
