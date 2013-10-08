@@ -32,7 +32,7 @@ Nvd3 <- setRefClass('Nvd3', contains = 'rCharts', methods = list(
     params <<- modifyList(params, getLayer(...))
   },
   getPayload = function(chartId){
-    data = toJSONArray(params$data)
+    data = toJSONArray2(params$data, digits = getOption('rcharts.digits', 13))
     chart = toChain(params$chart, 'chart')
     xAxis = toChain(params$xAxis, 'chart.xAxis')
     x2Axis = toChain(params$x2Axis, 'chart.x2Axis')    
