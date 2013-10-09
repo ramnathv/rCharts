@@ -1,9 +1,12 @@
 rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character', 
     LIB = 'list', srccode = 'ANY', tObj = 'list', container = 'character', 
-    html_id = 'character', templates = 'list'), methods = list(
+    html_id = 'character', templates = 'list', html_assets = 'list'),
+  methods = list(
+    
   initialize = function(){
     srccode <<- NULL     # source code to create the chart
     html_id <<- ""       # no id initially
+    html_assets <<- list(js = NULL, css = NULL) # no external assets
     tObj <<- list()      # 
     lib <<- tolower(as.character(class(.self)))
     LIB <<- get_lib(lib) # library name and url to library folder
@@ -16,6 +19,9 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
     templates <<- list(page = 'rChart.html', chartDiv = NULL, 
       script =  file.path(LIB$url, 'layouts', 'chart.html'))
     templates$chartDiv <<- "<{{container}} id = '{{ chartId }}' class = 'rChart {{ lib }}'></{{ container}}>"
+  },
+  addAssets = function(...){
+    html_assets <<- list(...)
   },
   addParams = function(...){
     params <<- modifyList(params, list(...))
@@ -79,9 +85,10 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
   render = function(chartId = NULL, cdn = F){
     params$dom <<- chartId %||% params$dom
     template = read_template(getOption('RCHART_TEMPLATE', templates$page))
+    assets = Map("c", get_assets(LIB, static = T, cdn = cdn), html_assets)
     html = render_template(template, list(
       params = params,
-      assets = get_assets(LIB, static = T, cdn = cdn),
+      assets = assets,
       chartId = params$dom,
       script = .self$html(params$dom),
       CODE = srccode,
