@@ -103,3 +103,73 @@ rqMap <- function(location = "montreal", ...){
   myMap$setView(c(LngLat$lat, LngLat$lon), ...)
   return(myMap)
 }
+
+Datamaps = setRefClass('Datamaps', contains = 'rCharts', methods = list(
+  getPayload = function(chartId){
+    params_ = params[!(names(params) %in% "popup_template")]
+    list(
+      chartParams = toJSON(params_), 
+      chartId = chartId, lib = basename(lib),
+      popup_template = params$popup_template
+    )
+  }  
+))
+
+choropleth <- function(x, data, pal, map = 'usa', ...){
+  fml = lattice::latticeParseFormula(x, data = data)
+  data = transform(data, fillKey = fml$left)
+  mypal = RColorBrewer::brewer.pal(length(unique(fml$left)), pal)
+  d <- Datamaps$new()
+  d$set(
+    scope = map,
+    fills = as.list(setNames(mypal, unique(fml$left))),
+    data = dlply(data, fml$right.name),
+    ...
+  )
+  return(d)
+}
+
+makeChoroData <- function(x, data, pal, map = 'usa'){
+  fml = lattice::latticeParseFormula(x, data = data)
+  if (!is.null(fml$condition)){
+    data = dlply(data, names(fml$condition))
+  }
+  return(data)
+}
+
+processChoroData <- function(x, data, pal, map = 'usa', ...){
+  fml = lattice::latticeParseFormula(x, data = data)
+  data = transform(data, fillKey = fml$left)
+  mypal = RColorBrewer::brewer.pal(length(unique(fml$left)), pal)
+  list(
+   scope = map,
+   fills = as.list(setNames(mypal, unique(fml$left))),
+   data = dlply(data, fml$right.name),
+   ...
+  )
+}
+
+choropleth2 <- function(x, data, pal, map = 'usa', ...){
+  data1 = makeChoroData(x, data, pal, map, ...)
+  data2 = llply(data1, processChoroData, x = x, pal, map, ...)
+  d <- Datamaps$new()
+  d$setTemplate(
+    script =  system.file('libraries', 'datamaps', 'layouts', 
+      'chart2.html', package = 'rCharts')  
+  )
+  d$set(map = data2)
+  return(d)
+}
+
+
+# data1 = makeChoroData(
+#   cut(Adult_Obesity_Rate, 5, labels = F) ~ state | Mandates_BMI_Screening,
+#   data = obesity,
+#   pal = 'PuRd'
+# )
+# 
+# data2 = llply(data1, processChoroData, 
+#   x =cut(Adult_Obesity_Rate, 5, labels = F) ~ state | Mandates_BMI_Screening,
+#   pal = 'PuRd', map = 'usa'
+# )
+
