@@ -32,14 +32,14 @@ Nvd3 <- setRefClass('Nvd3', contains = 'rCharts', methods = list(
     params <<- modifyList(params, getLayer(...))
   },
   getPayload = function(chartId){
-    data = toJSONArray2(params$data, digits = getOption('rcharts.digits', 13))
+    data = to_json(params$data, orient="records") #, digits = getOption('rcharts.digits', 13))
     chart = toChain(params$chart, 'chart')
     xAxis = toChain(params$xAxis, 'chart.xAxis')
     x2Axis = toChain(params$x2Axis, 'chart.x2Axis')    
     yAxis = toChain(params$yAxis, 'chart.yAxis')
-    controls_json = toJSON(params$controls)
+    controls_json = to_json(params$controls)
     controls = setNames(params$controls, NULL)
-    opts = toJSON(params[!(names(params) %in% c('data', 'chart', 'xAxis', 'x2Axis', 'yAxis', 'controls'))])
+    opts = to_json(params[!(names(params) %in% c('data', 'chart', 'xAxis', 'x2Axis', 'yAxis', 'controls'))])
     list(opts = opts, xAxis = xAxis, x2Axis = x2Axis, yAxis = yAxis, data = data, 
          chart = chart, chartId = chartId, controls = controls, 
          controls_json = controls_json, CODE = srccode
