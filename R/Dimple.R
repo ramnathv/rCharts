@@ -35,7 +35,7 @@ Dimple <- setRefClass('Dimple', contains = 'rCharts', methods = list(
     params <<- modifyList(params, getLayer(...))
   },
   getPayload = function(chartId){
-    data = toJSONArray(params$data)
+    data = to_json(params$data, orient="records")
     #there is potential to  chain the entire thing
     #making much cleaner
     #need to explore this
@@ -43,12 +43,12 @@ Dimple <- setRefClass('Dimple', contains = 'rCharts', methods = list(
     chart = toChain(params$chart, 'myChart')
     #cannot eliminate so changed toChain to toJSON
     #but need to revert back to toChain for the axes
-    xAxis = toJSON(params$xAxis) #toChain(params$xAxis, 'chart.xAxis')
-    yAxis = toJSON(params$yAxis) #toChain(params$yAxis, 'chart.yAxis')
-    zAxis = toJSON(params$zAxis)
-    colorAxis = toJSON(params$colorAxis)
-    legend = toJSON(params$legend)
-    opts = toJSON(params[!(names(params) %in% c('data', 'chart', 'xAxis', 'yAxis', 'zAxis', 'colorAxis', 'legend'))])
+    xAxis = to_json(params$xAxis) #toChain(params$xAxis, 'chart.xAxis')
+    yAxis = to_json(params$yAxis) #toChain(params$yAxis, 'chart.yAxis')
+    zAxis = to_json(params$zAxis)
+    colorAxis = to_json(params$colorAxis)
+    legend = to_json(params$legend)
+    opts = to_json(params[!(names(params) %in% c('data', 'chart', 'xAxis', 'yAxis', 'zAxis', 'colorAxis', 'legend'))])
     list(opts = opts, xAxis = xAxis, yAxis = yAxis, zAxis = zAxis, colorAxis = colorAxis, legend = legend, data = data, 
          chart = chart, chartId = chartId)
   }
