@@ -1,0 +1,45 @@
+<div class='container' ng-controller="DemoCtrl" ng-init="drawChart()">
+  <div class='row'>
+    <div class='span3'>
+      <form class='well'>
+      	{{# controls }}
+        <label><b>{{label}}</b></label>
+    		<select ng-model="opts.{{name}}.var" 
+          ng-options="ctl for ctl in controls.{{name}}.values">   
+    		</select><br>
+				{{/ controls }}
+      </form>
+    </div>
+    <div class='span8'>
+      <div class="bs-docs-example">
+        <div id='{{chartId}}' class='rChart {{params.lib}}'>
+          <svg></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type='text/javascript'>
+function DemoCtrl($scope){
+  $scope.chartParams = {{{ chartParams }}}
+  _.each($scope.chartParams.layers, function(el){
+    el.data = polyjs.data(el.data)
+  })
+      
+  $scope.controls = {{{ controls_json }}}
+  $scope.opts = $scope.chartParams.layers[0];
+    
+  $scope.drawChart = function(){
+    $scope.chart = polyjs.chart($scope.chartParams)
+	}
+
+  $scope.updateChart = function(){
+    $scope.chart.make($scope.chartParams)
+	}
+		
+	$scope.$watch('opts', function(){
+	  $scope.chartParams.layers[0] = $scope.opts;
+	  $scope.updateChart();
+	}, true)
+}
+</script>

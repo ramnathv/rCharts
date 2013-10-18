@@ -2,7 +2,7 @@ Polycharts = setRefClass('Polycharts', contains = 'rCharts', methods = list(
   initialize = function(){
     callSuper(); 
     params <<- c(params, list(layers = list(), facet = list(), guides = list(), 
-                              coord = list()))
+      coord = list(), controls = list()))
   },
   layer = function(..., copy_layer = F){
     len = length(params$layers)
@@ -27,7 +27,14 @@ Polycharts = setRefClass('Polycharts', contains = 'rCharts', methods = list(
     params$coord <<- modifyList(params$coord, list(...))
   },
   getPayload = function(chartId){
-    list(chartParams = fixJSON(toJSON(params)), chartId = chartId)
+    controls_json = toJSON(params$controls)
+    controls = setNames(params$controls, NULL)
+    list(
+      chartParams = toJSON2(params[names(params) != 'controls']), 
+      chartId = chartId,
+      controls_json = toJSON(params$controls),
+      controls = setNames(params$controls, NULL)
+    )
   }
 ))
 

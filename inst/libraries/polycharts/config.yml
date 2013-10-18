@@ -1,4 +1,4 @@
 polycharts:
   jshead: js/polychart2.standalone.js
   cdn:
-    jshead: "http://polychart.com/s/third_party/polychart2.standalone.js"
+    jshead: "http://ramnathv.github.io/rCharts/libraries/widgets/polycharts/js/polychart2.standalone.js"

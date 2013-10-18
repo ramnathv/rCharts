@@ -1,10 +1,19 @@
+dTable <- dataTable <- function(x, ...){
+  myTable <- Datatables$new()
+  myTable$addTable( x, ... )
+  return(myTable$copy())
+}
+
 Datatables = setRefClass('Datatables', contains = 'rCharts', methods = list(
   initialize = function(x){
     callSuper()
     container <<- 'table'
   },
   addTable = function(x, ...){
-    params$table <<- c(make_table2(x), list(...))
+    params$table <<- modifyList(make_table2(x), list(...))
+  },
+  getPayload = function(chartId){
+    list(chartParams = toJSON2(params), chartId = chartId, lib = basename(lib))
   }
 ))
 

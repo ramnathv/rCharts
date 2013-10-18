@@ -1,0 +1,67 @@
+<div class='container' ng-controller="DemoCtrl">
+  <div class='row'>
+    <div class='span3'>
+      <form class='well'>
+    		{{# controls }}
+        <label><b>{{label}}</b></label>
+    		<select ng-model="opts.{{name}}" 
+          ng-options="ctl for ctl in controls.{{name}}.values">   
+    		</select><br>
+				{{/ controls }}
+      </form>
+    </div>
+    <div class='span8'>
+      <div class="bs-docs-example">
+        <div id='{{chartId}}' class='rChart {{lib}}'>
+          <svg></svg>
+        </div>
+        {{# CODE }}<pre><code class='r'>{{CODE}}</code></pre>{{/ CODE }}
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+function DemoCtrl($scope){
+  $scope.opts = {{{ opts }}}
+  $scope.data = {{{ data }}}
+  $scope.controls = {{{ controls_json }}}           
+  $scope.drawChart = function(){
+    drawChart($scope.opts, $scope.data)  
+  }
+  $scope.$watch('opts',function(){
+    $scope.drawChart()
+	}, true)
+}  
+
+function drawChart(opts, data){  
+	var data = d3.nest()
+		.key(function(d){
+			return opts.group === undefined ? 'main' : d[opts.group]
+		})
+		.entries(data)
+	
+	nv.addGraph(function() {
+		var chart = nv.models[opts.type]()
+			.x(function(d) { return d[opts.x] })
+			.y(function(d) { return d[opts.y] })
+			.width(opts.width)
+			.height(opts.height)
+		
+	{{{ chart }}}
+          
+	{{{ xAxis }}}
+
+	{{{ x2Axis }}}
+	
+	{{{ yAxis }}}
+
+	d3.select("#" + opts.id + ' svg')
+		.datum(data)
+		.transition().duration(500)
+		.call(chart);
+	
+	 nv.utils.windowResize(chart.update);
+	 return chart;
+  });
+};
+</script>

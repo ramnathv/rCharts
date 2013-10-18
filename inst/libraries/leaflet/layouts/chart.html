@@ -1,7 +1,10 @@
 <script>
   var spec = {{{ chartParams }}}
   var map = L.map(spec.dom)
-    .setView(spec.center, spec.zoom);
+  
+  {{^ addons.kml }}
+    map.setView(spec.center, spec.zoom);
+  {{/ addons.kml }}
 
     if (spec.provider){
       L.tileLayer.provider(spec.provider).addTo(map)    
@@ -89,4 +92,15 @@
     }).addTo(map);
    
    {{/addons.fullscreen}}
+   
+   {{#addons.kml}}
+   var kmlLayer = new L.KML({{{ kml }}}, {async: true});
+                                                              
+   kmlLayer.on("loaded", function(e) { 
+        map.fitBounds(e.target.getBounds());
+   });
+                                                
+   map.addLayer(kmlLayer);
+   {{/addons.kml}}
+   
 </script>

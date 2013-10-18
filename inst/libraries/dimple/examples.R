@@ -844,3 +844,23 @@ d1$legend(
   horizontalAlign = "left"
 )
 d1
+
+
+#example 48 timeAxis
+data( economics, package = "ggplot2" )
+economics$date = format(economics$date, "%Y-%m-%d")
+d1 <- dPlot(
+x = "date",
+y = "uempmed",
+data = economics,
+type = "line",
+height = 400,
+width = 700,
+bounds = list(x=50,y=20,width=650,height=300)
+)
+d1$xAxis(
+type = "addTimeAxis",
+inputFormat = "%Y-%m-%d",
+outputFormat = "%b %Y"
+)
+d1

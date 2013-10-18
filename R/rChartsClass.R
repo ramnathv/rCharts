@@ -13,18 +13,33 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
       width = getOption('RCHART_WIDTH', 800),  # width of the container
       height = getOption('RCHART_HEIGHT', 400) # height of the container
     )
-    templates <<- list(page = 'rChart.html', chartDiv = NULL, script =  file.path(LIB$url, 'layouts', 'chart.html')
-)
+    templates <<- list(page = 'rChart.html', chartDiv = NULL, 
+      script =  file.path(LIB$url, 'layouts', 'chart.html'))
+    templates$chartDiv <<- "<{{container}} id = '{{ chartId }}' class = 'rChart {{ lib }}'></{{ container}}>"
   },
   addParams = function(...){
     params <<- modifyList(params, list(...))
   },
+  addControls = function(nm, value, values, label = paste("Select ", nm, ":")){
+    .self$setTemplate(
+      page = 'rChartControls.html',
+      script = system.file('libraries', lib, 'controls', 
+        'script.html', package = 'rCharts')
+    )
+    .self$set(width = 700)
+    control = list(name = nm, value = value, values = values, label = label)
+    params$controls[[nm]] <<- control
+  },
   setTemplate = function(...){
     templates <<- modifyList(templates, list(...))
   },
-  setLib = function(lib){
-    lib <<- lib
-    LIB <<- get_lib(lib)
+  setLib = function(lib, ...){
+    lib <<- lib; LIB <<- get_lib(lib)
+    templates <<- modifyList(list(
+      page = 'rChart.html', 
+      chartDiv = "<{{container}} id = '{{ chartId }}' class = 'rChart {{ lib }}'></{{ container}}>", 
+      script =  file.path(LIB$url, 'layouts', 'chart.html')
+    ), list(...))
   },
   set = function(...){
     # this is a hack, currently for external libraries
@@ -40,19 +55,25 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
   html = function(chartId = NULL){
     params$dom <<- chartId %||% params$dom
     params$id <<- params$dom
-    template = read_file(templates$script)
-    html = render_template(template, getPayload(params$dom))
+    # template = read_file(templates$script)
+    html = render_template(templates$script, getPayload(params$dom))
     return(html)
   },
   print = function(chartId = NULL, include_assets = F, ...){
     params$dom <<- chartId %||% params$dom
     assetHTML <- ifelse(include_assets, add_lib_assets(lib, ...), "")
-    if (is.null(templates$chartDiv)){
-      chartDiv =  sprintf("<%s id='%s' class='rChart %s'></%s>", 
-        container, params$dom, LIB$name, container)
-    } else {
-      chartDiv = render_template(templates$chartDiv, list(chartId = params$dom))
-    }
+    # if (is.null(templates$chartDiv)){
+    #   chartDiv =  sprintf("<%s id='%s' class='rChart %s'></%s>", 
+    #     container, params$dom, LIB$name, container)
+    # } else {
+    #   chartDiv = render_template(templates$chartDiv, 
+    #       list(chartId = params$dom))
+    # }
+    chartDiv = render_template(templates$chartDiv, list(
+      chartId = params$dom,
+      lib = LIB$name,
+      container = container
+    ))
     writeLines(c(assetHTML, chartDiv, .self$html(params$dom)))
   },
   render = function(chartId = NULL, cdn = F){
@@ -73,7 +94,44 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
     'Save chart as a standalone html page'
     writeLines(.self$render(...), destfile)
   },
-  show = function(static = T, ...){
+  show = function(mode_ = NULL, ...){
+    mode_ = getMode(mode_)
+    switch(mode_, 
+      static = {
+        writeLines(.self$render(...), tf <- tempfile(fileext = '.html'))
+        browseURL(tf)
+      },
+      server = {
+        shiny_copy = .self$copy()
+        shiny_copy$params$dom = 'show'
+        assign(".rChart_object", shiny_copy, envir = .GlobalEnv)
+        shiny::runApp(file.path(system.file(package = "rCharts"), "shiny"))
+      },
+      inline = {
+        add_ext_widgets(lib)
+        return(.self$print(...))
+      },
+      iframe = {
+        chunk_opts_ = opts_current$get() 
+        file_ = knitr:::fig_path('.html', chunk_opts_)
+        if (!file.exists(dirname(file_))){
+          dir.create(dirname(file_))
+        }
+        cdn = !(chunk_opts_$rcharts %?=% 'draft')
+        .self$save(file_, cdn = cdn)
+        cat(sprintf("<iframe src=%s seamless></iframe>", file_))
+        return(invisible())
+      }    
+    )
+  },
+  show2 = function(static = T, ...){
+    if (!is.null(getOption('rcharts.vis.tag')) &&
+          getOption("rcharts.vis.tag") == 'iframe'){
+      file_ = sprintf("assets/img/%s.html", params$dom)
+      .self$save(file_)
+      cat(sprintf("<iframe src=%s></iframe>", file_))
+      return(invisible())
+    }
     if (!is.null(getOption("knitr.in.progress")) && 
         getOption("knitr.in.progress")){
       add_ext_widgets(lib)
@@ -92,6 +150,8 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
   publish = function(description = "", id = NULL, ..., host = 'gist'){
     htmlFile = file.path(tempdir(), 'index.html'); on.exit(unlink(htmlFile))
     .self$save(destfile = htmlFile, cdn = T)
+    # imgFile = file.path(tempdir(), 'thumbnail.png'); on.exit(unlink(imgFile))
+    # take_screenshot(htmlFile, tools::file_path_sans_ext(imgFile))
     if (!is.null(.self$srccode)){
       codeFile = file.path(tempdir(), 'code.R'); on.exit(unlink(codeFile))
       writeLines(.self$srccode, con = codeFile)
@@ -115,5 +175,33 @@ add_ext_widgets <- function(lib){
     len = length(rcharts_widgets)
     .SLIDIFY_ENV$ext_widgets$rCharts[[len + 1]] <<- libpath
   }
+}
+
+# getMode = function(mode_){
+#   # if mode_ is specified as argument, just return it
+#   if(!is.null(mode_)){
+#     return(mode_)
+#   }
+#   # if mode_ is specified as options, just return it
+#   if(!is.null(getOption('rcharts.mode'))){
+#     return(getOption('rcharts.mode'))
+#   }
+#   # if knitr is in progress, return mode = iframe, else static
+#   if(!is.null(getOption('knitr.in.progress'))){
+#     mode_ = 'iframe'
+#   } else {
+#     mode_ = 'static'
+#   }
+#   return(mode_)
+# }
+
+getMode = function(mode_){
+  default = ifelse(getOption('knitr.in.progress') %?=% TRUE, 'iframe', 'static')
+  mode_ = mode_ %||% getOption('rcharts.mode') %||% default
+  return(mode_)
+}
+
+`%?=%` <- function(x, y){
+  ifelse(!is.null(x), x == y, FALSE)
 }
 

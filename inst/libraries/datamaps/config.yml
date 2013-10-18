@@ -1,0 +1,8 @@
+datamaps:
+  jshead: [js/d3.v3.min.js, js/topojson.v1.min.js, js/datamaps.all.min.js]
+  cdn:
+    jshead:
+      - "http://d3js.org/d3.v3.min.js"
+      - "http://d3js.org/topojson.v1.min.js"
+      - "http://datamaps.github.io/scripts/datamaps.all.min.js"
+      - "http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.min.js"

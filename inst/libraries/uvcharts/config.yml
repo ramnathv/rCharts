@@ -1,0 +1,6 @@
+uvcharts:
+  jshead: [js/d3.v3.min.js, js/uvcharts.js]
+  cdn:
+    jshead:
+      - http://cdnjs.cloudflare.com/ajax/libs/d3/3.2.2/d3.v3.min.js
+      - http://imaginea.github.io/uvCharts/js/uvcharts.js

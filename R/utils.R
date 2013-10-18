@@ -1,8 +1,21 @@
+#' Copy directories
+#' 
+#' @keywords internal
+copy_dir_ <- function (from, to){
+  if (!(file.exists(to))) {
+    dir.create(to, recursive = TRUE)
+    message("Copying files to ", to, "...")
+    file.copy(list.files(from, full.names = T), to, recursive = TRUE)
+  }
+}
+
 open_notebook <- function(rmdFile = NULL){
   if (!is.null(rmdFile)) {
     options(NOTEBOOK_TO_OPEN = normalizePath(rmdFile))
     on.exit(options(NOTEBOOK_TO_OPEN = NULL))
   }
+  options(rcharts.mode = 'inline')
+  on.exit(options(rcharts.mode = NULL))
   app <- system.file('apps', 'notebook', package = 'rCharts')
   shiny::runApp(app)
 }
@@ -22,6 +35,9 @@ get_rCharts_assets <- function(lib){
 }
 
 get_lib <- function(lib){
+  if (grepl("^http", lib)){
+    return(list(name = basename(lib), url = lib))
+  }
   if (file.exists(lib)){
     lib_url <- normalizePath(lib)
     lib <- basename(lib_url)
@@ -141,9 +157,33 @@ read_template <- function(..., package = 'rCharts'){
 #' @keywords internal
 #' @import whisker
 #' @noRd
-render_template <- function(..., data = parent.frame(1)){
-  paste(capture.output(cat(whisker.render(...))), collapse = "\n")
+# render_template <- function(..., data = parent.frame(1)){
+#   paste(capture.output(cat(whisker.render(...))), collapse = "\n")
+# }
+render_template = function(template, data = parent.frame(1), ...){
+  if (file.exists(template) || (grepl("^http", template) && RCurl::url.exists(template))) {
+    template <- read_file(template)
+  }
+  paste(capture.output(
+    cat(whisker.render(template, data = data))
+  ), collapse = "\n")
 }
+
+choropleth <- function(x, data, pal, map = 'usa', ...){
+  fml = lattice::latticeParseFormula(x, data = data)
+  data = transform(data, fillKey = fml$left)
+  mypal = RColorBrewer::brewer.pal(length(unique(fml$left)), pal)
+  d <- rCharts$new()
+  d$setLib('datamaps')
+  d$set(
+    scope = map,
+    fills = as.list(setNames(mypal, unique(fml$left))),
+    data = dlply(data, fml$right.name),
+    ...
+  )
+  return(d)
+}
+
 
 
 # tpl <- '{{# items }} {{{.}}}\n {{/ items}}'

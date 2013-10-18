@@ -1,8 +1,22 @@
 <script type="text/javascript" charset="utf-8">
-  var chartParams = {{{ chartParams }}}
+  var chartParams{{{ chartId }}} = {{{ chartParams }}}
+  $('#' + chartParams{{{ chartId }}}.id).removeClass("rChart")
+
   $(document).ready(function() {
-		$('#' + chartParams.dom).dataTable(
+		drawDataTable(chartParams{{{ chartId }}})
+	});
+  function drawDataTable(chartParams){
+    var dTable = $('#' + chartParams.dom).dataTable(
       chartParams.table
     );
-	});
+    //first use rCharts width
+  	$('#'+chartParams.id+"_wrapper").css("width",chartParams.width)  
+		$('#'+chartParams.id+"_wrapper").css("width",chartParams.table.width)
+    
+    //then if specified change to table width
+    $('#'+chartParams.id+"_wrapper").css("margin-left", "auto");
+    $('#'+chartParams.id+"_wrapper").css("margin-right", "auto");
+		dTable.fnAdjustColumnSizing();
+  }
+		
 </script>

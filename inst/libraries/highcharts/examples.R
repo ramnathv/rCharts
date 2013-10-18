@@ -6,6 +6,7 @@ hPlot(Pulse ~ Height, data = MASS::survey, type = "scatter", group = "Exer")
 ## Example 2
 a <- hPlot(Pulse ~ Height, data = MASS::survey, type = "bubble", title = "Zoom demo", subtitle = "bubble chart", size = "Age", group = "Exer")
 a$chart(zoomType = "xy")
+a$exporting(enabled = T)
 a
 
 ## Example 4
