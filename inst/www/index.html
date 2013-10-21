@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>OpenCPU Markdown App</title>
+    
+<script src="underscore-min.js"></script>    
+<script src="jquery-1.10.1.min.js"></script>
+<script src="opencpu.js"></script>
+<script src="src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+
+<script>
+$(function(){
+  var editor = ace.edit("editor");
+  editor.setTheme("ace/theme/monokai");
+  editor.getSession().setMode("ace/mode/r");
+  editor.setFontSize("14px");
+
+  //This app requires OpenCPU 1.0.1 or higher!
+  
+  function domarkdown(e){
+    var req = opencpu.r_fun_call("make_chart", {
+      text : editor.getSession().getValue()
+    }, function(session){
+      $("iframe").attr('src', session.getLoc() + "files/output.html");     
+    }).fail(function(text){
+      alert("Error: " + req.responseText);
+    });
+  }
+
+  //auto run after 3 seconds of no activity
+  var update = _.debounce(domarkdown, 3000);
+  
+  //register event
+  editor.on("change", update);
+  
+  //init on start
+  domarkdown();  
+});
+</script>
+
+<style type="text/css" media="screen">
+ 
+#editor { 
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+iframe { 
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 604px;
+  height: 100%;
+  border: 0;
+  margin: 0;
+  z-index: 999999;
+}
+
+</style>
+</head>
+<body>
+
+<div id="editor">require(rCharts)
+rPlot(mpg ~ wt, data = mtcars, type = 'point')
+</div>
+
+<iframe src="about:blank"></iframe>
+
+</body>
+</html>

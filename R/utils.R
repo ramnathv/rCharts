@@ -1,3 +1,17 @@
+## This app requires OpenCPU 1.0.1 or higher !!!! 
+##
+
+#' @export
+make_chart <- function(text){
+  writeLines(text, con="input.R")
+  chart = source('input.R', local = TRUE)$value
+  chart$set(width = 700)
+  chart$setTemplate(page = 'rChart2.html')
+  chart$save('output.html', cdn = TRUE)
+  invisible();
+}
+
+
 #' Copy directories
 #' 
 #' @keywords internal
