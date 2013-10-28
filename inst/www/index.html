@@ -40,20 +40,27 @@ $(function(){
 
 <style type="text/css" media="screen">
  
-#editor { 
+#deck { 
   position: absolute;
   top: 0px;
   left: 0px;
-  width: 100%;
-  height: 100%;
+  width: 50%;
+  height: 50%;
 }
 
+#editor { 
+  position: absolute;
+  top: 400px;
+  left: 0px;
+  width: 50%;
+  height: 50%;
+}
 
 iframe { 
   position: absolute;
   top: 0px;
   right: 0px;
-  width: 700px;
+  width: 720px;
   height: 100%;
   border: 0;
   margin: 0;
@@ -64,6 +71,7 @@ iframe {
 </head>
 <body>
 
+<iframe src='test2.html' id='deck'></iframe>
 
 <div id="editor">require(rCharts)
 rPlot(mpg ~ wt, data = mtcars, type = 'point')
