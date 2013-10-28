@@ -82,10 +82,10 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
     ))
     writeLines(c(assetHTML, chartDiv, .self$html(params$dom)))
   },
-  render = function(chartId = NULL, cdn = F){
+  render = function(chartId = NULL, cdn = F, static = T){
     params$dom <<- chartId %||% params$dom
     template = read_template(getOption('RCHART_TEMPLATE', templates$page))
-    assets = Map("c", get_assets(LIB, static = T, cdn = cdn), html_assets)
+    assets = Map("c", get_assets(LIB, static = static, cdn = cdn), html_assets)
     html = render_template(template, list(
       params = params,
       assets = assets,
@@ -105,14 +105,36 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
     mode_ = getMode(mode_)
     switch(mode_, 
       static = {
-        writeLines(.self$render(...), tf <- tempfile(fileext = '.html'))
-        browseURL(tf)
+        # refactor code. maybe create view_static function.
+        viewer = getOption('viewer')
+        if (!is.null(viewer)){
+          temp_dir = tempfile(pattern = 'rCharts')
+          dir.create(temp_dir)
+          suppressMessages(
+            copy_dir_(LIB$url, file.path(temp_dir, LIB$name))
+          )
+          tf <- file.path(temp_dir, 'index.html')
+          writeLines(.self$render(..., static = F), tf)
+          viewer(tf)
+        } else {
+          writeLines(.self$render(..., static = T), 
+            tf <- tempfile(fileext = '.html'))
+          browseURL(tf)
+        }
       },
       server = {
         shiny_copy = .self$copy()
         shiny_copy$params$dom = 'show'
         assign(".rChart_object", shiny_copy, envir = .GlobalEnv)
-        shiny::runApp(file.path(system.file(package = "rCharts"), "shiny"))
+        if (packageVersion('shiny') > 0.7) {
+          brwsr <- getOption('viewer', interactive())
+        } else {
+          brwsr <- getOption('shiny.launch.browser', interactive())
+        }
+        shiny::runApp(
+          file.path(system.file(package = "rCharts"), "shiny"),
+          launch.browser = brwsr
+        )
       },
       inline = {
         add_ext_widgets(lib)
