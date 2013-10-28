@@ -1,8 +1,35 @@
+<script id='popup-template' type='text/x-handlebars-template'>
+  {{{ popup_template }}}  
+</script>
 <script>
   var chartParams = {{{ chartParams }}}
   chartParams.element = document.getElementById('{{chartId}}')
+  
+  {{# popup_template }}
+  var tmplFn =  Handlebars.compile(
+    document.getElementById("popup-template").innerHTML
+  );
+  var popupFn = function(geography, data) {
+    return tmplFn({geography: geography, data: data});
+  }
+  if (chartParams.geographyConfig){
+    chartParams.geographyConfig.popupTemplate = popupFn
+  } else {
+    chartParams.geographyConfig = {"popupTemplate": popupFn}
+  }
+  {{/ popup_template }}
+  
   var map{{chartId}} = new Datamap(chartParams);
+  
+  
+    
+  // draw a bubble map if specified
+  if (chartParams.bubbles) {
+    var bubbles = chartParams.bubbles
+    map{{chartId}}.bubbles(bubbles.data, bubbles.config)
+  }
 </script>
+
 <style>
 .datamaps {
   position: relative;
