@@ -53,3 +53,98 @@ p7
 dat <- data.frame(t=rep(0:23,each=4),var=rep(LETTERS[1:4],4),val=round(runif(4*24,0,50)))
 p8 <- nPlot(val ~ t, group =  'var', data = dat, type = 'stackedAreaChart', id = 'chart')
 p8
+
+
+## {title: InteractiveGuidline(Multi-Tooltips) on Line}
+p9 <- nPlot(value ~ date, group = 'variable', data = ecm, type = 'lineChart')
+p9$xAxis( tickFormat="#!function(d) {return d3.time.format('%b %Y')(new Date( d * 86400000 ));}!#" )
+#try new interactive guidelines feature
+p9$chart(useInteractiveGuideline=TRUE)
+p9
+
+
+## {title: InteractiveGuidline(Multi-Tooltips) on Stack}
+p10 <- p8
+p10$chart(useInteractiveGuideline=TRUE)
+p10
+
+## {title: showDistX and showDistY}
+p11 <- p1
+p11$chart(showDistX = TRUE, showDistY = TRUE)
+p11
+
+## {title: multiChart}
+p12 <- nPlot(value ~ date, group = 'variable', data = ecm, type = 'multiChart')
+p12$params$multi = list(
+  uempmed = list(type="area",yAxis=1),
+  psavert = list(type="line",yAxis=2)
+)
+p12$setTemplate(script = system.file(
+  "/libraries/nvd3/layouts/multiChart.html",
+  package = "rCharts"
+))
+p12
+
+## {title: Facets}
+p13 <- nPlot(mpg ~ wt, data = mtcars, group = "gear", type = "scatterChart")
+p13$params$facet = "cyl"
+p13$templates$script = system.file(
+  "/libraries/nvd3/layouts/nvd3FacetPlot.html",
+  package = "rCharts"
+)
+p13
+
+hair_eye = as.data.frame(HairEyeColor)
+p14 <- nPlot(Freq ~ Hair, group = 'Sex', data = hair_eye, type = 'multiBarChart')
+p14$params$facet="Eye"
+p14$templates$script = system.file(
+  "/libraries/nvd3/layouts/nvd3FacetPlot.html",
+  package = "rCharts"
+)
+p14
+
+p15 <- nPlot(Freq ~ Hair, group = 'Eye', data = hair_eye, type = 'multiBarChart')
+p15$params$facet="Sex"
+p15$templates$script = system.file(
+  "/libraries/nvd3/layouts/nvd3FacetPlot.html",
+  package = "rCharts"
+)
+p15
+
+
+## {title: Sparklines}
+p16 <- nPlot(uempmed ~ date, data = economics, type = 'sparklinePlus',height=100,width=500)
+p16$chart(xTickFormat="#!function(d) {return d3.time.format('%b %Y')(new Date( d * 86400000 ));}!#")
+p16
+## semi replicate sparkline with a full nvd3 model by setting short height and turning off lots of things
+p17 <- nPlot(
+  x = "date",
+  y = "volume",
+  data = spy.df,
+  type = "multiBarChart",
+  height = 200)
+p17$chart(showControls = FALSE, showLegend = FALSE, showXAxis = FALSE, showYAxis = FALSE) 
+p17$xAxis(tickFormat = 
+  "#!function(d) {return d3.time.format('%Y-%m-%d')(new Date(d * 24 * 60 * 60 * 1000));}!#"
+)
+p17
+
+
+## {title: ohlcBar}
+## ohlcBar not fully implemented on nvd3 side, so no axes or interactive controls
+## note do not melt if using ohlcBar
+require(quantmod)
+
+spy <- getSymbols("SPY",auto.assign=FALSE,from="2013-01-01")
+colnames(spy) <- c("open","high","low","close","volume","adjusted")
+
+spy.df <- data.frame(index(spy),spy)
+colnames(spy.df)[1] <- "date"
+
+p18 <- nPlot(
+  x = "date",
+  y = "close",
+  data = spy.df,
+  type = "ohlcBar"
+)
+p18
