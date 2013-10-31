@@ -56,7 +56,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
     params <<- modifyList(params, list(...))
   },
   getPayload = function(chartId){
-    list(chartParams = toJSON(params), chartId = chartId, lib = basename(lib))
+    list(chartParams = toJSON(params), chartId = chartId, lib = basename(lib), liburl = LIB$url)
   },
   html = function(chartId = NULL){
     params$dom <<- chartId %||% params$dom
@@ -107,7 +107,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
       static = {
         # refactor code. maybe create view_static function.
         viewer = getOption('viewer')
-        if (!is.null(viewer)){
+        if (!grepl("^http", LIB$url) && !is.null(viewer)){
           temp_dir = tempfile(pattern = 'rCharts')
           dir.create(temp_dir)
           suppressMessages(
@@ -119,7 +119,11 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
         } else {
           writeLines(.self$render(..., static = T), 
             tf <- tempfile(fileext = '.html'))
-          browseURL(tf)
+          if (!is.null(viewer)) {
+            viewer(tf)
+          } else {
+            browseURL(tf)
+          }
         }
       },
       server = {
