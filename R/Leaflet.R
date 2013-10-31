@@ -79,7 +79,7 @@ Leaflet = setRefClass('Leaflet', contains = 'rCharts', methods = list(
     marker = paste(lapply(params$marker, toChain, obj =  'L'), collapse = '\n')
     # circle = paste(lapply(params$circle, toChain, obj =  'L'), collapse = '\n')
     circle = toChain(params$circle, obj = 'L')
-    chartParams = toJSON(params[!(names(params) %in% skip)])
+    chartParams = toJSON(params[!(names(params) %in% skip)], digits=13)
     list(
       chartParams = chartParams, 
       chartId = chartId, 
