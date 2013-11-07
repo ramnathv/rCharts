@@ -16,6 +16,12 @@
           .entries(data);
       }
       
+      if (opts.disabled != undefined){
+        data.map(function(d, i){
+          d.disabled = opts.disabled[i]
+        })
+      }
+      
       nv.addGraph(function() {
         var chart = nv.models[opts.type]()
           .x(function(d) { return d[opts.x] })
