@@ -154,7 +154,15 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
         .self$save(file_, cdn = cdn)
         cat(sprintf("<iframe src=%s seamless></iframe>", file_))
         return(invisible())
-      }    
+      },
+      iframesrc = {
+        cat(
+          "<iframe srcdoc='", 
+          htmlspecialchars(n1$render(...)), 
+          "'></iframe>"
+        )
+        return(invisible())
+      }
     )
   },
   show2 = function(static = T, ...){
