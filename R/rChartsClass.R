@@ -158,7 +158,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
       iframesrc = {
         cat(
           "<iframe srcdoc='", 
-          htmlspecialchars(n1$render(...)), 
+          htmlspecialchars(.self$render(...)), 
           "'></iframe>"
         )
         return(invisible())
