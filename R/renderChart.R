@@ -32,6 +32,8 @@ renderMap = function(expr, env = parent.frame(), quoted = FALSE, html_sub = NULL
         rChart_html = gsub(names(html_sub)[i], as.character(html_sub[i]), rChart_html)
       }
     }
+    # bbest DEBUG    
+    cat(HTML(paste(c(map_style, map_div, rChart_html), collapse = '\n')), file='~/Code/rCharts/inst/apps/leaflet_chloropleth/debug_renderMap.html')
     HTML(paste(c(map_style, map_div, rChart_html), collapse = '\n'))    
   }
 }

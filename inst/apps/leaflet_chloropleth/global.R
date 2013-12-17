@@ -1,4 +1,6 @@
-require(RJSONIO); require(rCharts); require(RColorBrewer)
+# install_github('rCharts','bbest'); 
+# load_all('~/Code/rCharts'); setwd('~/Code/ohigui'); load_all(); shiny::runApp('~/Code/rCharts/inst/apps/leaflet_chloropleth')
+require(shiny); require(RJSONIO); require(rCharts); require(RColorBrewer)
 options(stringsAsFactors = F)
 
 # port data from ohicore package for example sake
@@ -10,6 +12,7 @@ options(stringsAsFactors = F)
 # write.csv(variable_data, file.path(system.file('inst/apps/leaflet_chloropleth/data', package='rCharts'), 'variable_data.csv'), row.names=F, na='')
 
 # read data
+#variable_data = read.csv(system.file('apps/leaflet_chloropleth/data/variable_data.csv', package='rCharts'), na.strings='')
 variable_data = read.csv(system.file('inst/apps/leaflet_chloropleth/data/variable_data.csv', package='rCharts'), na.strings='')
 
 # get data
@@ -32,6 +35,7 @@ plotMap <- function(variable, layers, width=1600, height=800){
   d <- getData(variable, variable_data)
   
   lmap <- Leaflet$new()
+  lmap$mapOpts(worldCopyJump = TRUE)
   lmap$tileLayer(provide='Stamen.TonerLite')
   lmap$set(width = width, height = height)
   lmap$setView(c(0, 0), zoom = 3)

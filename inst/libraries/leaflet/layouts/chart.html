@@ -1,6 +1,6 @@
 <script>
   var spec = {{{ chartParams }}}
-  var map = L.map(spec.dom)
+  var map = L.map(spec.dom, spec.mapOpts)
     .setView(spec.center, spec.zoom);
 
     if (spec.provider){

@@ -1,11 +1,10 @@
-# load_all('~/Code/rCharts'); shiny::runApp('~/Code/rCharts/inst/apps/leaflet_chloropleth')
-require(shiny)
-require(rCharts)
+# see global.R
 
 # get list of variables for input
 vars = sort(as.character(unique(variable_data$layer)))
 
 # add url for preloading geojson data
+#addResourcePath('data', system.file('apps/leaflet_chloropleth/data', package='rCharts'))
 addResourcePath('data', system.file('inst/apps/leaflet_chloropleth/data', package='rCharts'))
 
 shinyUI(bootstrapPage( 
