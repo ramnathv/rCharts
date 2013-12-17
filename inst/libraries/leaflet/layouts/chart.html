@@ -56,7 +56,7 @@
     
     
     {{# addons.geoJson }}
-      L.geoJson(spec.features 
+    var geojsonLayer = L.geoJson(spec.features 
         {{# geoJson }}, 
          {{{ geoJson }}}
         {{/ geoJson }}
