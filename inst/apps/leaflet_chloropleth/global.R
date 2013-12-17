@@ -1,22 +1,27 @@
-require(RJSONIO); require(rCharts); require(RColorBrewer); require(httr)
+require(RJSONIO); require(rCharts); require(RColorBrewer)
 options(stringsAsFactors = F)
 
-# global
-require(ohicore)
-layers = layers.Global2013.www2013
-scores = scores.Global2013.www2013
+# port data from ohicore package for example sake
+# install_githbub('ohicore','bbest')
+# require(ohicore)
+# layers = layers.Global2013.www2013
+# vars_rgn = as.character(sort(subset(layers$meta, fld_id_num=='rgn_id' & is.na(fld_category)  & is.na(fld_year) & is.na(fld_val_chr), layer, drop=T)))
+# variable_data = plyr::rename(SelectLayersData(layers, layers=vars_rgn, narrow=T), c('id_num'='rgn_id'))
+# write.csv(variable_data, file.path(system.file('inst/apps/leaflet_chloropleth/data', package='rCharts'), 'variable_data.csv'), row.names=F, na='')
+
+# read data
+variable_data = read.csv(system.file('inst/apps/leaflet_chloropleth/data/variable_data.csv', package='rCharts'), na.strings='')
 
 # get data
-getData <- function(variable){ 
-  d = plyr::rename(SelectLayersData(layers, layers=variable, narrow=T), c('id_num'='rgn_id'))
+getData <- function(variable, variable_data){ 
+  d = subset(variable_data, layer==variable)
   brks = with(d, seq(min(val_num, na.rm=T),
                      max(val_num, na.rm=T), length.out=8))
   colors = brewer.pal(length(brks)-1, 'Spectral')
   regions = plyr::dlply(d, 'rgn_id', function(x) {
     return(list(val_num = x$val_num,
                 color   = cut(x$val_num, breaks=brks, labels=colors, include.lowest=TRUE)))
-  })
-                        
+  })                        
   legend = setNames(signif(brks, digits=4), cut(brks, breaks=brks, labels=colors, include.lowest=TRUE)) #; cat(toJSON(legend))
   return(list(regions=regions, legend=legend))
 }
@@ -24,7 +29,7 @@ getData <- function(variable){
 # plot map
 plotMap <- function(variable, layers, width=1600, height=800){  
   
-  d <- getData(variable)
+  d <- getData(variable, variable_data)
   
   lmap <- Leaflet$new()
   lmap$tileLayer(provide='Stamen.TonerLite')

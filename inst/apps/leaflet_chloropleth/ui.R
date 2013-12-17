@@ -1,12 +1,16 @@
-# load_all('/Users/bbest/Code/rCharts/'); shiny::runApp('/Users/bbest/Code/rCharts/inst/apps/leaflet_chloropleth/')
+# load_all('~/Code/rCharts'); shiny::runApp('~/Code/rCharts/inst/apps/leaflet_chloropleth')
 require(shiny)
 require(rCharts)
 
-vars_rgn = sort(subset(layers$meta, fld_id_num=='rgn_id' & is.na(fld_category)  & is.na(fld_year) & is.na(fld_val_chr), layer, drop=T))
-addResourcePath('shapes', path.expand('~/myohi/shapes'))
+# get list of variables for input
+vars = sort(as.character(unique(variable_data$layer)))
+
+# add url for preloading geojson data
+addResourcePath('data', system.file('inst/apps/leaflet_chloropleth/data', package='rCharts'))
 
 shinyUI(bootstrapPage( 
-  tags$script(src='/shapes/regions_gcs.js'),
-  selectInput(inputId='variable', label='Variable', choices=vars_rgn, selected=sort(names(layers))[1]),
+  tags$script(src='data/regions_gcs.js'),      # preload regions geojson variable
+  selectInput(inputId='variable', label='',
+              choices=vars, selected=vars[1]),
   mapOutput('map_container')
 ))
