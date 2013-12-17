@@ -33,7 +33,7 @@ renderMap = function(expr, env = parent.frame(), quoted = FALSE, html_sub = NULL
       }
     }
     # bbest DEBUG    
-    cat(HTML(paste(c(map_style, map_div, rChart_html), collapse = '\n')), file='~/Code/rCharts/inst/apps/leaflet_chloropleth/debug_renderMap.html')
+    #cat(HTML(paste(c(map_style, map_div, rChart_html), collapse = '\n')), file='~/Code/rCharts/inst/apps/leaflet_chloropleth/debug_renderMap.html')
     HTML(paste(c(map_style, map_div, rChart_html), collapse = '\n'))    
   }
 }
