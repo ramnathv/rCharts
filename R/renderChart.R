@@ -19,14 +19,19 @@ renderChart <- function(expr, env = parent.frame(), quoted = FALSE) {
   }
 }
 
-
-renderMap = function(expr, env = parent.frame(), quoted = FALSE){
+renderMap = function(expr, env = parent.frame(), quoted = FALSE, html_sub = NULL){
   func <- shiny::exprToFunction(expr, env, quoted)
   function() {
     rChart_ <- func()
     map_style <- sprintf("<style>.leaflet {width: %spx; height: %spx} </style>",
       rChart_$params$width, rChart_$params$height)
-    map_div = sprintf('<div id="%s" class="rChart leaflet"></div>', rChart_$params$dom)
-    HTML(paste(c(map_style, map_div, rChart_$html()), collapse = '\n'))
+    map_div = sprintf('<div id="%s" class="rChart leaflet"></div>', rChart_$params$dom)    
+    rChart_html = rChart_$html()
+    if (length(html_sub) > 0){
+      for (i in 1:length(html_sub)){
+        rChart_html = gsub(names(html_sub)[i], as.character(html_sub[i]), rChart_html)
+      }
+    }
+    HTML(paste(c(map_style, map_div, rChart_html), collapse = '\n'))    
   }
 }
