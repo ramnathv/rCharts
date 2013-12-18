@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>OpenCPU rCharts App - jsFiddle demo by ramnathv</title>
+  
+    
+      <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    
+  
+    
+      <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js"></script>
+    
+  
+    
+      <script type='text/javascript' src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    
+  
+    
+      <script type='text/javascript' src="https://public.opencpu.org/js/archive/opencpu-0.4.js"></script>
+    
+  
+    
+      <script type='text/javascript' src="https://rawgithub.com/ajaxorg/ace-builds/v1.1.1/src-min-noconflict/ace.js"></script>
+    
+  
+    
+      <script type='text/javascript' src="http://angular-ui.github.io/ui-ace/build/ui-ace.js"></script>
+    
+  
+  <style type='text/css'>
+    @import url(http://fonts.googleapis.com/css?family=Lora|Lato);
+h3 {
+   font-family: Lato;   
+}
+p {
+  font-family: "Lora";
+  text-align: justify;
+  line-height: 22px;
+}
+.ace_editor  {
+  height : 200px;
+}
+#output {
+  width: 100%;
+  height: 500px;
+}
+
+  </style>
+  
+</head>
+<body ng-app="myApp">
+  <div class='container' ng-controller='MainCtrl'>
+  <div class='row' id='main'>
+     <div class='col-lg-12'>
+      <h3>rCharts OpenCPU App</h3>
+    <p id='author' class='text-muted'>by <a href='http://github.com/ramnathv'>Ramnath Vaidyanathan</a>, Dec 17, 2013</p>
+    <p>
+      <span class='label label-default'>OpenCPU</span>
+      <span class='label label-success'>AngularJS</span>
+      <span class='label label-danger'>rCharts</span>
+    </p>
+         <p>This is a demo of an interactive web application built using OpenCPU that allows users to try <a href='http://rcharts.io'>rCharts</a> online. You can select different examples, which are dynamically retrieved from gists. You can modify the code, or type in your own before hitting the submit button to render the chart.</p>
+<p>This application makes use of AngularJS and the Angular Ace module for reactive bindings.</p>
+      </div>
+    </div>
+  <div class='col-lg-4'>
+     <div class='control-group'>
+         <label>Select Example</label>
+          <select ng-model='gist' ng-options='gist.title for gist in gists'
+           class='form-control'>
+          </select><br/><br/>
+      </div>
+     <div ng-model='code' ui-ace="aceOptions">{{ code }}
+      </div><br/>
+    <input type='submit' value='Submit' 
+      class='btn btn-success' ng-click='makeChart()' />
+  </div>
+  <div class='col-lg-8'>
+      <iframe id='output' seamless></iframe>
+  </div>
+</div>
+
+
+  
+
+
+<script type='text/javascript'>//<![CDATA[ 
+
+ocpu.seturl("//public.opencpu.org/ocpu/github/rcharts/rCharts/R")
+
+var myApp = angular.module('myApp', ['ui.ace'])
+
+
+myApp.controller('MainCtrl', function($scope, $http){
+    $scope.gists = [
+        {title: 'Example 1: Polychart', id: 8025095},
+        {title: 'Example 2: NVD3', id: 8025269},
+        {title: 'Example 3: MorrisJS', id: 8025647},
+        {title: 'Example 4: xCharts', id: 8025702},
+        {title: 'Example 5: Highcharts', id: 8025747},
+        {title: 'Example 6: Leaflet', id: 8025792}
+    ]
+    $scope.gist = $scope.gists[0]
+    $scope.getCode = function(id){
+       $.getJSON("https://api.github.com/gists/" + id).success(
+         function(result){
+           $scope.$apply(function (){
+             $scope.code = result.files['code.R'].content
+           })
+         }
+       )
+    }
+   
+   $scope.makeChart = function(){
+        var req = ocpu.call("make_chart", {
+        text: $scope.code   
+     }, function(session){
+       $("#output").attr('src', session.getLoc() + "files/output.html");     
+     }).fail(function(text){
+      alert("Error: " + req.responseText);
+     });  
+   }
+   $scope.aceOptions = {
+     theme: 'solarized_light',
+     mode: 'r',
+     useWrapMode : true
+   }
+   $scope.$watch('gist', function(newGist){
+     $scope.getCode(newGist.id)     
+   })
+})
+
+
+//]]>  
+
+</script>
+
+
+</body>
+
+
+</html>
