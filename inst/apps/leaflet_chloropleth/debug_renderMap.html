@@ -1,0 +1,819 @@
+<style>.leaflet {width: 1600px; height: 800px} </style>
+<div id="chartacf39beed8c" class="rChart leaflet"></div>
+<script>
+  var spec = {
+ "dom": "chartacf39beed8c",
+"width":   1600,
+"height":    800,
+"urlTemplate": "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
+"layerOpts": {
+ "attribution": "Map data<a href=\"http://openstreetmap.org\">OpenStreetMap</a>\n         contributors, Imagery<a href=\"http://mapbox.com\">MapBox</a>" 
+},
+"mapOpts": {
+ "worldCopyJump": true 
+},
+"provider": "Stamen.TonerLite",
+"center": [      0,      0 ],
+"zoom":      3,
+"features": regions,
+"legend": {
+ "position": "bottomright",
+"colors": [ "#D53E4F", "#D53E4F", "#FC8D59", "#FEE08B", "#FFFFBF", "#E6F598", "#99D594", "#3288BD" ],
+"labels": [      0, 0.1429, 0.2857, 0.4286, 0.5714, 0.7143, 0.8571,      1 ] 
+},
+"id": "chartacf39beed8c" 
+}
+  var map = L.map(spec.dom, spec.mapOpts)
+    .setView(spec.center, spec.zoom);
+
+    if (spec.provider){
+      L.tileLayer.provider(spec.provider).addTo(map)    
+    } else {
+		  L.tileLayer(spec.urlTemplate, spec.layerOpts).addTo(map)
+    }
+     
+    
+    
+    
+    
+    
+    if (spec.circle2){
+      for (var c in spec.circle2){
+        var circle = L.circle(c.center, c.radius, c.opts)
+         .addTo(map);
+      }
+    }
+    
+    
+    
+    
+    var geojsonLayer = L.geoJson(spec.features 
+        , 
+         {
+ "style":  function(feature) {
+      regions_data = {  '1': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '2': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '3': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '4': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '5': {
+ 'val_num': 0.52547,
+'color': '#FFFFBF' 
+}, '6': {
+ 'val_num':   0.75,
+'color': '#99D594' 
+}, '7': {
+ 'val_num':      1,
+'color': '#3288BD' 
+}, '8': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '9': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '10': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '11': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '12': {
+ 'val_num':      0,
+'color': '#D53E4F' 
+}, '13': {
+ 'val_num':      0,
+'color': '#D53E4F' 
+}, '14': {
+ 'val_num': 0.74382,
+'color': '#99D594' 
+}, '15': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '16': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '17': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '18': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '19': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '20': {
+ 'val_num':   0.75,
+'color': '#99D594' 
+}, '21': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '24': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '25': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '26': {
+ 'val_num':   0.75,
+'color': '#99D594' 
+}, '28': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '29': {
+ 'val_num': 0.51981,
+'color': '#FFFFBF' 
+}, '30': {
+ 'val_num': 0.51981,
+'color': '#FFFFBF' 
+}, '31': {
+ 'val_num':  0.875,
+'color': '#3288BD' 
+}, '32': {
+ 'val_num': 0.51981,
+'color': '#FFFFBF' 
+}, '33': {
+ 'val_num': 0.51981,
+'color': '#FFFFBF' 
+}, '34': {
+ 'val_num': 0.51981,
+'color': '#FFFFBF' 
+}, '35': {
+ 'val_num': 0.51981,
+'color': '#FFFFBF' 
+}, '36': {
+ 'val_num': 0.51981,
+'color': '#FFFFBF' 
+}, '37': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '38': {
+ 'val_num': 0.70431,
+'color': '#E6F598' 
+}, '39': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '40': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '41': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '42': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '43': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '44': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '45': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '46': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '47': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '48': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '49': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '50': {
+ 'val_num':   0.75,
+'color': '#99D594' 
+}, '51': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '52': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '53': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '54': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '55': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '56': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '57': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '58': {
+ 'val_num':   0.75,
+'color': '#99D594' 
+}, '59': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '60': {
+ 'val_num': 0.63576,
+'color': '#E6F598' 
+}, '61': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '62': {
+ 'val_num':      1,
+'color': '#3288BD' 
+}, '63': {
+ 'val_num': 0.027813,
+'color': '#D53E4F' 
+}, '64': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '65': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '66': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '67': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '68': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '69': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '70': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '71': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '72': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '73': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '74': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '75': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '76': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '77': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '78': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '79': {
+ 'val_num':  0.875,
+'color': '#3288BD' 
+}, '80': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '81': {
+ 'val_num':   0.75,
+'color': '#99D594' 
+}, '82': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '84': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '85': {
+ 'val_num': 0.66521,
+'color': '#E6F598' 
+}, '86': {
+ 'val_num': 0.66521,
+'color': '#E6F598' 
+}, '88': {
+ 'val_num': 0.66521,
+'color': '#E6F598' 
+}, '89': {
+ 'val_num': 0.66521,
+'color': '#E6F598' 
+}, '90': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '91': {
+ 'val_num': 0.66521,
+'color': '#E6F598' 
+}, '92': {
+ 'val_num': 0.66521,
+'color': '#E6F598' 
+}, '93': {
+ 'val_num': 0.66521,
+'color': '#E6F598' 
+}, '94': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '95': {
+ 'val_num': 0.66521,
+'color': '#E6F598' 
+}, '96': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '97': {
+ 'val_num':      1,
+'color': '#3288BD' 
+}, '98': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '99': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '100': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '101': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '102': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '103': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '104': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '105': {
+ 'val_num':   0.75,
+'color': '#99D594' 
+}, '106': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '107': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '108': {
+ 'val_num': 0.5971,
+'color': '#E6F598' 
+}, '110': {
+ 'val_num':   0.75,
+'color': '#99D594' 
+}, '111': {
+ 'val_num': 0.5971,
+'color': '#E6F598' 
+}, '112': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '113': {
+ 'val_num': 0.5971,
+'color': '#E6F598' 
+}, '114': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '115': {
+ 'val_num':  0.875,
+'color': '#3288BD' 
+}, '116': {
+ 'val_num': 0.097102,
+'color': '#D53E4F' 
+}, '117': {
+ 'val_num': 0.5971,
+'color': '#E6F598' 
+}, '118': {
+ 'val_num': 0.5971,
+'color': '#E6F598' 
+}, '119': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '120': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '121': {
+ 'val_num': 0.5971,
+'color': '#E6F598' 
+}, '122': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '123': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '124': {
+ 'val_num':   0.75,
+'color': '#99D594' 
+}, '125': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '126': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '127': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '129': {
+ 'val_num':   0.75,
+'color': '#99D594' 
+}, '130': {
+ 'val_num':   0.75,
+'color': '#99D594' 
+}, '131': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '132': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '133': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '134': {
+ 'val_num':      1,
+'color': '#3288BD' 
+}, '135': {
+ 'val_num':  0.875,
+'color': '#3288BD' 
+}, '136': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '137': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '138': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '139': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '140': {
+ 'val_num': 0.5971,
+'color': '#E6F598' 
+}, '141': {
+ 'val_num':   0.75,
+'color': '#99D594' 
+}, '143': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '144': {
+ 'val_num':   0.75,
+'color': '#99D594' 
+}, '145': {
+ 'val_num':   0.75,
+'color': '#99D594' 
+}, '146': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '147': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '148': {
+ 'val_num': 0.48838,
+'color': '#FFFFBF' 
+}, '149': {
+ 'val_num':      0,
+'color': '#D53E4F' 
+}, '150': {
+ 'val_num':      0,
+'color': '#D53E4F' 
+}, '151': {
+ 'val_num':      0,
+'color': '#D53E4F' 
+}, '152': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '153': {
+ 'val_num': 0.62506,
+'color': '#E6F598' 
+}, '154': {
+ 'val_num': 0.62506,
+'color': '#E6F598' 
+}, '155': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '156': {
+ 'val_num': 0.62506,
+'color': '#E6F598' 
+}, '157': {
+ 'val_num': 0.48838,
+'color': '#FFFFBF' 
+}, '158': {
+ 'val_num':      0,
+'color': '#D53E4F' 
+}, '159': {
+ 'val_num':      0,
+'color': '#D53E4F' 
+}, '161': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '162': {
+ 'val_num': 0.62506,
+'color': '#E6F598' 
+}, '163': {
+ 'val_num':  0.125,
+'color': '#D53E4F' 
+}, '164': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '166': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '167': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '168': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '169': {
+ 'val_num': 0.71045,
+'color': '#E6F598' 
+}, '171': {
+ 'val_num':   0.75,
+'color': '#99D594' 
+}, '172': {
+ 'val_num':   0.75,
+'color': '#99D594' 
+}, '173': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '174': {
+ 'val_num':  0.875,
+'color': '#3288BD' 
+}, '175': {
+ 'val_num':   0.75,
+'color': '#99D594' 
+}, '176': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '177': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '178': {
+ 'val_num':   0.75,
+'color': '#99D594' 
+}, '179': {
+ 'val_num':   0.75,
+'color': '#99D594' 
+}, '180': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '181': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '182': {
+ 'val_num':   0.75,
+'color': '#99D594' 
+}, '183': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '184': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '185': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '186': {
+ 'val_num': 0.13576,
+'color': '#D53E4F' 
+}, '187': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '188': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '189': {
+ 'val_num':      1,
+'color': '#3288BD' 
+}, '190': {
+ 'val_num':   0.75,
+'color': '#99D594' 
+}, '191': {
+ 'val_num':   0.75,
+'color': '#99D594' 
+}, '192': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '193': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '194': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '195': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '196': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '197': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '198': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '199': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '200': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '202': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '203': {
+ 'val_num':   0.75,
+'color': '#99D594' 
+}, '204': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '205': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '206': {
+ 'val_num':      1,
+'color': '#3288BD' 
+}, '207': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '208': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '209': {
+ 'val_num':   0.75,
+'color': '#99D594' 
+}, '210': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '212': {
+ 'val_num': 0.48838,
+'color': '#FFFFBF' 
+}, '213': {
+ 'val_num':      0,
+'color': '#D53E4F' 
+}, '214': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '215': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '216': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '218': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '219': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '220': {
+ 'val_num': 0.5971,
+'color': '#E6F598' 
+}, '221': {
+ 'val_num': 0.5971,
+'color': '#E6F598' 
+}, '222': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '223': {
+ 'val_num':   0.75,
+'color': '#99D594' 
+}, '224': {
+ 'val_num':      1,
+'color': '#3288BD' 
+}, '227': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '228': {
+ 'val_num':  0.625,
+'color': '#E6F598' 
+}, '231': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '232': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '237': {
+ 'val_num':    0.5,
+'color': '#FFFFBF' 
+}, '244': {
+ 'val_num': 0.5971,
+'color': '#E6F598' 
+}, '245': {
+ 'val_num': 0.5971,
+'color': '#E6F598' 
+}, '247': {
+ 'val_num':      1,
+'color': '#3288BD' 
+}, '248': {
+ 'val_num': 0.5971,
+'color': '#E6F598' 
+}, '249': {
+ 'val_num': 0.5971,
+'color': '#E6F598' 
+}, '250': {
+ 'val_num': 0.5971,
+'color': '#E6F598' 
+}  };
+      var rgn = feature.properties['rgn_id'].toString();
+      if (typeof regions_data[rgn] != 'undefined'){
+        var color = regions_data[rgn]['color'];
+      } else {
+        var color = 'gray';
+      };
+      return {
+        color: color,
+        strokeWidth: '1px',
+        strokeOpacity: 0.5,
+        fillOpacity: 0.2
+      }; } ,
+"onEachFeature":  function (feature, layer) {
+
+      // info rollover
+      if (document.getElementsByClassName('info leaflet-control').length == 0 ){
+        info = L.control({position: 'topright'});  // NOTE: made global b/c not ideal place to put this function
+        info.onAdd = function (map) {
+          this._div = L.DomUtil.create('div', 'info');
+          this.update();
+          return this._div;
+        };
+        info.update = function (props) {
+          if (props && typeof props['rgn_id'] != 'undefined' && typeof regions_data[props['rgn_id'].toString()] != 'undefined'){
+            var val_num = regions_data[props['rgn_id'].toString()]['val_num'];
+          } else {
+            var val_num = 'NA';
+          };
+
+          this._div.innerHTML = '<h4>alien_species</h4>' +  (props ?
+        		'<b>' + props['rgn_nam'] + '</b> (' + props['rgn_id'] + '): ' + val_num
+        		: 'Hover over a region');
+        };
+        info.addTo(map);
+      };
+  
+      // mouse events
+      layer.on({
+  
+        // mouseover to highlightFeature
+    	  mouseover: function (e) {
+          var layer = e.target;
+          layer.setStyle({
+            strokeWidth: '3px',
+            strokeOpacity: 0.7,
+            fillOpacity: 0.5
+          });
+        	if (!L.Browser.ie && !L.Browser.opera) {
+        		layer.bringToFront();
+        	}
+  	      info.update(layer.feature.properties);
+        },
+  
+        // mouseout to resetHighlight
+  		  mouseout: function (e) {
+          geojsonLayer.resetStyle(e.target);
+  	      info.update();
+        },
+  
+        // click to zoom
+  		  click: function (e) {
+          var layer = e.target;        
+          if ( feature.geometry.type === 'MultiPolygon' ) {        
+          // for multipolygons get true extent
+            var bounds = layer.getBounds(); // get the bounds for the first polygon that makes up the multipolygon
+            // loop through coordinates array, skip first element as the bounds var represents the bounds for that element
+            for ( var i = 1, il = feature.geometry.coordinates[0].length; i < il; i++ ) {
+              var ring = feature.geometry.coordinates[0][i];
+              var latLngs = ring.map(function(pair) {
+                return new L.LatLng(pair[1], pair[0]);
+              });
+              var nextBounds = new L.LatLngBounds(latLngs);
+              bounds.extend(nextBounds);
+            }
+            map.fitBounds(bounds);
+          } else {
+          // otherwise use native target bounds
+            map.fitBounds(e.target.getBounds());
+          }
+        }
+  	  });
+      }  
+}
+      ).addTo(map)
+    
+    var legend = L.control({position: spec.legend.position});
+    legend.onAdd = function (map) {
+      var div = L.DomUtil.create('div', 'info legend'),
+          labels = spec.legend.labels,
+          colors = spec.legend.colors
+
+      // loop through our density intervals and generate a 
+      // label with a colored square for each interval
+      for (var i = 0; i < labels.length; i++) {
+          div.innerHTML += '<i style="background:' +  colors[i] + '"></i>' + 
+            labels[i] + "<br>"
+      }
+     return div;
+    };
+    legend.addTo(map); 
+   
+</script>

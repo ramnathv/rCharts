@@ -1,10 +1,14 @@
 <script>
   var spec = {{{ chartParams }}}
+
   var map = L.map(spec.dom)
   
   {{^ addons.kml }}
     map.setView(spec.center, spec.zoom);
   {{/ addons.kml }}
+
+  var map = L.map(spec.dom, spec.mapOpts)
+    .setView(spec.center, spec.zoom);
 
     if (spec.provider){
       L.tileLayer.provider(spec.provider).addTo(map)    
@@ -59,7 +63,7 @@
     
     
     {{# addons.geoJson }}
-      L.geoJson(spec.features 
+    var geojsonLayer = L.geoJson(spec.features 
         {{# geoJson }}, 
          {{{ geoJson }}}
         {{/ geoJson }}
