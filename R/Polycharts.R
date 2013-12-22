@@ -63,6 +63,17 @@ rPlot.default <- function(x, y, data, facet = NULL, ...){
   return(myChart$copy())
 }
 
+rrPlot <- function(x, y, data, facet = NULL, ...){
+  myChart <- Polycharts$new()
+  myChart$layer(x = x, y = y, data = data, facet = facet, ...)
+  myChart$facet(from_layer = TRUE)
+  myChart$render(cdn = TRUE)
+}
+
+Render <- function(x){
+  x$render(cdn = TRUE)
+}
+
 rPlot.formula <- function(x, data, ...){
   myChart <- Polycharts$new()
   myChart$layer(x, data, ...)
