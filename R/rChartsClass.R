@@ -67,7 +67,8 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
   },
   print = function(chartId = NULL, include_assets = F, ...){
     params$dom <<- chartId %||% params$dom
-    assetHTML <- ifelse(include_assets, add_lib_assets(lib, ...), "")
+    assetHTML <- ifelse(include_assets, paste(add_lib_assets(lib, ...), '\n',
+      add_style_(params$width, params$height), collapse = '\n'), "")
     # if (is.null(templates$chartDiv)){
     #   chartDiv =  sprintf("<%s id='%s' class='rChart %s'></%s>", 
     #     container, params$dom, LIB$name, container)
@@ -156,11 +157,11 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
         return(invisible())
       },
       iframesrc = {
-        cat(
-          "<iframe srcdoc='", 
-          htmlspecialchars(.self$render(...)), 
-          "'></iframe>"
-        )
+        writeLines(c(
+          "<iframe srcdoc='", htmlspecialchars(.self$render(...)), 
+          "' scrolling='no' seamless></iframe>",
+          "<style>iframe{ width: 100%; height: 400px;}</style>"
+        ))
         return(invisible())
       }
     )

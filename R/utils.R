@@ -213,3 +213,17 @@ htmlspecialchars <- function(string) {
 # render_template <- function(template, data = parent.frame(1), ...){
 #   paste(capture.output(cat(whisker.render(template, data = data, ...))), collapse = '\n')
 # }
+
+
+add_style_ = function(width, height){
+  style = sprintf("<style>
+  .rChart {
+    display: block;
+    margin-left: auto; 
+    margin-right: auto;
+    width: %spx;
+    height: %spx;
+  }  
+  </style>", width, height) 
+  return(style)
+}
