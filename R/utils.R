@@ -63,7 +63,7 @@ get_lib <- function(lib){
 
 get_assets <- function(LIB, static = T, cdn = F){
   config = yaml.load_file(file.path(LIB$url, 'config.yml'))[[1]]
-  if (cdn) {
+  if (getOption('rcharts.cdn', cdn)) {
     config$cdn 
   } else {
     assets = config[names(config) != 'cdn']
