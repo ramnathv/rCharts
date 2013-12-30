@@ -28,7 +28,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
   },
   addControls = function(nm, value, values, label = paste("Select ", nm, ":")){
     .self$setTemplate(
-      page = 'rChartControls.html',
+      page = 'rChartControls2.html',
       script = system.file('libraries', lib, 'controls', 
         'script.html', package = 'rCharts')
     )
@@ -153,7 +153,12 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
         }
         cdn = !(chunk_opts_$rcharts %?=% 'draft')
         .self$save(file_, cdn = cdn)
-        cat(sprintf("<iframe src=%s seamless></iframe>", file_))
+        writeLines(c(
+          "<iframe src='", file_, 
+          "' scrolling='no' seamless></iframe>",
+          "<style>iframe{ width: 100%; height: 400px;}</style>"
+        ))
+        # cat(sprintf("<iframe src=%s seamless></iframe>", file_))
         return(invisible())
       },
       iframesrc = {
