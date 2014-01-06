@@ -1,0 +1,37 @@
+<!doctype HTML>
+<meta charset = 'utf-8'>
+<html>
+  <head>
+    <link rel='stylesheet' href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    {{# assets.css }}
+    <link rel='stylesheet' href='{{{ . }}}'>
+    {{/ assets.css }}
+    
+    {{# assets.jshead }}
+    <script src='{{{ . }}}' type='text/javascript'></script>
+    {{/ assets.jshead }}
+    
+     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
+     <script src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+    
+    <style>
+    .rChart {
+      display: block
+      margin: auto auto;
+      width: 100%;
+      height: 400px;
+    }
+    .bs-docs-example:after {
+      content: "";
+      background: transparent;
+      border: none;
+    }
+    </style>
+    
+  </head>
+  <body ng-app>
+      
+    {{{ script }}}
+    
+  </body>
+</html>
