@@ -155,17 +155,19 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
         .self$save(file_, cdn = cdn)
         writeLines(c(
           "<iframe src='", file_, 
-          "' scrolling='no' seamless></iframe>",
-          "<style>iframe{ width: 100%; height: 400px;}</style>"
+          "' scrolling='no' seamless class='rChart ", lib, " '",
+          "id=", params$dom, "></iframe>",
+          "<style>iframe.rChart{ width: 100%; height: 400px;}</style>"
         ))
         # cat(sprintf("<iframe src=%s seamless></iframe>", file_))
         return(invisible())
       },
       iframesrc = {
         writeLines(c(
-          "<iframe srcdoc='", htmlspecialchars(.self$render(...)), 
-          "' scrolling='no' seamless></iframe>",
-          "<style>iframe{ width: 100%; height: 400px;}</style>"
+          "<iframe srcdoc='", htmlspecialchars(.self$render(...)),
+          "' scrolling='no' seamless class='rChart ", lib, " '",
+          "id=", params$dom, "></iframe>",
+          "<style>iframe.rChart{ width: 100%; height: 400px;}</style>"
         ))
         return(invisible())
       }
