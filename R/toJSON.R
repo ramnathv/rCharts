@@ -58,7 +58,7 @@ toJSONArray2 <- function(obj, json = TRUE, names = TRUE, ...){
 #' }
 toChain <- function(x, obj){
   config <- sapply(names(x), USE.NAMES = F, function(key){
-    sprintf("  .%s(%s)", key, toJSON2(x[[key]]))
+    sprintf("  .%s(%s)", key, toJSON2(x[[key]],  digits = 13))
   })
   if (length(config) != 0L){
     paste(c(obj, config), collapse = '\n')
