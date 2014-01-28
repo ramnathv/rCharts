@@ -173,29 +173,6 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
       }
     )
   },
-  show2 = function(static = T, ...){
-    if (!is.null(getOption('rcharts.vis.tag')) &&
-          getOption("rcharts.vis.tag") == 'iframe'){
-      file_ = sprintf("assets/img/%s.html", params$dom)
-      .self$save(file_)
-      cat(sprintf("<iframe src=%s></iframe>", file_))
-      return(invisible())
-    }
-    if (!is.null(getOption("knitr.in.progress")) && 
-        getOption("knitr.in.progress")){
-      add_ext_widgets(lib)
-      return(.self$print())
-    }
-    if (static){
-      writeLines(.self$render(...), tf <- tempfile(fileext = '.html'))
-      browseURL(tf)
-    } else {
-      shiny_copy = .self$copy()
-      shiny_copy$params$dom = 'show'
-      assign(".rChart_object", shiny_copy, envir = .GlobalEnv)
-      shiny::runApp(file.path(system.file(package = "rCharts"), "shiny"))
-    }
-  },
   publish = function(description = "", id = NULL, ..., host = 'gist'){
     htmlFile = file.path(tempdir(), 'index.html'); on.exit(unlink(htmlFile))
     .self$save(destfile = htmlFile, cdn = T)
@@ -225,24 +202,6 @@ add_ext_widgets <- function(lib){
     .SLIDIFY_ENV$ext_widgets$rCharts[[len + 1]] <<- libpath
   }
 }
-
-# getMode = function(mode_){
-#   # if mode_ is specified as argument, just return it
-#   if(!is.null(mode_)){
-#     return(mode_)
-#   }
-#   # if mode_ is specified as options, just return it
-#   if(!is.null(getOption('rcharts.mode'))){
-#     return(getOption('rcharts.mode'))
-#   }
-#   # if knitr is in progress, return mode = iframe, else static
-#   if(!is.null(getOption('knitr.in.progress'))){
-#     mode_ = 'iframe'
-#   } else {
-#     mode_ = 'static'
-#   }
-#   return(mode_)
-# }
 
 getMode = function(mode_){
   default = ifelse(getOption('knitr.in.progress') %?=% TRUE, 'iframe', 'static')
