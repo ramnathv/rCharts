@@ -6,7 +6,7 @@
       var opts = {{{ opts }}},
         data = {{{ data }}}
   
-      if(!(opts.type==="pieChart" || opts.type==="sparklinePlus")) {
+      if(!(opts.type==="pieChart" || opts.type==="sparklinePlus" || opts.type==="bulletChart")) {
         var data = d3.nest()
           .key(function(d){
             //return opts.group === undefined ? 'main' : d[opts.group]
@@ -24,10 +24,15 @@
       
       nv.addGraph(function() {
         var chart = nv.models[opts.type]()
-          .x(function(d) { return d[opts.x] })
-          .y(function(d) { return d[opts.y] })
           .width(opts.width)
           .height(opts.height)
+          
+        if (opts.type != "bulletChart"){
+          chart
+            .x(function(d) { return d[opts.x] })
+            .y(function(d) { return d[opts.y] })
+        }
+          
          
         {{{ chart }}}
           
