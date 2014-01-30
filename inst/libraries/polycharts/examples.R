@@ -26,7 +26,7 @@ p4
 
 ## Example 5 (Heat Map)
 dat = expand.grid(x = 1:5, y = 1:5)
-dat = transform(dat, value = sample(1:5, 25, replace = T))
+dat = transform(dat, value = rnorm(25))
 p5 <- rPlot(x = 'bin(x, 1)', y = 'bin(y, 1)', color = 'value', data = dat, type = 'tile')
 p5
 
