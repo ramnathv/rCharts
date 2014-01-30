@@ -21,10 +21,9 @@
     </style>
     
   </head>
-  <body>
-    {{# chartId }}
-    <{{container}} id='{{chartId}}' class='rChart {{ lib }}'></{{container}}>  
-    {{/ chartId }}
+  <body {{{ params.bodyattrs }}}>
+    
+    {{> chartDiv }}
     
     {{{ script }}}
     

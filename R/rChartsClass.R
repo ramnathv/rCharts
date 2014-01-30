@@ -95,8 +95,11 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
       CODE = srccode,
       lib = LIB$name,
       tObj = tObj,
-      container = container
-    ))
+      container = container), 
+      partials = list(
+        chartDiv = templates$chartDiv
+      )
+    )
   },
   save = function(destfile = 'index.html', ...){
     'Save chart as a standalone html page'
@@ -155,7 +158,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
         .self$save(file_, cdn = cdn)
         writeLines(c(
           "<iframe src='", file_, 
-          "' scrolling='no' seamless", paste(class="'rChart", lib, "'"),
+          "' scrolling='no' seamless", paste("class='rChart", lib, "'"),
           "id=iframe-", params$dom, "></iframe>",
           "<style>iframe.rChart{ width: 100%; height: 400px;}</style>"
         ))
