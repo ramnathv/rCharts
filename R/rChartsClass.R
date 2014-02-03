@@ -16,7 +16,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
       width = getOption('RCHART_WIDTH', 800),  # width of the container
       height = getOption('RCHART_HEIGHT', 400) # height of the container
     )
-    templates <<- list(page = 'rChart.html', chartDiv = NULL, 
+    templates <<- list(page = 'rChart.html', chartDiv = NULL, afterScript = "<script></script>",
       script =  file.path(LIB$url, 'layouts', 'chart.html'))
     templates$chartDiv <<- "<{{container}} id = '{{ chartId }}' class = 'rChart {{ lib }}'></{{ container}}>"
   },
@@ -97,7 +97,8 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
       tObj = tObj,
       container = container), 
       partials = list(
-        chartDiv = templates$chartDiv
+        chartDiv = templates$chartDiv,
+        afterScript = templates$afterScript
       )
     )
   },
