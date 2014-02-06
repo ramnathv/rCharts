@@ -16,7 +16,10 @@
   //function to build axes
   function buildAxis(position,layer){
     var axis;
-    var axisopts = opts[position+"Axis"];
+    var axisopts;
+    if (!layer[position+"Axis"]){
+      axisopts = opts[position+"Axis"];
+    } else axisopts = layer[position+"Axis"];
     
     if(axisopts.measure) {
       axis = myChart[axisopts.type](position,layer[position],axisopts.measure);
