@@ -889,3 +889,29 @@ d1$layer(
   type = "line"
 )
 d1
+
+#example 49 multiple layers qq style plot with 2 datasets
+df <- data.frame(
+  id = 1:100,
+  x=ppoints(100),
+  y=sort(rnorm(100)),   #100 random normal distributed points  
+  normref=qnorm(ppoints(100))#lattice uses ppoints for the x
+)
+d1 <- dPlot(
+  y ~ x,  #x ~ id for a different look
+  groups = c("id","sample"),
+  data = df[,c("id","x","y")],  #specify columns to prove diff data
+  type = "bubble"
+)
+d1$xAxis(type="addMeasureAxis",orderRule="x")
+d1  #just one layer
+
+#now add a layer with a line to represent normal distribution
+d1$layer(
+  x = "x",
+  y = "normref",
+  groups = c("id","sample"),
+  data=df[,c("id","x","normref")],  #specify columns to prove diff data
+  type="line"
+)
+d1
