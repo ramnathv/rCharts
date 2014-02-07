@@ -31,7 +31,6 @@
     if (axisopts.grouporderRule) axis.addGroupOrderRule(axisopts.grouporderRule);  
     if (axisopts.overrideMin) axis.overrideMin = axisopts.overrideMin;
     if (axisopts.overrideMax) axis.overrideMax = axisopts.overrideMax;
-    if (axisopts.overrideMax) axis.overrideMax = axisopts.overrideMax;
     if (axisopts.inputFormat) axis.dateParseFormat = axisopts.inputFormat;
     if (axisopts.outputFormat) axis.tickFormat = axisopts.outputFormat;    
     return axis;
@@ -112,6 +111,22 @@
       }    
     };
     myChart.series.push(s);
+    
+    /*placeholder fix domain of primary scale for new series data
+    //not working right now but something like this
+    //for now just use overrideMin and overrideMax from rCharts
+    for( var i = 0; i<2; i++) {
+      if (!myChart.axes[i].overrideMin) {
+        myChart.series[0]._axisBounds(i==0?"x":"y").min = myChart.series[0]._axisBounds(i==0?"x":"y").min < s._axisBounds(i==0?"x":"y").min ? myChart.series[0]._axisBounds(i==0?"x":"y").min : s._axisBounds(i==0?"x":"y").min;
+      }
+      if (!myChart.axes[i].overrideMax) {  
+        myChart.series[0]._axisBounds(i==0?"x":"y")._max = myChart.series[0]._axisBounds(i==0?"x":"y").max > s._axisBounds(i==0?"x":"y").max ? myChart.series[0]._axisBounds(i==0?"x":"y").max : s._axisBounds(i==0?"x":"y").max;
+      }
+      myChart.axes[i]._update();
+    }
+    */
+      
+    
     return s;
   };
   
