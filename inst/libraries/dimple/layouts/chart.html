@@ -3,7 +3,6 @@
     data = {{{ data }}};
   var svg = dimple.newSvg("#" + opts.id, opts.width, opts.height);
 
-  //data = dimple.filterData(data, "Owner", ["Aperture", "Black Mesa"])
   var myChart = new dimple.chart(svg, data);
   if (opts.bounds) {
     myChart.setBounds(opts.bounds.x, opts.bounds.y, opts.bounds.width, opts.bounds.height);//myChart.setBounds(80, 30, 480, 330);
@@ -64,6 +63,11 @@
   //as of now we have x,y,groups,data,type in opts for primary layer
   //and other layers reside in opts.layers
   function buildSeries(layer, hidden){
+    //inherit from primary layer if not intentionally changed or xAxis, yAxis, zAxis null
+    if (!layer.xAxis) layer.xAxis = opts.xAxis;    
+    if (!layer.yAxis) layer.yAxis = opts.yAxis;
+    if (!layer.zAxis) layer.zAxis = opts.zAxis;
+    
     var x = buildAxis("x", layer);
     x.hidden = hidden;
     
