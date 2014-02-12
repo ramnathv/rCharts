@@ -8,7 +8,7 @@ Nvd3 <- setRefClass('Nvd3', contains = 'rCharts', methods = list(
   initialize = function(){
     callSuper(); 
     params <<- c(params, list(controls = list(),
-      chart = list(), xAxis = list(), x2Axis = list(), yAxis = list(),
+      chart = list(), xAxis = list(), x2Axis = list(), yAxis = list(), y2Axis = list(),
       filters = list()
     ))
   },
@@ -39,6 +39,14 @@ Nvd3 <- setRefClass('Nvd3', contains = 'rCharts', methods = list(
   },
   yAxis = function(..., replace = F){
     params$yAxis <<- setSpec(params$yAxis, ..., replace = replace)
+    #if type is lineWithFocus and y2Axis not specified
+    #make it the same as yAxis
+    if(  params$type == "lineWithFocusChart" && length(params$y2Axis) == 0 ) {
+      params$y2Axis <<- setSpec(params$y2Axis, ..., replace = replace)
+    }
+  },
+  y2Axis = function(..., replace = F){
+    params$y2Axis <<- setSpec(params$y2Axis, ..., replace = replace)
   },
   getChartParams = function(...){
     params <<- modifyList(params, getLayer(...))
@@ -49,11 +57,13 @@ Nvd3 <- setRefClass('Nvd3', contains = 'rCharts', methods = list(
     xAxis = toChain(params$xAxis, 'chart.xAxis')
     x2Axis = toChain(params$x2Axis, 'chart.x2Axis')    
     yAxis = toChain(params$yAxis, 'chart.yAxis')
+    y2Axis = toChain(params$y2Axis, 'chart.y2Axis')
     controls_json = toJSON(params$controls)
     filters_json = toJSON(params$filters)
     controls = setNames(params$controls, NULL)
     opts = toJSON(params[!(names(params) %in% c('data', 'chart', 'xAxis', 'x2Axis', 'yAxis', 'controls', 'filters'))])
-    list(opts = opts, xAxis = xAxis, x2Axis = x2Axis, yAxis = yAxis, data = data, 
+    list(opts = opts, xAxis = xAxis, x2Axis = x2Axis, yAxis = yAxis, y2Axis = y2Axis,
+         data = data, 
          chart = chart, chartId = chartId, controls = controls, 
          controls_json = controls_json, CODE = srccode, 
          filters_json = filters_json, hasFilter = (length(params$filters) > 0)
