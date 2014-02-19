@@ -83,10 +83,11 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
     ))
     writeLines(c(assetHTML, chartDiv, .self$html(params$dom)))
   },
-  render = function(chartId = NULL, cdn = F, static = T){
+  render = function(chartId = NULL, cdn = F, static = T, standalone = F){
     params$dom <<- chartId %||% params$dom
     template = read_template(getOption('RCHART_TEMPLATE', templates$page))
-    assets = Map("c", get_assets(LIB, static = static, cdn = cdn), html_assets)
+    assets = Map("c", 
+      get_assets(LIB, static = static, cdn = cdn, standalone = standalone), html_assets)
     html = render_template(template, list(
       params = params,
       assets = assets,
