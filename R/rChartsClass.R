@@ -110,27 +110,16 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
   show = function(mode_ = NULL, ...){
     mode_ = getMode(mode_)
     switch(mode_, 
-      static = {
-        # refactor code. maybe create view_static function.
-        viewer = getOption('viewer')
-        if (!grepl("^http", LIB$url) && !is.null(viewer)){
-          temp_dir = tempfile(pattern = 'rCharts')
-          dir.create(temp_dir)
-          suppressMessages(
-            copy_dir_(LIB$url, file.path(temp_dir, LIB$name))
-          )
-          tf <- file.path(temp_dir, 'index.html')
-          writeLines(.self$render(..., static = F), tf)
-          viewer(tf)
-        } else {
-          writeLines(.self$render(..., static = T), 
-            tf <- tempfile(fileext = '.html'))
-          if (!is.null(viewer)) {
-            viewer(tf)
-          } else {
-            browseURL(tf)
-          }
-        }
+       static = {
+         dir.create(temp_dir <- tempfile(pattern = 'rCharts'))
+         static_ = grepl("^http", LIB$url) || is.null(viewer <- getOption('viewer'))
+         writeLines(.self$render(..., static = static_), 
+           tf <- file.path(temp_dir, 'index.html')
+         )
+         if (!static_){
+           suppressMessages(copy_dir_(LIB$url, file.path(temp_dir, LIB$name)))
+         }
+         getOption('viewer', browseURL)(tf)
       },
       server = {
         shiny_copy = .self$copy()
