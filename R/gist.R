@@ -65,7 +65,8 @@ get_token <- function(username, pwd){
   return(fromJSON(response[1])$token)
 }
 
-post_gist <- function(gist, viewer = 'http://rcharts.github.io/viewer/?'){
+post_gist <- function(gist, 
+   viewer = getOption("rcharts.viewer", 'http://rcharts.github.io/viewer/?')){
   require(httr)
   credentials = get_credentials()
   response = POST(
@@ -87,7 +88,8 @@ post_gist <- function(gist, viewer = 'http://rcharts.github.io/viewer/?'){
 }
 
 # REFACTOR: Refactor to consolidate update_gist and post_gist
-update_gist <- function(gist, id, viewer = 'http://rcharts.github.io/viewer/?'){
+update_gist <- function(gist, id,
+   viewer = getOption("rcharts.viewer", 'http://rcharts.github.io/viewer/?')){
   require(httr)
   credentials = get_credentials()
   response = PATCH(
