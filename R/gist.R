@@ -39,7 +39,8 @@ post_gist_oauth <- function(gist,
 #' @param filenames names of files to post
 #' @param description brief description of gist (optional)
 #' @param public whether gist is public (defaults to TRUE)
-create_gist <- function(filenames, description = "", public = TRUE){
+create_gist <- function(filenames, description = "", extras = NULL, public = TRUE){
+  if (!is.null(extras)) filenames <- c(filenames, extras)
   files = lapply(filenames, function(file){
     x = list(content =  paste(readLines(file, warn = F), collapse = "\n"))
   })
