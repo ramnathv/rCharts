@@ -98,8 +98,8 @@ make_standalone_assets <- function(assets){
 make_standalone__ <- base64enc::dataURI
 
 #' Add library assets (useful in knitr documents)
-add_lib_assets <- function(lib, cdn = F){
-  assets = get_assets(get_lib(lib), cdn = cdn)
+add_lib_assets <- function(lib, cdn = F, standalone = F){
+  assets = get_assets(get_lib(lib), cdn = cdn, standalone = standalone)
   styles <- lapply(assets$css, function(style){
     sprintf("<link rel='stylesheet' href=%s>", style)
   })

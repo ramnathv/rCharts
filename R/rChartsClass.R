@@ -67,15 +67,11 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
   },
   print = function(chartId = NULL, include_assets = F, ...){
     params$dom <<- chartId %||% params$dom
-    assetHTML <- ifelse(include_assets, paste(add_lib_assets(lib, ...), '\n',
-      add_style_(params$width, params$height), collapse = '\n'), "")
-    # if (is.null(templates$chartDiv)){
-    #   chartDiv =  sprintf("<%s id='%s' class='rChart %s'></%s>", 
-    #     container, params$dom, LIB$name, container)
-    # } else {
-    #   chartDiv = render_template(templates$chartDiv, 
-    #       list(chartId = params$dom))
-    # }
+    assetHTML <- ifelse(include_assets, paste(
+      paste(add_lib_assets(lib, ...), collapse = '\n'), '\n',
+      add_style_(params$width, params$height), 
+      collapse = '\n'
+    ), "")
     chartDiv = render_template(templates$chartDiv, list(
       chartId = params$dom,
       lib = LIB$name,
@@ -87,7 +83,9 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
     params$dom <<- chartId %||% params$dom
     template = read_template(getOption('RCHART_TEMPLATE', templates$page))
     assets = Map("c", 
-      get_assets(LIB, static = static, cdn = cdn, standalone = standalone), html_assets)
+      get_assets(LIB, static = static, cdn = cdn, standalone = standalone), 
+      html_assets
+    )
     html = render_template(template, list(
       params = params,
       assets = assets,
