@@ -65,7 +65,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
     html = render_template(templates$script, getPayload(params$dom))
     return(html)
   },
-  print = function(chartId = NULL, include_assets = F, ...){
+  print = function(chartId = NULL, include_assets = F, strip_ws = F, ...){
     params$dom <<- chartId %||% params$dom
     assetHTML <- ifelse(include_assets, paste(
       paste(add_lib_assets(lib, ...), collapse = '\n'), '\n',
@@ -77,7 +77,11 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
       lib = LIB$name,
       container = container
     ))
-    writeLines(c(assetHTML, chartDiv, .self$html(params$dom)))
+    output = c(assetHTML, chartDiv, .self$html(params$dom))
+    if (strip_ws) {
+      output = gsub("(^|\\n)\\s+", "\n", output);
+    }
+    writeLines(output)
   },
   render = function(chartId = NULL, cdn = F, static = T, standalone = F){
     params$dom <<- chartId %||% params$dom
@@ -135,7 +139,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
       },
       inline = {
         add_ext_widgets(lib)
-        return(.self$print(...))
+        return(.self$print(strip_ws = TRUE, ...))
       },
       iframe = {
         chunk_opts_ = opts_current$get() 
