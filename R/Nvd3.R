@@ -17,6 +17,7 @@ Nvd3 <- setRefClass('Nvd3', contains = 'rCharts', methods = list(
   },
   addFilters = function(...){
     .self$setTemplate(
+      chartDiv = '',
       page = 'rChartControls2.html',
       script = system.file('libraries', lib, 'controls', 
         'script.html', package = 'rCharts')

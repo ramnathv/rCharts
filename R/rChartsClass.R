@@ -28,6 +28,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
   },
   addControls = function(nm, value, values, label = paste("Select ", nm, ":")){
     .self$setTemplate(
+      chartDiv = '',
       page = 'rChartControls2.html',
       script = system.file('libraries', lib, 'controls', 
         'script.html', package = 'rCharts')
