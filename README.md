@@ -8,6 +8,7 @@ You can install `rCharts` from `github` using the `devtools` package
 
 ```coffee
 require(devtools)
+library(devtools)
 install_github('rCharts', 'ramnathv')
 ```
 
