@@ -16,7 +16,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
       width = getOption('RCHART_WIDTH', 800),  # width of the container
       height = getOption('RCHART_HEIGHT', 400) # height of the container
     )
-    templates <<- list(page = 'rChart.html', chartDiv = NULL, 
+    templates <<- list(page = 'rChart.html', chartDiv = NULL, afterScript = "<script></script>",
       script =  file.path(LIB$url, 'layouts', 'chart.html'))
     templates$chartDiv <<- "<{{container}} id = '{{ chartId }}' class = 'rChart {{ lib }}'></{{ container}}>"
   },
@@ -67,15 +67,11 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
   },
   print = function(chartId = NULL, include_assets = F, ...){
     params$dom <<- chartId %||% params$dom
-    assetHTML <- ifelse(include_assets, paste(add_lib_assets(lib, ...), '\n',
-      add_style_(params$width, params$height), collapse = '\n'), "")
-    # if (is.null(templates$chartDiv)){
-    #   chartDiv =  sprintf("<%s id='%s' class='rChart %s'></%s>", 
-    #     container, params$dom, LIB$name, container)
-    # } else {
-    #   chartDiv = render_template(templates$chartDiv, 
-    #       list(chartId = params$dom))
-    # }
+    assetHTML <- ifelse(include_assets, paste(
+      paste(add_lib_assets(lib, ...), collapse = '\n'), '\n',
+      add_style_(params$width, params$height), 
+      collapse = '\n'
+    ), "")
     chartDiv = render_template(templates$chartDiv, list(
       chartId = params$dom,
       lib = LIB$name,
@@ -83,10 +79,13 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
     ))
     writeLines(c(assetHTML, chartDiv, .self$html(params$dom)))
   },
-  render = function(chartId = NULL, cdn = F, static = T){
+  render = function(chartId = NULL, cdn = F, static = T, standalone = F){
     params$dom <<- chartId %||% params$dom
     template = read_template(getOption('RCHART_TEMPLATE', templates$page))
-    assets = Map("c", get_assets(LIB, static = static, cdn = cdn), html_assets)
+    assets = Map("c", 
+      get_assets(LIB, static = static, cdn = cdn, standalone = standalone), 
+      html_assets
+    )
     html = render_template(template, list(
       params = params,
       assets = assets,
@@ -95,37 +94,33 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
       CODE = srccode,
       lib = LIB$name,
       tObj = tObj,
-      container = container
-    ))
+      container = container), 
+      partials = list(
+        chartDiv = templates$chartDiv,
+        afterScript = templates$afterScript %||% "<script></script>"
+      )
+    )
   },
   save = function(destfile = 'index.html', ...){
     'Save chart as a standalone html page'
     writeLines(.self$render(...), destfile)
   },
-  show = function(mode_ = NULL, ...){
+  show = function(mode_ = NULL, ..., extra_files = NULL){
     mode_ = getMode(mode_)
     switch(mode_, 
-      static = {
-        # refactor code. maybe create view_static function.
-        viewer = getOption('viewer')
-        if (!grepl("^http", LIB$url) && !is.null(viewer)){
-          temp_dir = tempfile(pattern = 'rCharts')
-          dir.create(temp_dir)
-          suppressMessages(
-            copy_dir_(LIB$url, file.path(temp_dir, LIB$name))
-          )
-          tf <- file.path(temp_dir, 'index.html')
-          writeLines(.self$render(..., static = F), tf)
-          viewer(tf)
-        } else {
-          writeLines(.self$render(..., static = T), 
-            tf <- tempfile(fileext = '.html'))
-          if (!is.null(viewer)) {
-            viewer(tf)
-          } else {
-            browseURL(tf)
-          }
-        }
+       static = {
+         dir.create(temp_dir <- tempfile(pattern = 'rCharts'))
+         static_ = grepl("^http", LIB$url) || is.null(viewer <- getOption('viewer'))
+         writeLines(.self$render(..., static = static_), 
+           tf <- file.path(temp_dir, 'index.html')
+         )
+         if (!static_){
+           suppressMessages(copy_dir_(LIB$url, file.path(temp_dir, LIB$name)))
+           if (!is.null(extra_files)){
+             suppressMessages(file.copy(extra_files, temp_dir))
+           }
+         }
+         getOption('viewer', browseURL)(tf)
       },
       server = {
         shiny_copy = .self$copy()
@@ -153,9 +148,9 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
         }
         cdn = !(chunk_opts_$rcharts %?=% 'draft')
         .self$save(file_, cdn = cdn)
-        writeLines(c(
+        cat(c(
           "<iframe src='", file_, 
-          "' scrolling='no' seamless class='rChart ", lib, " '",
+          "' scrolling='no' frameBorder='0' seamless", paste("class='rChart", lib, "'"),
           "id=iframe-", params$dom, "></iframe>",
           "<style>iframe.rChart{ width: 100%; height: 400px;}</style>"
         ))
@@ -163,38 +158,25 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
         return(invisible())
       },
       iframesrc = {
-        writeLines(c(
+        cat(c(
           "<iframe srcdoc='", htmlspecialchars(.self$render(...)),
-          "' scrolling='no' seamless class='rChart ", lib, " '",
-          "id=iframe-", params$dom, "></iframe>",
+          "' scrolling='no' frameBorder='0' seamless class='rChart ", lib, " '",
+          paste0("id='iframe-", params$dom, "'>"), "</iframe>\n",
           "<style>iframe.rChart{ width: 100%; height: 400px;}</style>"
         ))
         return(invisible())
+      },
+      ipynb = {
+        if (!require(IRdisplay)){
+          return(
+            message('You need to install the IRdisplay package from github.')
+          )
+        }
+        y = paste(capture.output(.self$show('iframesrc', cdn = TRUE)), 
+          collapse = "\n")
+        display_html(y)
       }
     )
-  },
-  show2 = function(static = T, ...){
-    if (!is.null(getOption('rcharts.vis.tag')) &&
-          getOption("rcharts.vis.tag") == 'iframe'){
-      file_ = sprintf("assets/img/%s.html", params$dom)
-      .self$save(file_)
-      cat(sprintf("<iframe src=%s></iframe>", file_))
-      return(invisible())
-    }
-    if (!is.null(getOption("knitr.in.progress")) && 
-        getOption("knitr.in.progress")){
-      add_ext_widgets(lib)
-      return(.self$print())
-    }
-    if (static){
-      writeLines(.self$render(...), tf <- tempfile(fileext = '.html'))
-      browseURL(tf)
-    } else {
-      shiny_copy = .self$copy()
-      shiny_copy$params$dom = 'show'
-      assign(".rChart_object", shiny_copy, envir = .GlobalEnv)
-      shiny::runApp(file.path(system.file(package = "rCharts"), "shiny"))
-    }
   },
   publish = function(description = "", id = NULL, ..., host = 'gist'){
     htmlFile = file.path(tempdir(), 'index.html'); on.exit(unlink(htmlFile))
@@ -226,24 +208,6 @@ add_ext_widgets <- function(lib){
   }
 }
 
-# getMode = function(mode_){
-#   # if mode_ is specified as argument, just return it
-#   if(!is.null(mode_)){
-#     return(mode_)
-#   }
-#   # if mode_ is specified as options, just return it
-#   if(!is.null(getOption('rcharts.mode'))){
-#     return(getOption('rcharts.mode'))
-#   }
-#   # if knitr is in progress, return mode = iframe, else static
-#   if(!is.null(getOption('knitr.in.progress'))){
-#     mode_ = 'iframe'
-#   } else {
-#     mode_ = 'static'
-#   }
-#   return(mode_)
-# }
-
 getMode = function(mode_){
   default = ifelse(getOption('knitr.in.progress') %?=% TRUE, 'iframe', 'static')
   mode_ = mode_ %||% getOption('rcharts.mode') %||% default
@@ -253,4 +217,3 @@ getMode = function(mode_){
 `%?=%` <- function(x, y){
   ifelse(!is.null(x), x == y, FALSE)
 }
-

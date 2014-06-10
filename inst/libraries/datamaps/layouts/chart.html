@@ -26,7 +26,28 @@
   // draw a bubble map if specified
   if (chartParams.bubbles) {
     var bubbles = chartParams.bubbles
-    map{{chartId}}.bubbles(bubbles.data, bubbles.config)
+    map{{chartId}}.bubbles(bubbles)
+  }
+  
+  if (chartParams.labels){
+    map{{chartId}}.labels()
+  }
+  
+  if (chartParams.legend){
+    map{{chartId}}.legend()
+  }
+  
+  setProjection = function( element, options ) {
+    var projection, path;
+ 
+      projection = d3.geo.albersUsa()
+        .scale(element.offsetWidth)
+        .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
+ 
+    path = d3.geo.path()
+      .projection( projection );
+ 
+    return {path: path, projection: projection};
   }
 </script>
 

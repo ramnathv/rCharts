@@ -4,7 +4,7 @@
   <head>
     <link rel='stylesheet' href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/cosmo/bootstrap.min.css">
      <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" >
-    <link rel='stylesheet' href="http://getbootstrap.com/2.3.2/assets/js/google-code-prettify/prettify.css">
+    <link rel='stylesheet' href="http://twitter.github.io/bootstrap/assets/js/google-code-prettify/prettify.css">
     <link rel='stylesheet' href="http://aozora.github.io/bootplus/assets/css/docs.css">
     {{# assets.css }}
     <link rel='stylesheet' href='{{{ . }}}'>
@@ -21,53 +21,37 @@
       width: 100%;
       height: 400px;
     }
-    /*
-    body {
-      margin-top: 60px;
-    }
-    */
     </style>
     
   </head>
   <body>
     <div class='container'>
       <div class='row'>
-        {{# tObj }}
+        {{# hasControls }}
         <div class='span3'>
-          <div class='well'>
-            <ul class='nav nav-list'>
-            {{# menu }}
-              <li class='{{{ class }}}'>
-                <a href='{{{ href}}}'>
-                  {{{ title }}}
-                </a>
-              </li>
-            {{/ menu }}
-            </ul>
-          </div>
+          <form class='well'>
+  					{{# controls }}
+    			  <select ng-model="opts.{{name}}" ng-options="ctl for ctl in controls"></select><br>
+						{{/ controls }}
+          </form>
         </div>
-        {{/ tObj }}
+        {{/ hasControls }}
         <div class='span8'>
           <div class="bs-docs-example">
-            <{{container}} id='{{chartId}}' class='rChart {{ lib }}'>
-            </{{container}}> 
-          <br/>
-{{# CODE }}
-<pre><code class='r'>{{CODE}}
-</code></pre>
-{{/ CODE }}
-</div>
+            <div id='{{chartId}}' class='rChart {{lib}}'>
+            	<svg></svg>
+            </div>
+          </div>
         </div>
       </div>
     </div>
       
     {{{ script }}}
     
-    {{> afterScript }}
-    
   </body>
   <!-- Google Prettify -->
   <script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
   <script 
     src='https://google-code-prettify.googlecode.com/svn-history/r232/trunk/src/lang-r.js'>
   </script>

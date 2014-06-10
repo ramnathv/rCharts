@@ -1,3 +1,0 @@
-forcedirected:
-  css: external/main.css
-  jshead: [external/d3.min.js, external/underscore-min.js]

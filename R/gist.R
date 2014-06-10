@@ -39,7 +39,8 @@ post_gist_oauth <- function(gist,
 #' @param filenames names of files to post
 #' @param description brief description of gist (optional)
 #' @param public whether gist is public (defaults to TRUE)
-create_gist <- function(filenames, description = "", public = TRUE){
+create_gist <- function(filenames, description = "", extras = NULL, public = TRUE){
+  if (!is.null(extras)) filenames <- c(filenames, extras)
   files = lapply(filenames, function(file){
     x = list(content =  paste(readLines(file, warn = F), collapse = "\n"))
   })
@@ -64,7 +65,8 @@ get_token <- function(username, pwd){
   return(fromJSON(response[1])$token)
 }
 
-post_gist <- function(gist, viewer = 'http://rcharts.github.io/viewer/?'){
+post_gist <- function(gist, 
+   viewer = getOption("rcharts.viewer", 'http://rcharts.github.io/viewer/?')){
   require(httr)
   credentials = get_credentials()
   response = POST(
@@ -86,7 +88,8 @@ post_gist <- function(gist, viewer = 'http://rcharts.github.io/viewer/?'){
 }
 
 # REFACTOR: Refactor to consolidate update_gist and post_gist
-update_gist <- function(gist, id, viewer = 'http://rcharts.github.io/viewer/?'){
+update_gist <- function(gist, id,
+   viewer = getOption("rcharts.viewer", 'http://rcharts.github.io/viewer/?')){
   require(httr)
   credentials = get_credentials()
   response = PATCH(

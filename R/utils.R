@@ -5,8 +5,8 @@
 make_chart <- function(text){
   writeLines(text, con="input.R")
   chart = source('input.R', local = TRUE)$value
-  chart$set(width = 700)
-  chart$setTemplate(page = 'rChart2.html')
+  # chart$set(width = 700)
+  # chart$setTemplate(page = 'rChart2.html')
   chart$save('output.html', cdn = TRUE)
   invisible();
 }
@@ -61,20 +61,45 @@ get_lib <- function(lib){
   return(list(name = basename(lib), url = lib_url))
 }
 
-get_assets <- function(LIB, static = T, cdn = F){
+get_assets <- function(LIB, static = T, cdn = F, standalone = F){
   config = yaml.load_file(file.path(LIB$url, 'config.yml'))[[1]]
   if (getOption('rcharts.cdn', cdn)) {
-    config$cdn 
+    result = config$cdn 
   } else {
     assets = config[names(config) != 'cdn']
     prefix = ifelse(static, LIB$url, LIB$name)
-    lapply(assets, function(asset) paste(prefix, asset, sep = '/'))
+    result = lapply(assets, function(asset) paste(prefix, asset, sep = '/'))
   }
+  if (standalone){
+    result = make_standalone_assets(result)
+  }
+  return(result)
 }
 
+make_standalone_assets <- function(assets){
+    if (length(assets[['css']]) > 0){
+      assets[['css']] = lapply(assets[['css']], function(x) {
+       make_standalone__(file = x, mime = "text/css")
+      })
+    }
+    if (length(assets[['jshead']]) > 0){
+      assets[['jshead']] = lapply(assets[['jshead']], function(x) {
+        make_standalone__(file = x, mime = "application/javascript")
+      })
+    }
+    return(assets)
+}
+
+# make_standalone__ <- function (file, mime){
+#   prefix = paste0("data:", mime, ",")
+#   paste(prefix, URLencode(read_file(file)), collapse = "")
+# }
+
+make_standalone__ <- base64enc::dataURI
+
 #' Add library assets (useful in knitr documents)
-add_lib_assets <- function(lib, cdn = F){
-  assets = get_assets(get_lib(lib), cdn = cdn)
+add_lib_assets <- function(lib, cdn = F, standalone = F){
+  assets = get_assets(get_lib(lib), cdn = cdn, standalone = standalone)
   styles <- lapply(assets$css, function(style){
     sprintf("<link rel='stylesheet' href=%s>", style)
   })
@@ -179,7 +204,7 @@ render_template = function(template, data = parent.frame(1), ...){
     template <- read_file(template)
   }
   paste(capture.output(
-    cat(whisker.render(template, data = data))
+    cat(whisker.render(template, data = data, ...))
   ), collapse = "\n")
 }
 
