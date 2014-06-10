@@ -1,16 +1,16 @@
 <div class='container' ng-controller="DemoCtrl" ng-init="drawChart()">
   <div class='row'>
-    <div class='span3'>
+    <div class='col-md-3'>
       <form class='well'>
       	{{# controls }}
         <label><b>{{label}}</b></label>
-    		<select ng-model="opts.{{name}}.var" 
+    		<select class='form-control' ng-model="opts.{{name}}.var" 
           ng-options="ctl for ctl in controls.{{name}}.values">   
     		</select><br>
 				{{/ controls }}
       </form>
     </div>
-    <div class='span8'>
+    <div class='col-md-9'>
       <div class="bs-docs-example">
         <div id='{{chartId}}' class='rChart {{params.lib}}'>
           <svg></svg>
