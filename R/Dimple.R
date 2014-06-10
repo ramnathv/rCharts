@@ -7,10 +7,18 @@ dPlot <- dimplePlot <- function(x, data, ...){
 Dimple <- setRefClass('Dimple', contains = 'rCharts', methods = list(
   initialize = function(){
     callSuper(); 
-    params <<- c(params, list(
-      chart = list(), xAxis = list(type="addCategoryAxis", showPercent = FALSE),
-      yAxis = list(type="addMeasureAxis", showPercent = FALSE),
-      zAxis = list(), colorAxis = list(), legend = list()
+    params <<- c(
+      params,
+      list(
+        chart = list(),
+        xAxis = list(type="addCategoryAxis", showPercent = FALSE),
+        yAxis = list(type="addMeasureAxis", showPercent = FALSE),
+        zAxis = list(),
+        colorAxis = list(),
+        defaultColors = list(),
+        layers = list(),
+        legend = list(),
+        controls = list()
     ))
   },
   chart = function(..., replace = F){
@@ -28,28 +36,37 @@ Dimple <- setRefClass('Dimple', contains = 'rCharts', methods = list(
   colorAxis = function(...){
     .self$set(colorAxis = list(...))
   },
+  defaultColors = function(..., replace = T){
+    params$defaultColors <<- setSpec(params$defaultColors, ..., replace = replace)
+  },   
   legend = function(...){
     .self$set(legend = list(...))
   },
   getChartParams = function(...){
     params <<- modifyList(params, getLayer(...))
   },
+  #add layer functionality from polycharts
+  #dimple allows us to add series
+  layer = function(..., copy_layer = F){
+    len = length(params$layers)
+    if (!copy_layer){
+      params$layers[[len + 1]] <<- getLayer(...)
+    } else {
+      params$layers[[len + 1]] <<- merge_list(list(...), params$layers[[len]])
+    }
+  },
   getPayload = function(chartId){
-    data = toJSONArray(params$data)
+    data = to_json(params$data, orient="records")
     #there is potential to  chain the entire thing
     #making much cleaner
-    #need to explore this
-    #as of now thought chart is not being used
+    #need to explore this with toChain3 added in dimple_layer branch
+    #as of now though chart is not being used
     chart = toChain(params$chart, 'myChart')
-    #cannot eliminate so changed toChain to toJSON
-    #but need to revert back to toChain for the axes
-    xAxis = toJSON(params$xAxis) #toChain(params$xAxis, 'chart.xAxis')
-    yAxis = toJSON(params$yAxis) #toChain(params$yAxis, 'chart.yAxis')
-    zAxis = toJSON(params$zAxis)
-    colorAxis = toJSON(params$colorAxis)
-    legend = toJSON(params$legend)
-    opts = toJSON(params[!(names(params) %in% c('data', 'chart', 'xAxis', 'yAxis', 'zAxis', 'colorAxis', 'legend'))])
-    list(opts = opts, xAxis = xAxis, yAxis = yAxis, zAxis = zAxis, colorAxis = colorAxis, legend = legend, data = data, 
-         chart = chart, chartId = chartId)
+    controls_json = toJSON(params$controls)
+    controls = setNames(params$controls, NULL)
+    opts = toJSON2(params[!(names(params) %in% c('data', 'chart', 'controls'))])
+    list(opts = opts, data = data, 
+         chart = chart, chartId = chartId,
+         controls = controls, controls_json = controls_json)
   }
 ))

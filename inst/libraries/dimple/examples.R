@@ -170,7 +170,7 @@ d1 <- dPlot(
 )
 d1$xAxis(type = "addAxis", measure = "UnitSales", showPercent = TRUE)
 d1$yAxis(type = "addPctAxis")
-d1d1$legend(
+d1$legend(
   x = 200,
   y = 10,
   width = 400,
@@ -606,9 +606,9 @@ d1 <- dPlot(
   y = "Month",
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
   type = "area",
-  bounds = list(x=80,y=30,height=480,width=330),
-  height = 400,
-  width = 590
+  bounds = list(x=80,y=30,width=330,height=480),
+  height = 590,
+  width = 400
 )
 d1$xAxis(type = "addMeasureAxis")
 d1$yAxis(type = "addCategoryAxis", orderRule = "Date")
@@ -623,16 +623,16 @@ d1 <- dPlot(
   groups = "Channel",
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
   type = "area",
-  bounds = list(x=80,y=30,height=480,width=330),
-  height = 400,
-  width = 590
+  bounds = list(x=80,y=30,width=330,height=480),
+  height = 590,
+  width = 400
 )
 d1$xAxis(type = "addMeasureAxis")
 d1$yAxis(type = "addCategoryAxis", grouporderRule = "Date")
 d1$legend(
-  x = 60,
+  x = 80,
   y = 10,
-  width = 500,
+  width = 330,
   height = 20,
   horizontalAlign = "right"
 )
@@ -651,7 +651,7 @@ d1 <- dPlot(
   groups = "Owner",
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
   type = "area",
-  bounds = list(x=90,y=30,height=470,width=330),
+  bounds = list(x=90,y=30,width=470,height=330),
   lineWeight = 1,
   barGap = 0.05,
   height = 400,
@@ -668,7 +668,7 @@ d1 <- dPlot(
   groups = "SKU",
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
   type = "area",
-  bounds = list(x=90,y=30,height=320,width=330),
+  bounds = list(x=90,y=30,width=320,height=330),
   lineWeight = 1,
   barGap = 0.05,
   height = 400,
@@ -746,7 +746,7 @@ d1 <- dPlot(
   groups = "Brand",
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
   type = "line",
-  bounds = list(x=70,y=30,height=420,width=330),
+  bounds = list(x=70,y=30,width=420,height=330),
   barGap = 0.05,
   height = 400,
   width = 590
@@ -770,7 +770,7 @@ d1 <- dPlot(
   y = "Month",
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
   type = "line",
-  bounds = list(x=80,y=30,height=480,width=330),
+  bounds = list(x=80,y=30,width=480,height=330),
   height = 400,
   width = 590
 )
@@ -787,7 +787,7 @@ d1 <- dPlot(
   groups = "Channel",
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
   type = "line",
-  bounds = list(x=80,y=30,height=480,width=330),
+  bounds = list(x=80,y=30,width=480,height=330),
   height = 400,
   width = 590
 )
@@ -811,7 +811,7 @@ d1 <- dPlot(
   groups = "Owner",
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
   type = "line",
-  bounds = list(x=90,y=30,height=470,width=330),
+  bounds = list(x=90,y=30,width=470,height=330),
   barGap = 0.05,
   height = 400,
   width = 590
@@ -829,7 +829,7 @@ d1 <- dPlot(
   groups = "Brand",
   data = subset(data, Owner %in% c("Aperture","Black Mesa")),
   type = "line",
-  bounds = list(x=90,y=30,height=320,width=330),
+  bounds = list(x=90,y=30,width=320,height=330),
   barGap = 0.05,
   height = 400,
   width = 590
@@ -843,6 +843,22 @@ d1$legend(
   height = 300,
   horizontalAlign = "left"
 )
+d1
+
+#show how to change defaultColors
+
+require(latticeExtra)
+d1$defaultColors(theEconomist.theme()$superpose.line$col, replace=T)
+d1
+d1$defaultColors(brewer.pal(n=9,"Blues"), replace=T)
+d1
+d1$defaultColors("#!d3.scale.category20()!#", replace=T)
+d1
+d1$defaultColors("#!d3.scale.category20b()!#", replace=T)
+d1
+d1$defaultColors("#!d3.scale.category20c()!#", replace=T)
+d1
+d1$defaultColors("#!d3.scale.category10()!#", replace=T)
 d1
 
 
@@ -862,5 +878,40 @@ d1$xAxis(
 type = "addTimeAxis",
 inputFormat = "%Y-%m-%d",
 outputFormat = "%b %Y"
+)
+d1
+
+#test out additional layer/series functionality
+d1$layer(
+  x = "date",
+  y = "psavert",
+  data = NULL,
+  type = "line"
+)
+d1
+
+#example 49 multiple layers qq style plot with 2 datasets
+df <- data.frame(
+  id = 1:100,
+  x=ppoints(100),
+  y=sort(rnorm(100)),   #100 random normal distributed points  
+  normref=qnorm(ppoints(100))#lattice uses ppoints for the x
+)
+d1 <- dPlot(
+  y ~ x,  #x ~ id for a different look
+  groups = c("id","sample"),
+  data = df[,c("id","x","y")],  #specify columns to prove diff data
+  type = "bubble"
+)
+d1$xAxis(type="addMeasureAxis",orderRule="x")
+d1  #just one layer
+
+#now add a layer with a line to represent normal distribution
+d1$layer(
+  x = "x",
+  y = "normref",
+  groups = c("id","sample"),
+  data=df[,c("id","x","normref")],  #specify columns to prove diff data
+  type="line"
 )
 d1
