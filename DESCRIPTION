@@ -1,7 +1,7 @@
 Package: rCharts
 Type: Package
-Title: Interactive Charts using Polycharts.js
-Version: 0.4.2
+Title: Interactive Charts using Javascript Visualization Libraries
+Version: 0.4.5
 Date: 2013-04-09
 Authors@R: c(
   person("Thomas", "Reinholdsson", role = "ctb"),
@@ -11,7 +11,7 @@ Authors@R: c(
   ))
 Maintainer: Ramnath Vaidyanathan <ramnath.vaidya@gmail.com>
 Description: Create interactive visualizations with a plotting interface
-    familiar to R users using the Polycharts javascript library
+    familiar to R users using several javascript visualization libraries.
 Imports:
     plyr,
     lattice,
