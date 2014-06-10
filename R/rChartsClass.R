@@ -97,7 +97,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
       container = container), 
       partials = list(
         chartDiv = templates$chartDiv,
-        afterScript = templates$afterScript
+        afterScript = templates$afterScript %||% "<script></script>"
       )
     )
   },
@@ -105,7 +105,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
     'Save chart as a standalone html page'
     writeLines(.self$render(...), destfile)
   },
-  show = function(mode_ = NULL, ...){
+  show = function(mode_ = NULL, ..., extra_files = NULL){
     mode_ = getMode(mode_)
     switch(mode_, 
        static = {
@@ -116,6 +116,9 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
          )
          if (!static_){
            suppressMessages(copy_dir_(LIB$url, file.path(temp_dir, LIB$name)))
+           if (!is.null(extra_files)){
+             suppressMessages(file.copy(extra_files, temp_dir))
+           }
          }
          getOption('viewer', browseURL)(tf)
       },
@@ -145,9 +148,9 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
         }
         cdn = !(chunk_opts_$rcharts %?=% 'draft')
         .self$save(file_, cdn = cdn)
-        writeLines(c(
+        cat(c(
           "<iframe src='", file_, 
-          "' scrolling='no' seamless", paste("class='rChart", lib, "'"),
+          "' scrolling='no' frameBorder='0' seamless", paste("class='rChart", lib, "'"),
           "id=iframe-", params$dom, "></iframe>",
           "<style>iframe.rChart{ width: 100%; height: 400px;}</style>"
         ))
@@ -155,13 +158,23 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
         return(invisible())
       },
       iframesrc = {
-        writeLines(c(
+        cat(c(
           "<iframe srcdoc='", htmlspecialchars(.self$render(...)),
-          "' scrolling='no' seamless class='rChart ", lib, " '",
-          paste0("id='iframe-", params$dom, "'>"), "</iframe>",
+          "' scrolling='no' frameBorder='0' seamless class='rChart ", lib, " '",
+          paste0("id='iframe-", params$dom, "'>"), "</iframe>\n",
           "<style>iframe.rChart{ width: 100%; height: 400px;}</style>"
         ))
         return(invisible())
+      },
+      ipynb = {
+        if (!require(IRdisplay)){
+          return(
+            message('You need to install the IRdisplay package from github.')
+          )
+        }
+        y = paste(capture.output(.self$show('iframesrc', cdn = TRUE)), 
+          collapse = "\n")
+        display_html(y)
       }
     )
   },
@@ -204,4 +217,3 @@ getMode = function(mode_){
 `%?=%` <- function(x, y){
   ifelse(!is.null(x), x == y, FALSE)
 }
-
