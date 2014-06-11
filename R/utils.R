@@ -77,6 +77,11 @@ get_assets <- function(LIB, static = T, cdn = F, standalone = F){
 }
 
 make_standalone_assets <- function(assets){
+    if (!require(base64enc)){
+      stop("You need to install the base64enc package.", call. = FALSE) 
+    } else {
+      make_standalone__ <- dataURI
+    }
     if (length(assets[['css']]) > 0){
       assets[['css']] = lapply(assets[['css']], function(x) {
        make_standalone__(file = x, mime = "text/css")
@@ -95,7 +100,7 @@ make_standalone_assets <- function(assets){
 #   paste(prefix, URLencode(read_file(file)), collapse = "")
 # }
 
-make_standalone__ <- base64enc::dataURI
+# make_standalone__ <- base64enc::dataURI
 
 #' Add library assets (useful in knitr documents)
 add_lib_assets <- function(lib, cdn = F, standalone = F){
