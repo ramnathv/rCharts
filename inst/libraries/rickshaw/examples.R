@@ -4,7 +4,7 @@ p1$layer(~ cyl, group = 'am', data = mtcars, type = 'bar')
 
 # Example 2
 require(rCharts)
-options(RCHART_TEMPLATE = 'Rickshaw.html')
+# options(RCHART_TEMPLATE = 'Rickshaw.html')
 require(RColorBrewer)
 data(economics, package = 'ggplot2')
 datm = reshape2::melt(
