@@ -48,7 +48,7 @@ get_rCharts_assets <- function(lib){
   assets[!grepl('jquery', assets)]
 }
 
-get_lib <- function(lib){
+get_lib <- function(lib, package = 'rCharts'){
   if (grepl("^http", lib)){
     return(list(name = basename(lib), url = lib))
   }
@@ -56,7 +56,7 @@ get_lib <- function(lib){
     lib_url <- normalizePath(lib)
     lib <- basename(lib_url)
   } else {
-    lib_url <- system.file('libraries', lib, package = 'rCharts')
+    lib_url <- system.file('libraries', lib, package = package)
   }
   return(list(name = basename(lib), url = lib_url))
 }
