@@ -10,7 +10,7 @@
 chartOutput <- showOutput <- function(outputId, lib = NULL, package = 'rCharts', 
     add_lib = TRUE){
   if (!is.null(lib)){
-    LIB <- get_lib(lib)
+    LIB <- get_lib(lib, package = package)
   } else if (exists(".rChart_object")) {
     LIB <- .rChart_object$LIB
   }
