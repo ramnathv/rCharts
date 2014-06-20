@@ -56,7 +56,11 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
     params <<- modifyList(params, list(...))
   },
   getPayload = function(chartId){
-    list(chartParams = toJSON(params), chartId = chartId, lib = basename(lib), liburl = LIB$url)
+    if(!is.null(params$digits))
+      JSONized = toJSON(params, digits=params$digits)
+    else
+      JSONized = toJSON(params)
+    list(chartParams = JSONized, chartId = chartId, lib = basename(lib), liburl = LIB$url)
   },
   html = function(chartId = NULL){
     params$dom <<- chartId %||% params$dom
