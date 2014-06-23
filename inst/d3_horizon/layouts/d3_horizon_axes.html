@@ -1,0 +1,57 @@
+<!--Attribution:
+Jason Davies https://github.com/d3/d3-plugins/tree/master/horizon
+Mike Bostock http://bl.ocks.org/mbostock/1483226
+-->
+
+<style>
+.axis .tick line {
+    stroke: lightgrey;
+    stroke-opacity: 0.7;
+}
+.y path, .x path {
+    stroke-width: 0;
+    fill-opacity: 0;
+}
+</style>
+
+<script>
+var params = {{{ chartParams }}};
+
+var svg = d3.select('#' + params.id).append("svg")
+    .attr("width", params.width)
+    .attr("height", params.height);
+    
+var chart = d3.horizon()
+    .width(params.width)
+    .height(params.height - 50)
+    .bands(params.bands)
+    .mode(params.mode)
+    .interpolate(params.interpolate);
+    
+data = [params.data.map(function(d) {return[d[params.x],d[params.y]]})]    
+    
+svg.data(data).call(chart);
+
+var x = d3.time.scale().range([0,params.width]),
+    xAxis = d3.svg.axis().scale(x).tickSize(5).tickSubdivide(true).orient("bottom");
+    
+x.domain(d3.extent(params.data,function(d){return new Date(d[params.x] * 1000) }));
+    
+svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + (params.height - 50) + ")")
+    .call(xAxis);
+    
+var y = d3.scale.linear().range([(params.height) * params.bands - 76,0]),  //use 76 for proper alignment
+    yAxis = d3.svg.axis()
+                .scale(y)
+                .tickSize(params.width)
+                .ticks(params.bands * params.bands)
+                .orient("left");
+    
+y.domain(d3.extent(params.data, function(d){return Math.abs( d[params.y] )}));
+svg.append("g")
+    .attr("class","y axis")
+    .attr("transform", "translate(" + params.width + ",0)")
+    .call(yAxis);
+</script>

@@ -1,0 +1,6 @@
+d3_horizon:
+  jshead: [js/d3.v3.js,js/horizon.js]
+  cdn:
+    jshead: 
+      - "http://d3js.org/d3.v3.min.js"
+      - "http://timelyportfolio.github.io/rCharts_d3_horizon/libraries/widgets/d3_horizon/js/horizon.js"
