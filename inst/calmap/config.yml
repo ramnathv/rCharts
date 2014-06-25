@@ -1,0 +1,8 @@
+calmap:
+  jshead: [js/d3.v3.min.js, js/cal-heatmap.min.js]
+  css: [css/cal-heatmap.css]
+  cdn:
+    jshead: 
+      - "http://d3js.org/d3.v3.min.js"
+      - "http://cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.min.js"
+    css: "http://cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.css"
