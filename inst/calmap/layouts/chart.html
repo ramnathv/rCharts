@@ -1,0 +1,9 @@
+<script>
+var chartParams = {{{ chartParams }}}
+chartParams.itemSelector = '#{{chartId}}'
+if (chartParams.start){
+  chartParams.start = new Date(chartParams.start)
+}
+var cal{{chartId}} = new CalHeatMap();
+cal{{chartId}}.init(chartParams);
+</script>
