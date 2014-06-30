@@ -1,8 +1,0 @@
-parcoords:
-  css: [external/d3.parcoords.css]
-  jshead: [external/d3.min.js, external/d3.parcoords.js]
-  cdn:
-    css: http://syntagmatic.github.io/parallel-coordinates/d3.parcoords.css
-    jshead:
-      - http://d3js.org/d3.v2.min.js
-      - http://syntagmatic.github.io/parallel-coordinates/d3.parcoords.js

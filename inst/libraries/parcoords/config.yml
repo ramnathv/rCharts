@@ -1,0 +1,8 @@
+parcoords:
+  css: [css/d3.parcoords.css]
+  jshead: [js/d3.min.js, js/d3.parcoords.js]
+  cdn:
+    css: https://s3.amazonaws.com/ada-pI/static/rCharts/libs/parcoords/css/d3.parcoords.css
+    jshead:
+      - https://s3.amazonaws.com/ada-pI/static/rCharts/libs/parcoords/js/d3.v2.min.js
+      - https://s3.amazonaws.com/ada-pI/static/rCharts/libs/parcoords/js/d3.parcoords.js
