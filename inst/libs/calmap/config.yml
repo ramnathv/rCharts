@@ -1,0 +1,8 @@
+calmap:
+  jshead: [js/d3.v3.min.js, js/cal-heatmap.min.js]
+  css: [css/cal-heatmap.css]
+  cdn:
+    jshead: 
+      - "https://s3.amazonaws.com/ada-pI/static/rCharts/libs/calmap/js/d3.v3.min.js"
+      - "https://s3.amazonaws.com/ada-pI/static/rCharts/libs/calmap/js/cal-heatmap.min.js"
+    css: "https://s3.amazonaws.com/ada-pI/static/rCharts/libs/calmap/css/cal-heatmap.css"
