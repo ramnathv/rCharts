@@ -28,7 +28,7 @@
           .y(function(d) { return d[opts.y] })
           .width(opts.width)
           .height(opts.height)
-         
+          .reduceXTicks(opts.reduceXTicks)
         {{{ chart }}}
           
         {{{ xAxis }}}
@@ -41,7 +41,7 @@
         .append('svg')
         .datum(data)
         .transition().duration(500)
-        .call(chart);
+        .call(chart)
 
        nv.utils.windowResize(chart.update);
        return chart;
