@@ -1,4 +1,4 @@
-<div class='container' ng-controller="DemoCtrl">
+<div class='container' ng-controller="{{chartId}}Ctrl">
   <div class='row'>
     <div class='col-md-3'>
       <form class='well'>
@@ -28,7 +28,7 @@
   </div>
 </div>
 <script type="text/javascript">
-function DemoCtrl($scope){
+function {{chartId}}Ctrl($scope){
   $scope.opts = {{{ opts }}}
   $scope.data = {{{ data }}}
   $scope.controls = {{{ controls_json }}} 
