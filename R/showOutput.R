@@ -12,6 +12,7 @@ chartOutput <- showOutput <- function(outputId, lib = NULL, package = 'rCharts',
   if (!is.null(lib)){
     LIB <- get_lib(lib, package = package)
   } else if (exists(".rChart_object")) {
+    LIB <- tolower(LIB) # make sure lib is lowercase, https://github.com/ramnathv/rCharts/issues/188
     LIB <- .rChart_object$LIB
   }
   if (add_lib){
