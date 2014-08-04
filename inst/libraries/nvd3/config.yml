@@ -2,9 +2,9 @@ nvd3:
   css: [css/nv.d3.css, css/rNVD3.css]
   jshead: [js/jquery-1.8.2.min.js, js/d3.v3.min.js, "js/nv.d3.min-new.js", js/fisheye.js]
   cdn:
-    css: http://nvd3.org/assets/css/nv.d3.css
+    css: "//cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.css"
     jshead: 
-      - "http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"
-      - "http://d3js.org/d3.v3.min.js"
-      - "http://timelyportfolio.github.io/rCharts_nvd3_tests/libraries/widgets/nvd3/js/nv.d3.min-new.js"
-      - "http://nvd3.org/assets/lib/fisheye.js"
+      - "//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"
+      - "//d3js.org/d3.v3.min.js"
+      - "//cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.js"
+      - "//nvd3.org/assets/lib/fisheye.js"
