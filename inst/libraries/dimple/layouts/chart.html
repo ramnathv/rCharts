@@ -83,7 +83,7 @@
     //here think I need to evaluate group and if missing do null
     //as the group argument
     //if provided need to use groups from layer
-    var s = new dimple.series(myChart, null, x, y, z, c, dimple.plot[layer.type], dimple.aggregateMethod.avg, dimple.plot[layer.type].stacked);
+    var s = new dimple.series(myChart, null, x, y, z, c, null, dimple.plot[layer.type], dimple.aggregateMethod.avg, dimple.plot[layer.type].stacked);
     
     //as of v1.1.4 dimple can use different dataset for each series
     if(layer.data){
