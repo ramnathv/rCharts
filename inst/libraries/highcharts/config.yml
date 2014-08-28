@@ -6,7 +6,7 @@ highcharts:
     - js/exporting.js
   cdn:
     jshead:
-      - "http://code.jquery.com/jquery-1.9.1.min.js"
-      - "http://code.highcharts.com/highcharts.js"
-      - "http://code.highcharts.com/highcharts-more.js"
-      - "http://code.highcharts.com/modules/exporting.js"
+      - "//code.jquery.com/jquery-1.9.1.min.js"
+      - "//code.highcharts.com/highcharts.js"
+      - //code.highcharts.com/highcharts-more.js"
+      - "//code.highcharts.com/modules/exporting.js"
