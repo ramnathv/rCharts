@@ -106,7 +106,7 @@
         if( typeof layer[ax + 'Axis'].orderRule == "string" ){
           s.addOrderRule( layer[ax + 'Axis'].orderRule );
         } else if ( typeof layer[ax + 'Axis'].orderRule == "object" ) {
-          s._orderRule = layer[ax + 'Axis'].orderRule;
+          s._orderRules = layer[ax + 'Axis'].orderRule;
         }
       }
     })
