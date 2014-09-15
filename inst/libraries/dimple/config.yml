@@ -1,6 +1,6 @@
 dimple:
-  jshead: [js/dimple.v1.1.4.js, js/d3.v3.js]
+  jshead: [js/d3.v3.js,js/dimple.v2.1.0.js]
   cdn:
     jshead: 
       - "//d3js.org/d3.v3.min.js"
-      - "//dimplejs.org/dist/dimple.v1.1.4.min.js"
+      - "//dimplejs.org/dist/dimple.v2.1.0.min.js"

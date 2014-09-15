@@ -83,7 +83,7 @@
     //here think I need to evaluate group and if missing do null
     //as the group argument
     //if provided need to use groups from layer
-    var s = new dimple.series(myChart, null, x, y, z, c, dimple.plot[layer.type], dimple.aggregateMethod.avg, dimple.plot[layer.type].stacked);
+    var s = new dimple.series(myChart, null, x, y, z, c, null, dimple.plot[layer.type], dimple.aggregateMethod.avg, dimple.plot[layer.type].stacked);
     
     //as of v1.1.4 dimple can use different dataset for each series
     if(layer.data){
@@ -100,20 +100,38 @@
       s.data = layer.dataarray;
     }
     
+    //for measure axis dimple sorts at the series level not at axis level
+    ['x','y'].map(function(ax){
+      if( layer[ax + 'Axis'].type=="addMeasureAxis" && layer[ax + 'Axis'].orderRule ){
+        if( typeof layer[ax + 'Axis'].orderRule == "string" ){
+          s.addOrderRule( layer[ax + 'Axis'].orderRule );
+        } else if ( typeof layer[ax + 'Axis'].orderRule == "object" ) {
+          s._orderRules = layer[ax + 'Axis'].orderRule;
+        }
+      }
+    })
+    
     if(layer.hasOwnProperty("groups")) {
       s.categoryFields = (typeof layer.groups === "object") ? layer.groups : [layer.groups];
       //series offers an aggregate method that we will also need to check if available
       //options available are avg, count, max, min, sum
-      if (!(typeof(layer.aggregate) === 'undefined')) {
-        s.aggregate = eval(layer.aggregate);
-      }
-      if (!(typeof(layer.lineWeight) === 'undefined')) {
-        s.lineWeight = eval(layer.lineWeight);
-      }
-      if (!(typeof(layer.barGap) === 'undefined')) {
-        s.barGap = eval(layer.barGap);
-      }    
-    };
+    }
+    if (!(typeof(layer.aggregate) === 'undefined')) {
+      s.aggregate = eval(layer.aggregate);
+    }
+    if (!(typeof(layer.lineWeight) === 'undefined')) {
+      s.lineWeight = layer.lineWeight;
+    }
+    if (!(typeof(layer.lineMarkers) === 'undefined')) {
+      s.lineMarkers = layer.lineMarkers;
+    }
+    if (!(typeof(layer.barGap) === 'undefined')) {
+      s.barGap = layer.barGap;
+    }    
+    if (!(typeof(layer.interpolation) === 'undefined')) {
+      s.interpolation = layer.interpolation;
+    } 
+    
     myChart.series.push(s);
     
     /*placeholder fix domain of primary scale for new series data
