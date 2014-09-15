@@ -213,8 +213,10 @@ shinyUI(pageWithSidebar(
 
 rCharts can also be embedded into an Rmd document using `knit2html` or in a blog post using `slidify`. Here are a few examples of tutorials written using `rCharts` and `slidify`.
 
-1. [Parallel Coordinate Plots](http://ramnathv.github.io/rChartsParCoords/)
-2. [NY Times Graphics Tutorial](http://ramnathv.github.io/rChartsNYT/)
+1. [Parallel Coordinate Plots](http://rcharts.io/gallery/#visualizationType=parallel%20coordinates)
+2. [NY Times Graphics Tutorial](http://rcharts.io/nytinteractive/)
+
+More in the [rCharts website](http://rcharts.io) and the [Gallery](http://rcharts.io/gallery/).
 
 ## More
 
@@ -233,4 +235,3 @@ There has been a lot of interest recently in creating packages that allow R user
 - [gg2v](https://github.com/hadley/gg2v) by [Hadley Wickham](https://github.com/hadley)
 - [clickme](https://github.com/nachocab/clickme) by [Nacho Caballero](https://github.com/nachocab)
 - [rVega](https://github.com/metagraf/rVega) by [Thomas Reinholdsson](https://github.com/reinholdsson)
-
