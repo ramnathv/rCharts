@@ -115,8 +115,12 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
        static = {
          dir.create(temp_dir <- tempfile(pattern = 'rCharts'))
          static_ = grepl("^http", LIB$url) || is.null(viewer <- getOption('viewer'))
+         
          tf <- file.path(temp_dir, 'index.html')
-         writeLines(.self$render(..., static = static_), file(tf, "w", encoding = "UTF-8"))
+         tfcon <- file(tf, "w", encoding = "UTF-8")
+         writeLines(.self$render(..., static = static_), tfcon)
+         close(tfcon)
+         
          if (!static_){
            suppressMessages(copy_dir_(LIB$url, file.path(temp_dir, LIB$name)))
            if (!is.null(extra_files)){
