@@ -42,7 +42,9 @@ post_gist_oauth <- function(gist,
 create_gist <- function(filenames, description = "", extras = NULL, public = TRUE){
   if (!is.null(extras)) filenames <- c(filenames, extras)
   files = lapply(filenames, function(file){
-    x = list(content =  paste(readLines(file, warn = F), collapse = "\n"))
+    con <- file(file, "r", encoding = "UTF-8")
+    on.exit(close(con))
+    list(content =  paste(readLines(con, warn = F), collapse = "\n"))
   })
   names(files) = basename(filenames)
   body = list(description = description, public = public, files = files)

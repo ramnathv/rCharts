@@ -107,7 +107,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
   },
   save = function(destfile = 'index.html', ...){
     'Save chart as a standalone html page'
-    writeLines(.self$render(...), destfile)
+    write_file(.self$render(...), destfile)
   },
   show = function(mode_ = NULL, ..., extra_files = NULL){
     mode_ = getMode(mode_)
@@ -115,12 +115,9 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
        static = {
          dir.create(temp_dir <- tempfile(pattern = 'rCharts'))
          static_ = grepl("^http", LIB$url) || is.null(viewer <- getOption('viewer'))
-         
-         tf <- file.path(temp_dir, 'index.html')
-         tfcon <- file(tf, "w", encoding = "UTF-8")
-         writeLines(.self$render(..., static = static_), tfcon)
-         close(tfcon)
-         
+         write_file(.self$render(..., static = static_),
+           tf <- file.path(temp_dir, 'index.html')
+         )
          if (!static_){
            suppressMessages(copy_dir_(LIB$url, file.path(temp_dir, LIB$name)))
            if (!is.null(extra_files)){
@@ -192,7 +189,7 @@ rCharts = setRefClass('rCharts', list(params = 'list', lib = 'character',
     # take_screenshot(htmlFile, tools::file_path_sans_ext(imgFile))
     if (!is.null(.self$srccode)){
       codeFile = file.path(tempdir(), 'code.R'); on.exit(unlink(codeFile))
-      writeLines(.self$srccode, con = codeFile)
+      write_file(.self$srccode, codeFile)
       files = c(htmlFile, codeFile)
     } else {
       files = htmlFile
