@@ -8,5 +8,5 @@ highcharts:
     jshead:
       - "//code.jquery.com/jquery-1.9.1.min.js"
       - "//code.highcharts.com/highcharts.js"
-      - //code.highcharts.com/highcharts-more.js"
+      - "//code.highcharts.com/highcharts-more.js"
       - "//code.highcharts.com/modules/exporting.js"
