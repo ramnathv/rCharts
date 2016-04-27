@@ -3,7 +3,7 @@
 
 #' @export
 make_chart <- function(text){
-  writeLines(text, con="input.R")
+  write_file(text, "input.R")
   chart = source('input.R', local = TRUE)$value
   # chart$set(width = 700)
   # chart$setTemplate(page = 'rChart2.html')
@@ -175,6 +175,20 @@ addLayer.default <- function(...){
 #' @noRd
 read_file <- function(file, warn = F, ...){
   paste(readLines(file, warn = warn, ...), collapse = "\n")
+}
+
+#' Write lines into a file using specific encoding
+#' 
+#' @param text A character vector
+#' @param output path to text file that needs to be written
+#' @param encoding The name of the encoding to be used. See the Encoding section in \code{\link{connections}}.
+#' @param ... other parameters to be passed to \code{\link{writeLines}}
+#' @keywords internal
+#' @noRd
+write_file <- function(text, output, encoding = "UTF-8", ...){
+  con <- file(output, "w", encoding = encoding)
+  writeLines(text, con, ...)
+  close(con)
 }
 
 #' Read contents of a system file into a character string
