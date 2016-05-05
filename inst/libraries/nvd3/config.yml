@@ -1,6 +1,6 @@
 nvd3:
   css: [css/nv.d3.css, css/rNVD3.css]
-  jshead: [js/jquery-1.8.2.min.js, js/d3.v3.min.js, "js/nv.d3.min-new.js", js/fisheye.js]
+  jshead: [js/jquery-1.8.2.min.js, js/d3.v3.min.js, "js/nv.d3.min.js", js/fisheye.js]
   cdn:
     css: "//cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.css"
     jshead: 
