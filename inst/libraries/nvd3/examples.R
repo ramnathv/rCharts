@@ -49,6 +49,17 @@ p7
 p7$xAxis( NULL, replace = T)
 p7
 
+#now do the same to demo y2Axis formatting
+#like x2Axis above
+p7$yAxis( tickFormat="#!function(d) {return d3.format(',.2%')(d / 100);}!#" )
+p7
+#set y2Axis to override the copied yAxis
+p7$y2Axis( tickFormat="#!function(d) {return d3.format('.3f')(d / 100);}!#" )
+p7
+#test set yAxis again to make sure it does not override set y2Axis
+p7$yAxis( NULL, replace = T)
+p7
+
 ## {title: Stacked Area Chart}
 dat <- data.frame(t=rep(0:23,each=4),var=rep(LETTERS[1:4],4),val=round(runif(4*24,0,50)))
 p8 <- nPlot(val ~ t, group =  'var', data = dat, type = 'stackedAreaChart', id = 'chart')
