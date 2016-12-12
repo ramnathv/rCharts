@@ -21,9 +21,10 @@ publish_.rpubs <- function(files, description, id, ...){
 
 #' Run an rCharts example from a github repo
 #' 
-# runExample(
-#    username = 'timelyportfolio', 
-#    repo = 'rCharts_polycharts_standalone', 
+# viewExample(
+#   username = 'timelyportfolio', 
+#   repo = 'rCharts_polycharts_standalone', 
+#   ref = "dev",
 #   filename = 'bar_athletes.R'
 # )
 viewExample <- function(repo, username, ref = 'master', filename){
