@@ -1,0 +1,38 @@
+<!--Attribution:
+Jason Davies https://github.com/d3/d3-plugins/tree/master/horizon
+Mike Bostock http://bl.ocks.org/mbostock/1483226
+-->
+
+<script>
+var params = {{{ chartParams }}};
+
+var svg = d3.select('#' + params.id).append("svg")
+    .attr("width", params.width)
+    .attr("height", params.height);
+            
+//get number of keys assuming everything besides date is to be plotted
+var nKeys = d3.keys(params.data[0]).length - 1;
+
+var chart = d3.horizon()
+    .width(params.width)
+    .height(params.height / nKeys)
+    .bands(params.bands)
+    .mode(params.mode)
+    .interpolate(params.interpolate);
+        
+    
+d3.keys(params.data[0]).forEach(function(key,i) {
+  if (!(key == params.x)) {
+    var data = [params.data.map(function(d) {return[d[params.x],d[key]]})]
+    var gHorizon = svg.append("g")
+        .data(data)
+        .attr("transform","translate(0," + ( (i-1) * params.height / nKeys) + ")" )
+        .call(chart);
+    gHorizon.append("text")
+        .attr("x", 0)
+        .attr("y", params.height / nKeys / 2)
+        .attr("dy", ".35em")
+        .text(key);
+  };
+});                
+</script>

@@ -1,0 +1,21 @@
+<!--Attribution:
+Jason Davies https://github.com/d3/d3-plugins/tree/master/horizon
+Mike Bostock http://bl.ocks.org/mbostock/1483226
+-->
+
+<script>
+var params = {{{ chartParams }}};
+
+var svg = d3.select('#' + params.id).append("svg")
+    .attr("width", params.width)
+    .attr("height", params.height);
+    
+var chart = d3.horizon()
+    .width(params.width)
+    .height(params.height)
+    .bands(params.band)
+    .mode(params.mode)
+    .interpolate(params.interpolate);
+    
+svg.data(params.data).call(chart)
+</script>

@@ -1,0 +1,444 @@
+.g-hovering-list .g-chooser-list {
+  display: block;
+}
+
+.g-chooser-list li:hover {
+  background-color: #004276;
+  color: white;
+  cursor:pointer;
+}
+
+.g-shell {
+  position:relative;
+  margin-top:20px;
+}
+
+.g-chart {
+  margin-top:60px;
+  margin-left:10px;
+}
+
+.g-end-label {
+  fill:steelblue;
+  font-family:arial;
+  text-anchor:end;
+}
+
+.g-selected-city-endpoint-label {
+  font-size: 14px;
+}
+
+.g-selected-city-endpoint-value {
+ font-weight: bold;
+ font-size: 19px;
+}
+
+.c-chart {
+  margin-left:10px;
+}
+.storyHeader h1 {
+  font-size: 34px !important;
+  font-family: georgia, sans-serif;
+  padding-top: 6px;
+  font-weight: lighter;
+}
+
+.g-intro-sentence {
+  font-family: georgia;
+  font-size: 14px;
+  font-weight: normal;
+  margin: 0 0 30px 10px;
+}
+
+.g-selector {
+}
+
+.g-selector select {
+  color: #333;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-size: 13px;
+  font-family: Georgia;
+  padding: 0px 20px 4px 7px;
+  margin: 0 2px;
+  cursor: pointer;
+  border: solid white 1px;
+  border-bottom: solid 1px #ccc;
+  border-radius: 3px;
+  background: rgba(235, 235, 235, 0.9) url(triangle.svg) no-repeat center right;
+}
+
+.g-selector select:disabled {
+  background: none;
+  border-color: #ccc;
+}
+
+.g-selector select:focus {
+  /*border: solid 1px #004276;*/
+  box-shadow: none;
+  outline: rgb(57, 100, 156) auto 4px;
+}
+
+.g-answer {
+  font-weight: bold;
+  font-size: 17px;
+  font-family: arial;
+  display: inline-block;
+  margin: 0 4px;
+  width: 12em;
+  text-align: center;
+}
+
+.g-key-text {
+  font-size: 14px;
+  font-weight: bold;
+  font-family: arial;
+}
+
+/*svg*/
+
+.g-chart svg {
+  /*cursor: pointer;*/
+}
+
+.g-most-recent-month-value {
+  text-anchor: end;
+}
+
+
+
+.g-prices-since {
+  font-size:9px;
+  text-transform: uppercase;
+  font-family:arial;
+}
+
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+  stroke-width: 1px;
+}
+
+.axis text {
+  font-family: arial, sans-serif;
+  font-size: 12px;
+  pointer-events: none;
+  fill: #777;
+}
+
+.axis path {
+  display: none;
+}
+
+.y.axis line {
+}
+
+.y.axis text {
+  text-anchor: end !important;
+  font-size:12px;
+}
+
+.g-first text {
+  display:none;
+}
+
+/*.y.axis .major text: {
+  display: none;
+}*/
+
+.y.axis .minor.major line {
+  stroke-dasharray: 4,3;
+  stroke: #ccc;
+}
+.y.axis .minor.major.g-baseline line {
+  stroke:#999;
+  stroke-dasharray:none;
+}
+
+
+.y.axis .major line {
+  /*stroke-width: 1px;*/
+  stroke:#000;
+}
+
+.x.axis line {
+/*  stroke: none;
+*/}
+
+.x.axis .minor text {
+  display: none;
+}
+
+.g-dot {
+  fill:orange;
+}
+
+.g-city-line {
+  fill:none;
+  stroke-width:1px;
+  stroke:#ccc;
+}
+
+.g-highlight-line {
+  stroke-width:3px;
+  fill:none;
+  stroke:steelblue;
+}
+
+.g-hover-line.g-highlight-line {
+  stroke:steelblue;
+
+}
+
+.g-hover-line {
+  stroke:orange;
+}
+
+.background {
+  fill: #fff;
+}
+
+circle {
+  fill: steelblue;
+  stroke: white;
+  stroke-width: 1px;
+}
+
+.g-screen {
+  fill: #fff;
+  opacity: 0.9;
+}
+
+.g-hover-bar {
+  opacity:.7;
+  fill:#555;
+}
+
+.g-hover-row td {
+  background:hsl(39, 90%, 90%);
+}
+
+/*.g-slider {
+  stroke: #ccc;
+  shape-rendering:crispEdges;
+  fill:#fff;
+
+}
+
+.g-slider-active {
+
+  fill:#f0f0f0;
+  stroke:#ccc;
+  shape-rendering:crispEdges;
+}*/
+
+.g-current-month {
+  position: absolute;
+  bottom: 10px;
+  font-size: 14px;
+  font-family: arial;
+}
+
+.g-most-recent-month {
+  position: absolute;
+  bottom: 10px;
+  right: 0px;
+  font-size: 14px;
+  font-family: arial;
+}
+
+.g-slider {
+  position: relative;
+}
+
+.g-slider-tray {
+  position: absolute;
+  width: 100%;
+  height: 8px;
+  border: solid 1px #ccc;
+  border-top-color: #aaa;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.g-slider-fill {
+  position: absolute;
+  right: -1px;
+  height: 8px;
+  width: 100px;
+  border: solid 1px #bbb;
+  border-top-color: #888;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.12);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.g-slider-handle {
+  position: absolute;
+  top: -4px;
+}
+
+.g-slider-handle-icon {
+  width: 32px;
+  height: 33px;
+  position: absolute;
+  left: -17px;
+}
+
+/*table*/
+.g-table-container {
+  margin: 30px 12px;
+  font-family: arial;
+
+}
+
+.g-table-intro {
+  width: 165px;
+  float: left;
+  margin-right: 55px;
+}
+
+.g-table-intro h4 {
+ font-size: 14px;
+ margin-bottom: 10px;
+ text-indent: 0px;
+ font-family: arial, sans-serif;
+}
+.g-table-readin {
+  font-size: 13px;
+  color: #333;
+  line-height: 1.3em;
+}
+
+.g-table {
+  border-collapse: collapse;
+}
+
+.g-table-row {
+  cursor: pointer;
+}
+
+.g-table-row:hover .g-proper-city {
+  text-decoration: underline;
+  cursor:pointer;
+}
+
+.g-table th.g-recent-value {
+  text-align:right;
+}
+
+td {
+  padding: 2px 0;
+  border-bottom: 1px dashed #ddd;
+  font-size: 12px;
+  color:#555;
+  transition: background-color .25s;
+  -webkit-transition: background-color .25s;
+
+}
+
+.g-selected-row td {
+  color:#000;
+  background-color:#f0f0f0;
+}
+
+
+.g-selected-row .g-yoy-bar {
+  background-color:steelblue;
+}
+
+.g-table th {
+text-transform: uppercase;
+font-size:10px;
+font-weight:normal;
+text-align:left;
+}
+
+.g-num-td {
+  text-align:right;
+  width:40px;
+}
+
+.g-proper-city {
+  width:115px;
+  padding-left: 6px;
+}
+
+
+.g-bar-container {
+  height: 10px;
+  width: 100px;
+  position: relative;
+  padding-right: 40px;
+}
+
+.g-yoy-bar {
+  height:10px;
+  background-color:#ccc;
+  position:absolute;
+}
+
+.g-peak-month-val {
+  font-size:10px;
+  padding-left:3px;
+}
+
+
+.g-live-change-bar-td {
+  width:200px;
+}
+
+.g-live-bar-container {
+  position:relative;
+  height:10px;
+}
+
+.g-live-bar {
+  height: 10px;
+  position: absolute;
+  background-color:#ccc;
+}
+
+.g-selected-row .g-live-bar {
+background-color:steelblue;
+}
+
+.g-date-compare.g-selector {
+
+  font-family: arial;
+  font-size:10px;
+  padding:2px 5px;
+
+
+}
+
+.g-zeromarker {
+  height:10px;
+  width:1px;
+  position:absolute;
+  background-color: black;
+  top:0px;
+}
+
+
+.g-tooltip {
+  background-color: #fff;
+  padding: 2px 8px;
+  border: 1px solid #dedede;
+  box-shadow: 0 2px 8px hsla(0, 0%, 0%, 0.3);
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  font-family: arial;
+  display: none;
+}
+
+.g-tooltip.g-hovering-tooltip {
+  display: block;
+}
+
+
